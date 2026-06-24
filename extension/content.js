@@ -19,6 +19,7 @@
     lastEl: null,     // last page element the cursor was over (not our UI)
     state: "idle",    // idle | armed | thinking | ready | error
     lastSel: "",
+    last: null,       // last explain params, for the "caută online" escalation
     lastAutoQ: "",    // text of the last auto-explained question (dedupe)
     hlEl: null,       // element currently framed by the highlight
     hlSrc: null,      // source element of the current explanation (for dim scoping)
@@ -168,6 +169,9 @@
                 font-size:12.5px; color:#3a3640; background:transparent;
                 border:1px solid rgba(245,166,35,.5); border-radius:10px; padding:8px 10px; }
       .p-hint svg { flex:0 0 auto; margin-top:1px; }
+      .p-src-note { margin-top:8px; font-size:11px; color:#8a889c; }
+      .p-web { color:#5a4db0; font-weight:600; cursor:pointer; border-bottom:1px dotted #a99cff; }
+      .p-web:hover { color:#3a2d90; }
       .p-foot { margin-top:9px; display:flex; align-items:center; gap:8px;
                 font-size:11px; color:#736e92; }
       .p-src { color:#6b5fae; text-decoration:none; border-bottom:1px dotted #a99cff; }
@@ -589,17 +593,18 @@
   }
 
   /* ---------- the call ---------- */
-  async function explain(selection, context, mode, srcEl) {
+  async function explain(selection, context, mode, srcEl, web) {
     S.lastSel = selection;
     S.hlSrc = srcEl || null;
+    S.last = { selection, context, mode, srcEl };  // remember for "caută online"
     setState("thinking");
-    openLoading(mode);
+    openLoading(web ? "web" : mode);
     showHighlight(srcEl);
     let resp;
     try {
       resp = await chrome.runtime.sendMessage({
         type: "explain",
-        payload: { selection, context, mode, url: location.href },
+        payload: { selection, context, mode, web: !!web, url: location.href },
       });
     } catch (e) {
       resp = { ok: false, error: String(e) };
@@ -623,13 +628,18 @@
     S.panelOpen = true;
     S.barExpanded = false;             // every new question starts collapsed (peek only)
     panel.classList.remove("expanded");
-    panel.innerHTML = `<div class="p-loading"><div class="shimmer"></div>
-      ${mode === "check" ? "Lupa verifică alegerea ta…" : "Lupa se uită în materie…"}</div>`;
+    const loadMsg = mode === "web" ? "Lupa caută online…"
+      : mode === "check" ? "Lupa verifică alegerea ta…" : "Lupa se uită în materie…";
+    panel.innerHTML = `<div class="p-loading"><div class="shimmer"></div>${loadMsg}</div>`;
     requestAnimationFrame(() => panel.classList.add("show"));
   }
   function toggleBar() {
     S.barExpanded = !S.barExpanded;
     panel.classList.toggle("expanded", S.barExpanded);
+  }
+  function webNow() {
+    if (!S.last) return;
+    explain(S.last.selection, S.last.context, S.last.mode, S.last.srcEl, true);
   }
   function esc(s){ return (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   // DJ crossfader (single-answer) or per-option level faders (multi-answer)
@@ -686,6 +696,10 @@
     const elim = elimItems
       .map(e => `<span class="p-elim" title="${esc(e.why || "")}"><b>✕ nu e:</b> ${esc(e.opt)}</span>`).join("");
     const elims = elim ? `<div class="p-elims">${elim}</div>` : "";
+    const srcNote = d.source === "general"
+      ? `<div class="p-src-note">ℹ din cunoștințe generale (nu din materie) · <span class="p-web" id="elupa-web">🌐 caută online</span></div>`
+      : d.source === "web"
+        ? `<div class="p-src-note">🌐 din căutare web</div>` : "";
     const bal = faderHTML(d, isMulti);
     const peek = bal
       ? bal
@@ -706,10 +720,12 @@
         <div class="p-body">${esc(d.explain || "")}</div>
         ${elims}
         ${hint}
+        ${srcNote}
       </div>
       <span class="p-x" id="elupa-x">✕</span>`;
     root.getElementById("elupa-x").addEventListener("click", closePanel);
     root.getElementById("elupa-h").addEventListener("click", toggleBar);
+    root.getElementById("elupa-web")?.addEventListener("click", webNow);
     panel.classList.toggle("expanded", S.barExpanded);
     applyOptionBars(d, isMulti);
     positionHighlight();

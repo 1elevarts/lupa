@@ -57,15 +57,20 @@ lista goală []."""
 
 
 def build_user_prompt(selection: str, context: str, mode: str, course_context: str,
-                      choice: str = "") -> str:
+                      choice: str = "", grounded: bool = True) -> str:
     selection = (selection or "").strip()[:1500]
     context = (context or "").strip()[:1200]
     course_context = (course_context or "").strip()
     choice = (choice or "").strip()[:400]
 
     blocks = []
-    if course_context:
+    if course_context and grounded:
         blocks.append(f"<context_curs>\n{course_context}\n</context_curs>")
+    elif not grounded:
+        blocks.append("<nota>Materialul de curs NU acoperă bine acest subiect. "
+                      "Răspunde corect din cunoștințele tale generale de neuroștiințe/psihologie, "
+                      "scurt și clar. Dacă nici tu nu ești sigur, spune sincer că nu e în materie "
+                      "și că merită căutat în altă parte.</nota>")
 
     if mode == "check":
         task = ("Studentul tocmai a ales o variantă la o întrebare de test (vezi <alegere>). "

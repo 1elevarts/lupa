@@ -40,6 +40,7 @@ class ExplainReq(BaseModel):
     mode: str = "explain"         # explain | quiz | write | check
     choice: str = ""              # the answer the student picked (mode=check)
     url: str = ""
+    web: bool = False             # escalate to a web-search answer (manual, rare)
     model: str | None = None
     nocache: bool = False
 
@@ -120,8 +121,8 @@ def explain(req: ExplainReq):
     if len(sel) < 3:
         return {"ok": False, "error": "selectie prea scurta"}
 
-    # answer-checking depends on the picked choice -> always fresh, never cached
-    use_cache = not req.nocache and req.mode != "check"
+    # answer-checking and web lookups depend on fresh state -> never cached
+    use_cache = not req.nocache and req.mode != "check" and not req.web
     cache_path = _cache_key(req)
     if use_cache and os.path.exists(cache_path):
         try:
@@ -138,8 +139,17 @@ def explain(req: ExplainReq):
         for h in hits
     )
 
-    user_prompt = build_user_prompt(sel, req.context, req.mode, course_ctx, req.choice)
-    res = llm.ask(TUTOR_SYSTEM, user_prompt, model=req.model)
+    # is the question actually covered by our course material?
+    top_score = hits[0].get("score", 0) if hits else 0
+    grounded = bool(hits) and top_score >= 0.12
+    source = "web" if req.web else ("curs" if grounded else "general")
+
+    user_prompt = build_user_prompt(sel, req.context, req.mode, course_ctx,
+                                    req.choice, grounded=grounded)
+    if req.web:
+        res = llm.ask_web(TUTOR_SYSTEM, user_prompt, model=req.model)
+    else:
+        res = llm.ask(TUTOR_SYSTEM, user_prompt, model=req.model)
 
     data = res.get("data")
     if not data:
@@ -176,6 +186,7 @@ def explain(req: ExplainReq):
         "ms": res.get("ms"),
         "auth": res.get("auth"),
         "mode": req.mode,
+        "source": source,
         "ts": int(time.time()),
     }
     # single-answer -> crossfader (finalists + lean); multi-answer -> per-option picks

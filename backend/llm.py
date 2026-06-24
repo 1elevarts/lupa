@@ -175,9 +175,31 @@ def _via_oauth(system: str, prompt: str, model: str) -> str:
     # With =0 it returns clean JSON directly. Verified empirically 2026-06-24.
     env["ENABLE_TOOL_SEARCH"] = "0"
     cli_model = _OAUTH_MODEL.get(model, "sonnet")
+    # skip loading the user's MCP servers (n8n/supabase/etc.) — they add cold-start
+    # latency on every call and the lens never needs tools.
     proc = subprocess.run(
-        ["claude", "-p", full, "--model", cli_model],
+        ["claude", "-p", full, "--model", cli_model,
+         "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}'],
         capture_output=True, text=True, env=env, timeout=90,
+    )
+    if proc.returncode != 0 and not proc.stdout:
+        raise RuntimeError(f"claude -p exit {proc.returncode}: {(proc.stderr or '')[:200]}")
+    return (proc.stdout or "").strip()
+
+
+def _via_oauth_web(system: str, prompt: str, model: str) -> str:
+    """OAuth call WITH web search allowed — for the rare 'caută online' escalation.
+    Free on the Max/Pro subscription; slower (agentic). Tools enabled, MCP still off."""
+    full = f"{system}\n\n---\n\n{prompt}\n\n(Poți căuta pe web dacă e nevoie. Întoarce DOAR JSON-ul cerut la final.)"
+    env = dict(os.environ)
+    env.pop("ANTHROPIC_API_KEY", None)
+    env["ENABLE_TOOL_SEARCH"] = "0"
+    cli_model = _OAUTH_MODEL.get(model, "sonnet")
+    proc = subprocess.run(
+        ["claude", "-p", full, "--model", cli_model,
+         "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
+         "--allowedTools", "WebSearch"],
+        capture_output=True, text=True, env=env, timeout=120,
     )
     if proc.returncode != 0 and not proc.stdout:
         raise RuntimeError(f"claude -p exit {proc.returncode}: {(proc.stderr or '')[:200]}")
@@ -199,6 +221,20 @@ def ask(system: str, prompt: str, model: str | None = None, max_tokens: int = 10
     data = _extract_json(raw)
     _log_best_effort(model, ms, auth)
     return {"data": data, "raw": raw, "ms": ms, "auth": auth}
+
+
+def ask_web(system: str, prompt: str, model: str | None = None) -> dict:
+    """Web-search-backed answer (OAuth only; the rare 'caută online' path)."""
+    model = model or MODEL
+    t0 = time.time()
+    try:
+        raw = _via_oauth_web(system, prompt, model)
+    except Exception as e:
+        return {"data": None, "raw": "", "ms": int((time.time() - t0) * 1000),
+                "auth": "oauth", "error": str(e)}
+    ms = int((time.time() - t0) * 1000)
+    _log_best_effort(model, ms, "oauth")
+    return {"data": _extract_json(raw), "raw": raw, "ms": ms, "auth": "oauth"}
 
 
 def _log_best_effort(model: str, ms: int, auth: str) -> None:
