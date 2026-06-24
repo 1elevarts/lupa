@@ -1,1 +1,1 @@
-{"version":"2026-06-24-2318","notes":"excluse: overlay rosu pe pagina (pozitionat dupa textul optiunii, nu mai modifica DOM-ul site-ului) - merge pe orice platforma; reposed la scroll"}
+{"version":"2026-06-24-2324","notes":"Moodle: scope .que/.formulation + grupare pe container (checkbox multi cu name diferit); excluse: bara 2px discreta + dedupe (coloreaza ambele); crossfader verde(favorit)/gri(celalalt) + knob verde"}

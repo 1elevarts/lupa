@@ -78,8 +78,8 @@
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
       /* red bar overlaid on the left edge of an excluded option (no page edits) */
-      .dimbar { position: fixed; width: 4px; border-radius: 3px; pointer-events: none;
-        background: rgba(214,69,69,.5); z-index: 1; transition: opacity .2s; }
+      .dimbar { position: fixed; width: 2px; border-radius: 2px; pointer-events: none;
+        background: rgba(214,69,69,.55); z-index: 1; transition: opacity .2s; }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
@@ -130,15 +130,15 @@
       /* DJ crossfader (single-answer) — compact, decks hugging the track */
       .p-fader { width:100%; }
       .f-row { display:flex; align-items:center; justify-content:center; gap:8px; }
-      .f-deck { flex:0 1 auto; max-width:34%; min-width:0; font-size:11px; color:#7a7790; text-align:center;
-                overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-      .f-deck.fav { color:#5a4db0; font-weight:700; }
+      .f-deck { flex:0 1 auto; max-width:34%; min-width:0; font-size:11px; color:#9a98aa; text-align:center;
+                overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }      /* gri = mai puțin probabil */
+      .f-deck.fav { color:#1f9d57; font-weight:700; }                                /* verde = spre care înclină */
       .f-track { flex:0 0 118px; height:5px; border-radius:5px; position:relative;
-                 background:linear-gradient(90deg, rgba(124,92,255,.2), rgba(124,92,255,.05) 50%, rgba(124,92,255,.2)); }
+                 background:linear-gradient(90deg, rgba(120,122,140,.2), rgba(120,122,140,.07) 50%, rgba(120,122,140,.2)); }
       .f-mid { position:absolute; left:50%; top:-3px; width:1px; height:11px; background:rgba(20,16,40,.2); }
       .f-knob { position:absolute; top:50%; width:6px; height:15px; border-radius:3px;
-                background:var(--accent,#7c5cff); transform:translate(-50%,-50%);
-                box-shadow:0 1px 4px rgba(124,92,255,.5); transition:left .35s cubic-bezier(.2,.9,.3,1); }
+                background:#2e9e63; transform:translate(-50%,-50%);
+                box-shadow:0 1px 4px rgba(46,158,99,.5); transition:left .35s cubic-bezier(.2,.9,.3,1); }
       .b-cap { font-size:10px; color:#9b99ab; text-align:center; margin-top:4px; }
       /* level faders (multi-answer) — slider first, then option; original order; centered & small */
       .p-faders { display:flex; flex-direction:column; gap:6px; width:100%; align-items:center; }
@@ -288,16 +288,13 @@
   }, true);
 
   function maybeCheckAnswer(inp) {
-    // only fire on real quiz groups (>=2 options)
-    let opts = [];
-    if (inp.name) {
-      opts = document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`);
-    } else {
-      const grp = inp.closest("fieldset, .question, .quiz, form, li, ul, ol");
-      opts = grp ? grp.querySelectorAll('input[type=radio], input[type=checkbox]') : [];
-    }
-    if ((opts.length || 0) < 2) return;
-    const scope = inp.closest("fieldset, .question, .quiz, form, li, .q, section, article") || inp.parentElement;
+    // a real quiz group has >=2 options. Moodle multi-answer checkboxes each have a
+    // DIFFERENT name, so count by the question container too, not just by name.
+    const scope = inp.closest(Q_SEL) || inp.parentElement;
+    const byName = inp.name
+      ? document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`).length : 0;
+    const byCont = scope ? scope.querySelectorAll('input[type=radio], input[type=checkbox]').length : 0;
+    if (Math.max(byName, byCont) < 2) return;
     const question = questionBlock(inp);
     const choice = labelText(inp);
     if (question.length < 12 || choice.length < 1) return;
@@ -365,13 +362,13 @@
     const seen = new Set();
     let best = null, bestTop = Infinity;
     for (const inp of inputs) {
-      const c = inp.closest("fieldset, .question, .quiz, form, li, .q, section, article");
+      const c = inp.closest(Q_SEL);
       if (!c || seen.has(c)) continue;
       seen.add(c);
-      const grp = inp.name
-        ? document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`)
-        : c.querySelectorAll('input[type=radio], input[type=checkbox]');
-      if ((grp.length || 0) < 2) continue;
+      const byName = inp.name
+        ? document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`).length : 0;
+      const byCont = c.querySelectorAll('input[type=radio], input[type=checkbox]').length;
+      if (Math.max(byName, byCont) < 2) continue;
       const r = c.getBoundingClientRect();
       const aboveLimit = -Math.min(120, r.height * 0.5); // tolerate a small top crop
       if (r.bottom < 80 || r.top > innerHeight - 80) continue; // below fold / barely visible
@@ -423,8 +420,10 @@
   /* ---------- helpers ---------- */
   function answerControl(el) {
     if (!el || !el.closest) return false;
-    return !!el.closest('input[type=radio], input[type=checkbox], label, [role=radio], [role=option]');
+    return !!el.closest('input[type=radio], input[type=checkbox], label, .answer, [role=radio], [role=option]');
   }
+  // closest question container — Moodle uses .que / .formulation
+  const Q_SEL = "fieldset, .que, .formulation, .question, .quiz, .q, li, form, section, article";
   function elementUnderCursor() {
     return document.elementFromPoint(S.cursor.x, S.cursor.y) || document.body;
   }
@@ -437,7 +436,7 @@
   // The question container to frame/scope dimming to — the nearest quiz block.
   function questionScope(el) {
     if (!el || !el.closest) return el || null;
-    return el.closest("fieldset, .question, .quiz, .q, li, form, section, article") || el;
+    return el.closest(Q_SEL) || el;
   }
 
   /* ---------- highlight frame + excluded-option overlay ---------- */
@@ -461,7 +460,7 @@
 
   // find the tightest on-page element whose text matches an option string;
   // search the question first, then the whole page as a fallback
-  function findOption(optText) {
+  function findOption(optText, used) {
     const target = normTxt(optText);
     if (target.length < 3) return null;
     const scopes = [];
@@ -471,6 +470,7 @@
     for (const scope of scopes) {
       let best = null, bestLen = Infinity;
       for (const el of scope.querySelectorAll(SEL)) {
+        if (used && used.has(el)) continue;        // don't mark the same node twice
         const t = normTxt(el.innerText || el.textContent);
         if (!t || t.length > target.length + 50) continue;
         if (t.includes(target) || target.includes(t)) {
@@ -485,9 +485,11 @@
   function applyDim(elim) {
     clearDim();
     if (!elim || !elim.length) return;
+    const used = new Set();
     for (const e of elim) {
-      const target = findOption(e.opt);
+      const target = findOption(e.opt, used);
       if (!target) continue;
+      used.add(target);
       const ov = document.createElement("div");
       ov.className = "dimbar";
       root.appendChild(ov);
@@ -523,7 +525,7 @@
   }
   function contextAround(el) {
     const base = el || elementUnderCursor();
-    const c = base.closest?.("article, section, main, .question, .quiz, li, p, form, body") || document.body;
+    const c = base.closest?.("article, section, main, .que, .formulation, .question, .quiz, li, p, form, body") || document.body;
     return (c.innerText || "").trim().replace(/\s+/g, " ").slice(0, 1000);
   }
   function labelText(inp) {
@@ -534,7 +536,7 @@
     return (t || inp.value || "").trim().replace(/\s+/g, " ").slice(0, 200);
   }
   function questionBlock(inp) {
-    const c = inp.closest?.("fieldset, .question, .quiz, form, li, .q, section, article") || inp.parentElement;
+    const c = inp.closest?.(Q_SEL) || inp.parentElement;
     return (c?.innerText || "").trim().replace(/\s+/g, " ").slice(0, 800);
   }
   function detectMode(text, el) {
