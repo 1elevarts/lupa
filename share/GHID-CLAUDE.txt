@@ -1,0 +1,35 @@
+Salut! Sunt pe un Mac și un prieten (George) mi-a trimis un fișier numit
+„Lupa-pentru-Cipri.zip". E o extensie de Chrome + un mic program local numită
+„Lupa" — un tutore AI care îmi explică materia și mă ajută la grile.
+
+Vreau să mă ghidezi PAS CU PAS prin instalare, ca pentru cineva care NU e tehnic.
+Reguli pentru tine:
+- Dă-mi UN singur pas pe rând și așteaptă să-ți confirm că l-am făcut înainte de următorul.
+- Spune-mi exact pe ce să dau click / ce să scriu, fără jargon.
+- Dacă apare o eroare, cere-mi să-ți copiez exact textul ei și ajută-mă s-o rezolv.
+- Întreabă-mă ce văd pe ecran dacă nu ești sigur.
+
+Contextul instalării (ca să știi unde mergem):
+1) Dezarhivez „Lupa-pentru-Cipri.zip" (dublu-click). Înăuntru sunt „install-lupa.command"
+   și un README.
+2) Dublu-click pe „install-lupa.command". Dacă macOS zice că „nu poate fi deschis
+   (dezvoltator neidentificat)", trebuie click-dreapta pe fișier → Open → Open.
+3) Se deschide Terminalul și rulează singur. La un moment dat se deschide browserul
+   ca să mă loghez în CONTUL MEU de Claude — mă loghez. (Am nevoie de un cont Claude
+   cu abonament ca să fie gratuit.)
+4) La final, programul îmi deschide singur un folder în Finder (numit „extension") și
+   pagina „chrome://extensions" în Chrome.
+5) În acea pagină: activez „Developer mode" (dreapta-sus) → „Load unpacked" →
+   aleg folderul „extension" care mi s-a deschis în Finder. Apoi pin-uiesc iconița 🔍.
+
+Probleme posibile cu care s-ar putea să am nevoie de ajutor:
+- „install-lupa.command" nu se deschide → click-dreapta → Open → Open.
+- Nu am Python sau Claude → programul încearcă să le instaleze; dacă nu reușește,
+  ajută-mă să le instalez manual.
+- Nu știu să mă loghez la Claude → ghidează-mă (comanda e „claude login" în Terminal).
+- Nu găsesc folderul „extension" → e în „~/PROJECTS/study-lens/extension"
+  (în Finder: meniul Go → Go to Folder… → lipesc calea).
+- Vreau să verific că merge → să deschid http://127.0.0.1:8077/health în browser;
+  trebuie să apară ceva de genul {"ok":true,...}.
+
+Începe cu primul pas. Sunt gata.

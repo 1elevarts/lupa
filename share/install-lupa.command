@@ -81,13 +81,17 @@ launchctl unload "$UPLIST" 2>/dev/null || true
 launchctl load "$UPLIST"
 ok "Update automat activ (la 30 min + la pornire)."
 
-# ── done ─────────────────────────────────────────────────────
-say "✅ Gata! Mai e UN pas, în Chrome (nu-l pot face eu):"
+# ── done: open the folder + Chrome so the last step is trivial ──
+open "$PROJ/extension" 2>/dev/null || true
+open -a "Google Chrome" "chrome://extensions" 2>/dev/null || true
+
+say "✅ Gata! Ți-am deschis Finder-ul pe folderul extensiei + pagina Chrome."
 cat <<DONE
-  1. Deschide:  chrome://extensions
-  2. Activează „Developer mode" (sus-dreapta)
-  3. „Load unpacked" → alege folderul:
-       $PROJ/extension
+  Mai e UN pas, în Chrome (nu-l pot face eu):
+  1. În pagina deschisă (chrome://extensions) activează „Developer mode" (sus-dreapta)
+  2. Apasă „Load unpacked"
+  3. Selectează folderul „extension" pe care ți l-am deschis în Finder
+     (calea lui: $PROJ/extension)
   4. Pin-uiește iconița 🔍
 
   Folosire:
