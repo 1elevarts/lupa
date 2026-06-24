@@ -1,1 +1,1 @@
-{"version":"2026-06-24-2324","notes":"Moodle: scope .que/.formulation + grupare pe container (checkbox multi cu name diferit); excluse: bara 2px discreta + dedupe (coloreaza ambele); crossfader verde(favorit)/gri(celalalt) + knob verde"}
+{"version":"2026-06-24-2328","notes":"bare optiuni 1px: rosu=excluse, verde=favorit, gri=celalalt (toate 4 marcate la single-answer)"}

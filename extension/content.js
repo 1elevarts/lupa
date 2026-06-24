@@ -78,8 +78,12 @@
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
       /* red bar overlaid on the left edge of an excluded option (no page edits) */
-      .dimbar { position: fixed; width: 2px; border-radius: 2px; pointer-events: none;
-        background: rgba(214,69,69,.55); z-index: 1; transition: opacity .2s; }
+      /* thin colour bar overlaid on the left edge of an option (no page edits) */
+      .dimbar { position: fixed; width: 1px; border-radius: 2px; pointer-events: none;
+        z-index: 1; transition: opacity .2s; }
+      .dimbar.red   { background: rgba(214,69,69,.75); }
+      .dimbar.green { background: rgba(46,158,99,.85); }
+      .dimbar.grey  { background: rgba(150,150,165,.75); }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
@@ -482,18 +486,26 @@
     }
     return null;
   }
-  function applyDim(elim) {
+  // draw left-edge bars on the options: red = excluded, green = leaned-to, grey = other
+  function applyOptionBars(d, isMulti) {
     clearDim();
-    if (!elim || !elim.length) return;
     const used = new Set();
-    for (const e of elim) {
-      const target = findOption(e.opt, used);
-      if (!target) continue;
+    const draw = (optText, cls) => {
+      const target = findOption(optText, used);
+      if (!target) return;
       used.add(target);
       const ov = document.createElement("div");
-      ov.className = "dimbar";
+      ov.className = "dimbar " + cls;
       root.appendChild(ov);
       S.dimEls.push({ ov, target });
+    };
+    for (const e of (d.eliminate || [])) draw(e.opt, "red");
+    const f = d.finalists || [];
+    if (!isMulti && d.lean && d.lean.toward && f.length === 2) {
+      const t = normTxt(d.lean.toward);
+      const favIdx = (normTxt(f[1]).includes(t) || t.includes(normTxt(f[1]))) ? 1 : 0;
+      draw(f[favIdx], "green");
+      draw(f[1 - favIdx], "grey");
     }
     positionDims();
   }
@@ -679,7 +691,7 @@
     root.getElementById("elupa-x").addEventListener("click", closePanel);
     root.getElementById("elupa-h").addEventListener("click", toggleBar);
     panel.classList.toggle("expanded", S.barExpanded);
-    applyDim(d.eliminate);
+    applyOptionBars(d, isMulti);
     positionHighlight();
     requestAnimationFrame(() => panel.classList.add("show"));
   }
