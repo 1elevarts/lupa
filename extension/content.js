@@ -526,9 +526,13 @@
   function positionDims() {
     for (const d of S.dimEls) {
       const r = d.target.getBoundingClientRect();
-      d.ov.style.left = (r.left + 1) + "px";
-      d.ov.style.top = (r.top + 3) + "px";
-      d.ov.style.height = Math.max(0, r.height - 6) + "px";
+      const cs = getComputedStyle(d.target);
+      let lh = parseFloat(cs.lineHeight);
+      if (!lh || isNaN(lh)) lh = (parseFloat(cs.fontSize) || 15) * 1.4;
+      const h = Math.max(12, Math.min(lh, r.height) - 2); // only the FIRST line, next to the letter
+      d.ov.style.left = (r.left - 2) + "px";
+      d.ov.style.top = (r.top + 2) + "px";
+      d.ov.style.height = h + "px";
     }
   }
   function clearDim() {

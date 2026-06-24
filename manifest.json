@@ -1,1 +1,1 @@
-{"version":"2026-06-24-2337","notes":"fix mapare culori pe casute (match pe text complet, nu pe litera badge) + fallback pe cuvinte; verde 2px mai deschis/transparent"}
+{"version":"2026-06-24-2341","notes":"bara doar pe prima linie (1 rand, langa litera); pagina test stil Moodle (single + multi)"}

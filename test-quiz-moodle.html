@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>Lupa — test stil Moodle</title>
+<style>
+  body { font-family:-apple-system,"Segoe UI",Roboto,sans-serif; max-width:820px; margin:36px auto;
+         padding:0 20px; color:#1d2125; background:#f5f6f8; line-height:1.5; }
+  h1 { font-size:19px; }
+  .note { font-size:12.5px; color:#777; margin-bottom:24px; }
+  code { background:#e9e9ee; padding:1px 5px; border-radius:4px; }
+  /* Moodle-like quiz markup */
+  .que { background:#fff; border:1px solid #dee2e6; border-radius:8px; padding:18px 20px; margin:18px 0;
+         box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .que .info { font-size:12px; color:#868e96; margin-bottom:8px; }
+  .que .qtext { font-weight:600; margin:0 0 14px; font-size:15px; }
+  .que .answer > div { display:flex; align-items:flex-start; gap:10px; padding:10px 12px;
+        border:1px solid #edeef1; border-radius:8px; margin:8px 0; }
+  .que .answer .answernumber { font-weight:600; color:#495057; min-width:20px; }
+  .que .answer label { display:flex; gap:8px; cursor:pointer; margin:0; }
+  .que input { margin-top:3px; }
+</style>
+</head>
+<body>
+  <h1>🔍 Lupa — test în stil Moodle</h1>
+  <p class="note">Markup cu clasele reale Moodle (<code>.que.multichoice</code>, <code>.answer</code>,
+  <code>.r0/.r1</code>, <code>.answernumber</code>). Pune <b>Mod = Auto</b>, selectează enunțul / click pe lupă,
+  apasă <code>H</code> pentru detalii.</p>
+
+  <!-- SINGLE ANSWER (radio) -->
+  <div class="que multichoice deferredfeedback">
+    <div class="content"><div class="formulation clearfix">
+      <div class="info">Întrebarea 1</div>
+      <div class="qtext">Care metodă poate modula DIRECT nuclei subcorticali profunzi (STN/GPi)?</div>
+      <div class="ablock"><div class="answer">
+        <div class="r0"><input type="radio" id="q1a" name="q1">
+          <label for="q1a"><span class="answernumber">a.</span><span class="flex-fill">TMS (stimulare magnetică transcraniană)</span></label></div>
+        <div class="r1"><input type="radio" id="q1b" name="q1">
+          <label for="q1b"><span class="answernumber">b.</span><span class="flex-fill">tES (stimulare electrică transcraniană)</span></label></div>
+        <div class="r2"><input type="radio" id="q1c" name="q1">
+          <label for="q1c"><span class="answernumber">c.</span><span class="flex-fill">DBS (deep brain stimulation, electrozi implantați chirurgical în nucleii profunzi)</span></label></div>
+        <div class="r3"><input type="radio" id="q1d" name="q1">
+          <label for="q1d"><span class="answernumber">d.</span><span class="flex-fill">EEG (electroencefalografie de suprafață)</span></label></div>
+      </div></div>
+    </div></div>
+  </div>
+
+  <!-- MULTIPLE ANSWERS (checkbox: in Moodle each has a DIFFERENT name) -->
+  <div class="que multichoice deferredfeedback">
+    <div class="content"><div class="formulation clearfix">
+      <div class="info">Întrebarea 2</div>
+      <div class="qtext">Selectați TOATE metodele neinvazive de neuroimagistică/stimulare (mai multe corecte):</div>
+      <div class="ablock"><div class="answer">
+        <div class="r0"><input type="checkbox" id="q2c0" name="q2:choice0">
+          <label for="q2c0"><span class="answernumber">a.</span><span class="flex-fill">EEG</span></label></div>
+        <div class="r1"><input type="checkbox" id="q2c1" name="q2:choice1">
+          <label for="q2c1"><span class="answernumber">b.</span><span class="flex-fill">DBS (deep brain stimulation cu electrozi implantați)</span></label></div>
+        <div class="r2"><input type="checkbox" id="q2c2" name="q2:choice2">
+          <label for="q2c2"><span class="answernumber">c.</span><span class="flex-fill">fMRI</span></label></div>
+        <div class="r3"><input type="checkbox" id="q2c3" name="q2:choice3">
+          <label for="q2c3"><span class="answernumber">d.</span><span class="flex-fill">TMS</span></label></div>
+        <div class="r4"><input type="checkbox" id="q2c4" name="q2:choice4">
+          <label for="q2c4"><span class="answernumber">e.</span><span class="flex-fill">Implant de electrozi profunzi pe cale chirurgicală</span></label></div>
+      </div></div>
+    </div></div>
+  </div>
+</body>
+</html>
