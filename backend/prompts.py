@@ -72,11 +72,16 @@ def build_user_prompt(selection: str, context: str, mode: str, course_context: s
                 "Dacă e CORECTĂ: în \"explain\" confirmă scurt și explică DE CE e corectă, ca să "
                 "consolideze. Întrebarea e în <text_sub_cursor>.")
     elif mode == "quiz":
-        task = ("Sub cursor e o ÎNTREBARE/variantă de test. NU da răspunsul. "
+        task = ("Sub cursor e o ÎNTREBARE de test cu variante (A/B/C/D...). NU da răspunsul. "
                 "Explică conceptul testat și criteriul de discriminare, ca să aleagă singur. "
-                "Dacă există variante și unele sunt CLAR greșite, pune 1-2 dintre ele în \"eliminate\" "
-                "(cu motiv scurt), ca să se poată concentra pe cele plauzibile — dar lasă cel puțin "
-                "2 variante în joc și NU pune varianta corectă în listă.")
+                "OBLIGATORIU dacă întrebarea are cel puțin 3 variante: completează \"eliminate\" cu "
+                "EXACT 1-2 variante pe care le poți exclude cu certitudine (fiecare cu motiv scurt). "
+                "ATENȚIE la întrebările NEGATIVE (cele care cer ce e GREȘIT / INCORECT / FALS / NU este): "
+                "acolo răspunsul corect ESTE opțiunea falsă, deci în \"eliminate\" pui opțiuni care sunt "
+                "clar VALIDE/adevărate (deci NU sunt răspunsul). "
+                "Reguli ferme: lasă MEREU cel puțin 2 variante neeliminate și NU pune NICIODATĂ în "
+                "\"eliminate\" opțiunea care e răspunsul corect la întrebare. La întrebări cu doar 2 "
+                "variante, lasă \"eliminate\" gol.")
     elif mode == "write":
         task = ("Studentul are de redactat un răspuns. NU scrie răspunsul în locul lui. "
                 "Dă-i schela: ce idei-cheie ar trebui să atingă și în ce ordine, în 2-3 propoziții.")

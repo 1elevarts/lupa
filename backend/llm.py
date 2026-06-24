@@ -111,10 +111,19 @@ def _loose_fields(text: str) -> dict | None:
     mk = re.search(r'"keys"\s*:\s*\[(.*?)\]', text, re.DOTALL)
     if mk:
         keys = [k.strip().strip('"').strip() for k in re.findall(r'"([^"]*)"', mk.group(1))]
+    eliminate = []
+    me = re.search(r'"eliminate"\s*:\s*\[(.*?)\]', text, re.DOTALL)
+    if me:
+        for obj in re.findall(r'\{(.*?)\}', me.group(1), re.DOTALL):
+            mo = re.search(r'"opt"\s*:\s*"([^"]*)"', obj)
+            mw = re.search(r'"why"\s*:\s*"([^"]*)"', obj)
+            if mo and mo.group(1).strip():
+                eliminate.append({"opt": mo.group(1).strip(),
+                                  "why": mw.group(1).strip() if mw else ""})
     if not (concept or explain):
         return None
     return {"concept": concept, "explain": explain, "keys": keys,
-            "hint": hint, "verdict": verdict, "chapter": chapter}
+            "hint": hint, "verdict": verdict, "eliminate": eliminate, "chapter": chapter}
 
 
 def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:
