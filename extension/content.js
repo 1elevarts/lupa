@@ -39,9 +39,12 @@
     <style>
       :host { all: initial; }
       * { box-sizing: border-box; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; }
+      /* fixed hover zone that never moves -> no jitter when the orb slides out */
+      .orbzone { position: fixed; right: 0; bottom: 8px; width: 54px; height: 58px;
+                 pointer-events: auto; z-index: 2; }
       .orb {
-        position: fixed; width: 34px; height: 34px;
-        border-radius: 50%; pointer-events: auto; cursor: pointer; right: -17px; bottom: 18px;
+        position: absolute; right: -17px; bottom: 10px; width: 34px; height: 34px;
+        border-radius: 50%; pointer-events: auto; cursor: pointer;
         background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.6), rgba(255,255,255,.1) 60%);
         backdrop-filter: blur(6px) saturate(1.4); -webkit-backdrop-filter: blur(6px) saturate(1.4);
         border: 1.5px solid var(--accent, #7c5cff);
@@ -49,13 +52,13 @@
         opacity: .15; transition: opacity .25s, right .2s ease, transform .18s, border-color .3s, box-shadow .3s;
         display: grid; place-items: center;
       }
-      .orb:hover { opacity: 1; right: 12px; transform: scale(1.06); }
+      /* only a real hover over the (stationary) zone reveals it */
+      .orbzone:hover .orb { opacity: 1; right: 10px; transform: scale(1.06); }
       .orb:active { transform: scale(.94); }
       .orb svg { width: 16px; height: 16px; stroke: var(--accent,#7c5cff); opacity:.95; }
-      /* when working/ready, slide fully out so the state is visible */
-      .orb.armed, .orb.thinking, .orb.ready, .orb.error { right: 12px; }
-      .orb.armed   { opacity: 1; transform: scale(1.06); }
-      .orb.thinking{ opacity: 1; border-color:#f5a623; box-shadow:0 6px 22px rgba(245,166,35,.4), inset 0 0 14px rgba(255,255,255,.3); }
+      /* working/ready: change colour only — stays hidden until hovered */
+      .orb.armed   { transform: scale(1.04); }
+      .orb.thinking{ border-color:#f5a623; box-shadow:0 6px 22px rgba(245,166,35,.4), inset 0 0 14px rgba(255,255,255,.3); }
       .orb.thinking::after{
         content:""; position:absolute; inset:-4px; border-radius:50%;
         background: conic-gradient(from 0deg, transparent, #f5a623, transparent 60%);
@@ -63,8 +66,8 @@
                 mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 0);
         animation: spin .9s linear infinite;
       }
-      .orb.ready   { opacity:1; border-color:#34d399; box-shadow:0 6px 24px rgba(52,211,153,.45), inset 0 0 14px rgba(255,255,255,.3); }
-      .orb.error   { opacity:1; border-color:#ef4444; }
+      .orb.ready   { border-color:#34d399; box-shadow:0 6px 24px rgba(52,211,153,.45), inset 0 0 14px rgba(255,255,255,.3); }
+      .orb.error   { border-color:#ef4444; }
       @keyframes spin { to { transform: rotate(360deg); } }
 
       /* ---- highlight frame around the question the lens is helping with ---- */
@@ -138,10 +141,12 @@
       .toast b { color:#ffd9a8; }
       kbd { background:rgba(255,255,255,.14); border-radius:5px; padding:1px 5px; font-size:11px; }
     </style>
-    <div class="orb" id="orb" title="Lupa — click ca să-ți explic selecția / paragraful">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
-      </svg>
+    <div class="orbzone" id="orbzone">
+      <div class="orb" id="orb" title="Lupa — click ca să-ți explic selecția / paragraful">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
+        </svg>
+      </div>
     </div>
     <div class="hl" id="hl"></div>
     <div class="panel" id="panel"></div>
@@ -149,6 +154,7 @@
   `;
 
   const orb = root.getElementById("orb");
+  const orbzone = root.getElementById("orbzone");
   const panel = root.getElementById("panel");
   const toast = root.getElementById("toast");
   const hl = root.getElementById("hl");
@@ -174,7 +180,7 @@
   }
 
   function reflectEnabled() {
-    orb.style.display = S.enabled ? "" : "none";
+    orbzone.style.display = S.enabled ? "" : "none";
     if (!S.enabled && S.panelOpen) closePanel();
   }
   function reflectAuto() {
