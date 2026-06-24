@@ -22,7 +22,7 @@
     lastAutoQ: "",    // text of the last auto-explained question (dedupe)
     hlEl: null,       // element currently framed by the highlight
     hlSrc: null,      // source element of the current explanation (for dim scoping)
-    dimmed: [],       // option labels we greyed out (to restore on close)
+    dimEls: [],       // overlay bars drawn over excluded options
     barExpanded: false, // H toggles the full text under the peek
     panelOpen: false,
     hoverTimer: null,
@@ -77,6 +77,9 @@
         box-shadow: 0 0 0 2px rgba(120,122,140,.07);
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
+      /* red bar overlaid on the left edge of an excluded option (no page edits) */
+      .dimbar { position: fixed; width: 4px; border-radius: 3px; pointer-events: none;
+        background: rgba(214,69,69,.5); z-index: 1; transition: opacity .2s; }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
@@ -437,14 +440,16 @@
     return el.closest("fieldset, .question, .quiz, .q, li, form, section, article") || el;
   }
 
-  /* ---------- highlight frame + option dimming ---------- */
+  /* ---------- highlight frame + excluded-option overlay ---------- */
+  // We never style the page's own elements (fragile across sites). Instead we draw
+  // our own fixed overlays positioned over the matched option boxes in the viewport.
+  function normTxt(s) { return (s || "").toLowerCase().replace(/\s+/g, " ").trim(); }
+
   function showHighlight(el) {
     if (!el || !el.getBoundingClientRect) { hideHighlight(); return; }
     S.hlEl = el;
     positionHighlight();
     hl.classList.add("show");
-    window.addEventListener("scroll", positionHighlight, { passive: true });
-    window.addEventListener("resize", positionHighlight);
   }
   function positionHighlight() {
     if (!S.hlEl) return;
@@ -452,36 +457,60 @@
     hl.style.left = (r.left - 4) + "px"; hl.style.top = (r.top - 4) + "px";
     hl.style.width = (r.width + 8) + "px"; hl.style.height = (r.height + 8) + "px";
   }
-  function hideHighlight() {
-    S.hlEl = null; hl.classList.remove("show");
-    window.removeEventListener("scroll", positionHighlight);
-    window.removeEventListener("resize", positionHighlight);
-  }
-  function clearDim() {
-    for (const d of S.dimmed) { try { d.el.style.cssText = d.prev; } catch (_) {} }
-    S.dimmed = [];
+  function hideHighlight() { S.hlEl = null; hl.classList.remove("show"); }
+
+  // find the tightest on-page element whose text matches an option string;
+  // search the question first, then the whole page as a fallback
+  function findOption(optText) {
+    const target = normTxt(optText);
+    if (target.length < 3) return null;
+    const scopes = [];
+    if (S.hlSrc && S.hlSrc.querySelectorAll) scopes.push(S.hlSrc);
+    scopes.push(document.body);
+    const SEL = "label, li, [role=radio], [role=option], [role=button], button, a, p, td, div, span";
+    for (const scope of scopes) {
+      let best = null, bestLen = Infinity;
+      for (const el of scope.querySelectorAll(SEL)) {
+        const t = normTxt(el.innerText || el.textContent);
+        if (!t || t.length > target.length + 50) continue;
+        if (t.includes(target) || target.includes(t)) {
+          const r = el.getBoundingClientRect();
+          if (r.width > 0 && r.height > 0 && t.length < bestLen) { best = el; bestLen = t.length; }
+        }
+      }
+      if (best) return best;
+    }
+    return null;
   }
   function applyDim(elim) {
     clearDim();
-    if (!elim || !elim.length || !S.hlSrc || !S.hlSrc.querySelectorAll) return;
-    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, " ").trim();
-    const labels = S.hlSrc.querySelectorAll("label, li, [role=radio], [role=option]");
+    if (!elim || !elim.length) return;
     for (const e of elim) {
-      const target = norm(e.opt);
-      if (target.length < 3) continue;
-      for (const lb of labels) {
-        const t = norm(lb.innerText);
-        if (t && (t.includes(target) || target.includes(t))) {
-          S.dimmed.push({ el: lb, prev: lb.style.cssText });
-          // subtle red bar on the LEFT edge only (next to A/B/C), no full outline
-          lb.style.boxShadow = "inset 4px 0 0 rgba(214,69,69,.45)";
-          lb.style.borderRadius = "10px";
-          lb.style.transition = "box-shadow .2s";
-          break;
-        }
-      }
+      const target = findOption(e.opt);
+      if (!target) continue;
+      const ov = document.createElement("div");
+      ov.className = "dimbar";
+      root.appendChild(ov);
+      S.dimEls.push({ ov, target });
+    }
+    positionDims();
+  }
+  function positionDims() {
+    for (const d of S.dimEls) {
+      const r = d.target.getBoundingClientRect();
+      d.ov.style.left = (r.left + 1) + "px";
+      d.ov.style.top = (r.top + 3) + "px";
+      d.ov.style.height = Math.max(0, r.height - 6) + "px";
     }
   }
+  function clearDim() {
+    for (const d of S.dimEls) { try { d.ov.remove(); } catch (_) {} }
+    S.dimEls = [];
+  }
+  // one set of listeners keeps the frame + overlays glued while scrolling/resizing
+  function repositionAll() { positionHighlight(); positionDims(); }
+  window.addEventListener("scroll", repositionAll, { passive: true });
+  window.addEventListener("resize", repositionAll);
   function blockText(el) {
     if (!el) return "";
     let n = el;
