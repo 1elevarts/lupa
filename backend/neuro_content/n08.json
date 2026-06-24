@@ -1,0 +1,151 @@
+{
+ "id": "n08",
+ "title": "Stimularea Magnetică Transcraniană (TMS)",
+ "summary_html": "<h3>Principiul fizic: inducția electromagnetică</h3>\n<p><span class='term'>Stimularea Magnetică Transcraniană (TMS)</span> se bazează pe legea inducției electromagnetice a lui Faraday și pe legea circulației câmpului magnetic (Ampère). Un curent electric puternic este trecut rapid printr-o <strong>bobină</strong> (<em>coil</em>) — un ansamblu de spire de cupru — plasată la suprafața scalpului. Variația rapidă a curentului generează un câmp magnetic intens, care, la rândul său, <strong>induce un curent electric</strong> în neuronii din cortexul cerebral de dedesubt, suficient de puternic pentru a depolariza membranele neuronale (Newman, cap. 13).</p>\n\n<div class='callout def'>\n<strong>Definiție (Newman):</strong> TMS se bazează pe legea lui Ampère (regula mâinii drepte) pentru a induce curenți electrici scurți, dar puternici, în creier folosind un câmp magnetic intens. Stimulatorul se numește <em>coil</em> deoarece conține numeroase spire de fir de cupru prin care trece un curent electric puternic.\n</div>\n\n<h3>Bobina TMS: tipuri și precizie spațială</h3>\n<p>Există mai multe tipuri de bobine: circulare (rotunde), <strong>în formă de 8</strong> (<em>figure-8</em> sau <em>butterfly</em>) — cele mai frecvente în cercetare — și bobine H pentru stimulare mai profundă. Bobina în formă de 8 asigură o focalizare superioară: stimularea maximă apare într-un volum de câțiva centimetri cubici direct sub bobină și <strong>scade brusc cu distanța</strong> (Newman, 2018). Precizia spațială ridicată a TMS o diferențiază de alte tehnici de neuromodulare noninvazive.</p>\n\n<h3>Pragul motor și MEP</h3>\n<p>Calibrarea intensității TMS se face prin determinarea <span class='term'>pragului motor</span> (<em>motor threshold</em>): intensitatea minimă a stimulului aplicat pe <strong>cortexul motor primar</strong> care produce un <span class='term'>potențial evocat motor</span> (<em>Motor Evoked Potential, MEP</em>) detectabil prin EMG în mușchii contralaterali ai mâinii (de obicei mușchiul abductor scurt al policelui). Pragul motor se stabilește individual pentru fiecare participant și servește ca referință de bază (100%) pentru toate protocoalele TMS. O perioadă de tăcere corticală (<em>silent period</em>) urmează imediat după MEP, reflectând inhibiția post-excitare.</p>\n\n<h3>Leziunea virtuală: TMS ca metodă cauzală</h3>\n<p>Cea mai importantă aplicație a TMS în neuroștiințele cognitive este crearea de <span class='term'>leziuni virtuale</span> (<em>virtual lesions</em>): printr-un protocol <strong>inhibitor</strong>, activitatea dintr-o arie corticală țintă este perturbată tranzitoriu, imitând efectele unei leziuni reale, dar reversibil. Aceasta permite <strong>inferențe cauzale</strong> asupra funcției ariei respective:</p>\n<ul>\n<li>Neuroimagistica (fMRI/PET) arată că o arie <em>este activată</em> în timpul unei sarcini</li>\n<li>TMS demonstrează că activarea acelei arii <em>este critic necesară</em> pentru execuția sarcinii (Newman, 2018)</li>\n<li>TMS poate fi și <em>facilitatoare</em>, crescând excitabilitatea corticală — utilă în studii de antrenament cognitiv sau reabilitare neurologică</li>\n</ul>\n<div class='callout'>\n<strong>Avantaj cheie:</strong> Spre deosebire de neuroimagistică (corelație), TMS oferă dovezi <em>cauzale</em> privind necesitatea funcțională a unei arii corticale.\n</div>\n\n<h3>Single-pulse TMS vs. rTMS</h3>\n<table class='ctab'>\n  <thead>\n    <tr><th>Parametru</th><th>Single-pulse TMS</th><th>rTMS (repetitiv)</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Definiție</td><td>Un singur puls (~1 ms)</td><td>Trenuri de pulsuri la frecvență fixă</td></tr>\n    <tr><td>Efect imediat</td><td>Excitare urmată de perioadă silențioasă</td><td>Depinde de frecvență</td></tr>\n    <tr><td>Frecvență joasă (≤1 Hz)</td><td>—</td><td><strong>Inhibitor</strong> (reduce excitabilitatea)</td></tr>\n    <tr><td>Frecvență înaltă (&gt;1 Hz, uzual 5–20 Hz)</td><td>—</td><td><strong>Excitator / facilitator</strong></td></tr>\n    <tr><td>Durata efectelor</td><td>Secunde</td><td>20–30 min sau mai mult; sesiuni repetate → efecte de durată</td></tr>\n    <tr><td>Aplicații clinice</td><td>Diagnostic (MEP, prag motor)</td><td>Depresie (DLPFC stâng, 10 Hz), reabilitare</td></tr>\n  </tbody>\n</table>\n\n<h4>Theta Burst Stimulation (TBS) — protocol avansat de rTMS</h4>\n<ul>\n<li><strong>cTBS</strong> (<em>continuous</em>): triplete de pulsuri la 20 ms livrate la fiecare 200 ms, continuu → efect <strong>inhibitor</strong> (30–60 min)</li>\n<li><strong>iTBS</strong> (<em>intermittent</em>): 10 triplete urmate de o pauză de 8 s, repetat → efect <strong>facilitator</strong> (3–30 min)</li>\n</ul>\n\n<h3>TMS combinată cu neuroimagistică</h3>\n<p>Combinarea TMS cu EEG (<em>TMS-EEG</em>) permite măsurarea directă a <span class='term'>potențialelor evocate TMS</span> (<em>TMS-Evoked Potentials, TEP</em>) și evaluarea conectivității funcționale între arii corticale, chiar în absența unui comportament motor. Combinarea TMS cu fMRI oferă date despre efectele stimulării atât local, cât și în rețelele conectate (de ex. stimularea DLPFC și modularea downstream a rețelei frontoparietale sau a rețelei mod-default). Aceste abordări multimodale sunt esențiale deoarece <strong>TMS nu este o măsurătoare în sine</strong>, ci o metodă de manipulare care necesită o tehnică suplimentară pentru cuantificarea efectelor (Newman, 2018).</p>\n\n<h3>Design experimental</h3>\n<p>Aspecte critice în designul unui studiu TMS:</p>\n<ol>\n<li><strong>Condiție sham (control)</strong>: bobina plasată la unghi sau cu intensitate sub prag, pentru a controla efectele non-specifice (senzații cutanate, zgomot)</li>\n<li><strong>Neuronavigație</strong>: sistemele de neuronavigație (bazate pe MRI structural individual) asigură precizia și reproductibilitatea plasării bobinei</li>\n<li><strong>Selectarea ariei țintă</strong>: ghidată de literatură, date funcționale individuale sau repere anatomice</li>\n<li><strong>Parametri de stimulare</strong>: intensitate (%MT), frecvență, număr de pulsuri, interval inter-stimul</li>\n<li><strong>Măsuri de outcome</strong>: comportamentale (timp reacție, acuratețe) și/sau neurofiziologice (MEP, TEP, BOLD)</li>\n</ol>\n\n<h3>Siguranță: riscuri și contraindicații</h3>\n<div class='callout'>\n<strong>Risc principal:</strong> Crize convulsive (epileptice) — 16 cazuri documentate asociate rTMS (slide-uri curs). Protocolul de siguranță limitează parametrii de stimulare.\n</div>\n<ul>\n<li><strong>Convulsii</strong>: risc redus dar real, în special la rTMS cu frecvență înaltă; ghiduri internaționale de siguranță (Rossi et al.) definesc limite de siguranță</li>\n<li><strong>Dureri de cap</strong> și contracturi musculare la nivelul scalpului</li>\n<li><strong>Pierderea auzului</strong>: zgomotul bobinei (&gt;90 dB) impune protecție auditivă obligatorie</li>\n<li><strong>Arsuri</strong>: implante metalice, electrozi EEG incompatibili, temperaturi &gt;43°C</li>\n<li><strong>Contraindicații absolute</strong>: implanturi metalice intracerebrale, stimulatoare cardiace, antecedente de epilepsie fără aprobare neurolog</li>\n<li><strong>Greață și vărsături</strong>: efecte secundare posibile</li>\n<li>TMS sesiuni repetate pe zile/săptămâni au demonstrat eficacitate în tratamentul depresiei rezistente (Newman, 2018)</li>\n</ul>",
+ "questions": [
+  {
+   "q": "Ce lege fizică stă la baza funcționării TMS?",
+   "options": [
+    "Legea lui Ohm — rezistența tisulară determină curentul indus",
+    "Legea inducției electromagnetice Faraday și legea circuitală Ampère",
+    "Legea lui Coulomb — forța dintre sarcini electrice opuse",
+    "Principiul Doppler — variația frecvenței câmpului magnetic"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018) precizează explicit că TMS se bazează pe legea lui Ampère (regula mâinii drepte) pentru a induce curenți electrici în creier printr-un câmp magnetic variabil — principiu descris și de legea inducției Faraday."
+  },
+  {
+   "q": "Care este precizia spațială maximă a TMS conform Newman?",
+   "options": [
+    "Câțiva milimetri cubi, cu efect strict subcortical",
+    "Câțiva centimetri cubi direct sub bobină, scăzând brusc cu distanța",
+    "Aproximativ 10 cm³, similar cu rezoluția fMRI",
+    "Întregul lob frontal dacă se folosește bobina circulară"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018): 'TMS has very high spatial precision, with the maximum stimulation occurring in an area of only a few cubic centimetres directly under the coil and dropping off quite sharply with distance.'"
+  },
+  {
+   "q": "Ce este 'leziunea virtuală' în contextul TMS?",
+   "options": [
+    "O leziune cerebrală permanentă produsă de TMS la intensitate maximă",
+    "Perturbarea tranzitorie și reversibilă a activității dintr-o arie corticale țintă, permițând inferențe cauzale",
+    "Absența semnalului BOLD în fMRI după aplicarea TMS",
+    "Un artefact electroencefalografic produs de câmpul magnetic al bobinei"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018) descrie 'transient brain lesions': prin protocol inhibitor, TMS perturbă temporar activitatea unei arii corticale, demonstrând că activarea sa este critic necesară pentru execuția sarcinii — inferență cauzală imposibilă doar prin neuroimagistică."
+  },
+  {
+   "q": "Prin ce se diferențiază metodologic TMS față de neuroimagistică (fMRI/PET)?",
+   "options": [
+    "TMS oferă rezoluție temporală mai bună (milisecunde vs. secunde)",
+    "TMS demonstrează că o arie este cauzal necesară pentru o sarcină, nu doar corelată cu aceasta",
+    "TMS poate vizualiza structuri subcorticale inaccesibile prin fMRI",
+    "TMS nu necesită condiție de control, spre deosebire de fMRI"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018): TMS 'has the advantage of demonstrating not only that the area is activated during the task, but that its activation is critically necessary for performance of that task.' Aceasta reprezintă logica cauzală, nu corelativă."
+  },
+  {
+   "q": "Care este efectul rTMS la frecvență de 1 Hz?",
+   "options": [
+    "Excitator — crește excitabilitatea corticală și facilitează performanța",
+    "Inhibitor — reduce excitabilitatea corticală",
+    "Neutru — 1 Hz este sub pragul de efect fiziologic",
+    "Excitator la prima aplicare, apoi inhibitor prin adaptare siaptică"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Slide-urile cursului: 'rates of 1 Hz = low-frequency rTMS → have inhibitory effects.' Frecvențele înalte (>1 Hz) produc efecte excitatoare/facilitatoare. Această regulă este esențială pentru designul protocoalelor clinice și experimentale."
+  },
+  {
+   "q": "Ce reprezintă MEP (Motor Evoked Potential)?",
+   "options": [
+    "Potențialul evocat cortical înregistrat EEG după stimularea TMS",
+    "Răspunsul muscular periferic detectat prin EMG ca urmare a stimulării cortexului motor primar prin TMS",
+    "Variația câmpului magnetic produs de bobina TMS",
+    "Modificarea fluxului sanguin cortical după aplicarea TMS"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "MEP este răspunsul motor muscular periferic (înregistrat EMG, uzual în mușchii mâinii) produs de stimularea cortexului motor primar cu TMS. Pragul motor este intensitatea minimă care produce un MEP detectabil și servește ca referință de calibrare individuală."
+  },
+  {
+   "q": "Ce diferențiază cTBS de iTBS în protocoalele Theta Burst Stimulation?",
+   "options": [
+    "cTBS este excitator (continuu = mai multă energie); iTBS este inhibitor (pauze = mai puțin eficient)",
+    "cTBS este inhibitor (stimulare continuă); iTBS este facilitator (trenuri cu pauze de 8 s)",
+    "cTBS și iTBS produc efecte identice, diferind doar în durata sesiunii",
+    "cTBS vizează cortexul frontal; iTBS este specific cortexului parietal"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Slide-urile cursului: cTBS (triplete de 20 ms la fiecare 200 ms, continuu) → inhibitor, 30–60 min; iTBS (10 triplete + pauză 8 s, repetat) → facilitator, efecte după 3–30 min. Nu depinde de arie, ci de parametri temporali."
+  },
+  {
+   "q": "De ce este necesară o condiție 'sham' în studiile TMS?",
+   "options": [
+    "Pentru a crește intensitatea bobinei fără risc de convulsii",
+    "Pentru a controla efectele nespecifice (senzații cutanate, zgomot) și a izola efectele neurologice ale TMS",
+    "Pentru a măsura MEP în absența stimulării electrice",
+    "Sham nu este necesară în TMS; este specifică studiilor farmacologice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Condiția sham (bobină la unghi sau sub prag) controlează efectele placebo, senzațiile cutanate și zgomotul produs de bobină — factori nespecifici care ar putea influența comportamentul independent de efectul neurofiziologic al stimulării."
+  },
+  {
+   "q": "Care este principalul risc de siguranță asociat rTMS?",
+   "options": [
+    "Lezarea permanentă a cortexului prin căldură excesivă",
+    "Inducerea de crize convulsive (epileptice)",
+    "Desensibilizarea pe termen lung a receptorilor dopaminergici",
+    "Demagnetizarea implanturilor metalice ortopedice periferice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Slide-urile cursului: 'rTMS epileptic seizures – 16 documented cases.' Newman menționează că protocoalele trebuie să respecte ghiduri de siguranță. Convulsiile reprezintă cel mai sever risc documentat, în special la frecvențe înalte."
+  },
+  {
+   "q": "De ce TMS trebuie combinată obligatoriu cu o altă tehnică de măsurare?",
+   "options": [
+    "Deoarece TMS produce artefacte care blochează înregistrarea EEG autonomă",
+    "Deoarece TMS este o metodă de manipulare, nu de măsurare — nu produce direct date cantitative despre activitatea cerebrală",
+    "Deoarece efectele TMS durează prea scurt pentru a fi detectate printr-o singură modalitate",
+    "Deoarece ghidurile etice impun întotdeauna o metodă de backup în studiile de stimulare"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018): 'TMS and tES are not actually measurements, but rather ways of influencing brain function. For this reason, experiments involving these techniques necessarily rely on one or more additional techniques to provide quantitative measurements.' Măsurile asociate includ RT, EEG, fMRI."
+  },
+  {
+   "q": "Ce rol joacă neuronavigația în studiile TMS?",
+   "options": [
+    "Permite stimularea simultană a mai multor arii corticale cu bobine separate",
+    "Asigură plasarea precisă și reproductibilă a bobinei pe aria corticală țintă, ghidată de MRI structural individual",
+    "Calculează automat pragul motor fără a fi necesare înregistrări EMG",
+    "Neuronavigația se folosește exclusiv în aplicații clinice, nu în cercetare"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Slide-urile cursului: 'Neuro-navigation = essential for precise stimulation.' Sistemele de neuronavigație înregistrează poziția bobinei față de MRI-ul structural al participantului, maximizând precizia și reproducibilitatea inter-sesiuni."
+  },
+  {
+   "q": "Un cercetător aplică rTMS la 10 Hz pe cortexul prefrontal dorsolateral stâng (DLPFC) timp de 25 min pe zi, 20 de sesiuni. Care este interpretarea corectă a designului?",
+   "options": [
+    "Protocol inhibitor de tip single-pulse, destinat cartografierii ariilor motorii",
+    "Protocol excitator de tip rTMS frecvență înaltă cu potențial terapeutic în depresie, conform Rosen et al. (2021)",
+    "Protocol cTBS care vizează rețeaua mod-default pentru studii de atenție",
+    "Stimulare de 1 Hz (inhibitorie) cu scop diagnostic al pragului motor"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Slide-urile cursului citează Rosen et al. (2021): frecvența 10 Hz = rTMS excitator/facilitator, 4000 pulsuri/sesiune, 120% MT, 25 min/sesiune, 20–30 sesiuni = protocol clinic pentru depresia rezistentă prin modularea DLPFC și a rețelelor conectate."
+  }
+ ]
+}

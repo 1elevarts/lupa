@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Lupa — tutore AR de studiu",
+  "version": "0.1.0",
+  "description": "O lupă AR care vine cu cursorul pe orice pagină și îți explică subtil conceptele din materie (neuroștiințe). Te învață, nu îți dă răspunsul.",
+  "permissions": ["storage", "activeTab", "scripting", "alarms", "tabs"],
+  "host_permissions": ["http://127.0.0.1:8077/*", "http://localhost:8077/*"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "Lupa — tutore AR" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-lens": {
+      "suggested_key": { "default": "Alt+Shift+L" },
+      "description": "Pornește/oprește Lupa"
+    },
+    "explain-now": {
+      "suggested_key": { "default": "Alt+L" },
+      "description": "Explică selecția / elementul de sub cursor"
+    }
+  }
+}

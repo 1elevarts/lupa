@@ -1,0 +1,151 @@
+{
+ "id": "n11",
+ "title": "Interfața Creier-Computer (BCI)",
+ "summary_html": "<h3>Ce este o interfață creier-computer (BCI)?</h3>\n<p>O <span class='term'>interfață creier-computer (BCI)</span> — numită și interfață creier-mașină (BMI, <em>brain-machine interface</em>) — este un sistem care înregistrează activitatea neuronală, o procesează în timp real și o traduce în comenzi pentru dispozitive externe (software, proteză robotică, stimulator etc.), fără a implica mușchii sau nervii periferici.</p>\n<div class='callout def'>\n<strong>Definiție (Wolpaw et al., 2002):</strong> un BCI este un sistem de comunicație care nu depinde de căile motorii normale ale creierului; semnalul de control provine <em>exclusiv</em> din activitatea cerebrală.\n</div>\n\n<h3>Lanțul de prelucrare BCI</h3>\n<ol>\n  <li><strong>Achiziție semnal</strong> — electrozi/senzori captează activitatea cerebrală (potențiale de acțiune, câmpuri electrice sau magnetice, semnal BOLD).</li>\n  <li><strong>Preprocesare</strong> — filtrare, amplificare, eliminare artefacte (clipit ocular, mișcare musculară).</li>\n  <li><strong>Extragere trăsături</strong> (<em>feature extraction</em>) — se identifică parametrii relevanți: puterea benzilor de frecvență, amplitudinea componentelor eveniment-legate, rata de activare a neuronilor.</li>\n  <li><strong>Clasificare / decodare</strong> — algoritm (LDA, SVM, rețea neuronală) mapează trăsăturile pe o intenție sau comandă.</li>\n  <li><strong>Comandă externă</strong> — semnalul decodat acționează dispozitivul; feedback-ul (vizual, tactil) închide bucla de control.</li>\n</ol>\n\n<h3>Tipuri de semnale și sisteme</h3>\n<h4>BCI neinvazive</h4>\n<ul>\n  <li><strong>EEG</strong> — cea mai folosită modalitate; rezoluție temporală bună (milisecunde), rezoluție spațială slabă, artefacte musculare și oculare.</li>\n  <li><strong>Paradigme EEG frecvente:</strong>\n    <ul>\n      <li><span class='term'>P300 Speller</span> — utilizatorul urmărește litere flash; componenta P300 (latență ~300 ms) marchează ținta; permite comunicare scrisă la pacienți paralizați.</li>\n      <li><span class='term'>SSVEP</span> (<em>Steady-State Visual Evoked Potentials</em>) — privirea fixată pe stimul flickering generează răspuns EEG la frecvența de stimulare; detecție robustă, antrenament minim.</li>\n      <li><span class='term'>Imagerie motorie / ritmuri senzoriomotorii</span> — imaginarea unei mișcări produce desincronizare în banda mu (8–12 Hz) și beta (13–30 Hz) la C3/C4; baza BCIs cu 2–4 clase de mișcare.</li>\n    </ul>\n  </li>\n  <li><strong>fMRI, fNIRS</strong> — rezoluție spațială bună, latență mare; fNIRS portabil, utilizabil în afara laboratorului.</li>\n</ul>\n<h4>BCI invazive</h4>\n<ul>\n  <li><span class='term'>ECoG</span> (<em>Electrocorticografie</em>) — electrozi plasați pe suprafața cortexului; semnal mai curat decât EEG, mai puțin rezolutiv decât microelectrozii unitari.</li>\n  <li><strong>Microelectrozi intracorticali</strong> — array Utah (96 electrozi), BrainGate; înregistrează spikes individuale sau activitate multi-unitate (MUA); rezoluție maximă, dar risc chirurgical și degradare în timp (glioza).</li>\n</ul>\n<table class='ctab'>\n  <thead>\n    <tr><th>Modalitate</th><th>Invazie</th><th>Rezoluție spațială</th><th>Rezoluție temporală</th><th>Durabilitate</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>EEG</td><td>Neinvazivă</td><td>cm</td><td>ms</td><td>Nelimitată</td></tr>\n    <tr><td>fNIRS</td><td>Neinvazivă</td><td>~1 cm</td><td>secunde</td><td>Nelimitată</td></tr>\n    <tr><td>ECoG</td><td>Invazivă (subdurală)</td><td>mm</td><td>ms</td><td>ani</td></tr>\n    <tr><td>Microelectrozi</td><td>Invazivă (intracortical)</td><td>µm</td><td>ms</td><td>luni–ani</td></tr>\n  </tbody>\n</table>\n\n<h3>Vectorul populației și decodarea mișcării</h3>\n<p>Activitatea neuronilor din cortexul motor primar corelează cu <strong>direcția mișcării</strong> mai bine decât cu localizarea în spațiu sau forța aplicată. Fiecare neuron are o <span class='term'>direcție preferată</span>, descrisă ca un vector. <span class='term'>Vectorul populației</span> = suma vectorilor individuali ponderați cu rata de activare — prezice direcția mișcării cu ~30–50 de neuroni și apare cu ~300 ms înainte de inițierea mișcării (planificare motorie).</p>\n<div class='callout'>\n<strong>Studiu-cheie:</strong> Chapin et al. (1999) — șobolan cu array de 30 de microelectrozi în cortexul motor; rețea neurală artificiala a decodat forța aplicată pe pârghie și a controlat un braț robotic în timp real.\n</div>\n<div class='callout'>\n<strong>Studiu-cheie:</strong> Hochberg et al. (2006, 2012) — pacient tetraplegic cu array BrainGate (Utah, 96 electrozi) a controlat cursor și braț robotic prin intenție motorie imaginată.\n</div>\n<div class='callout'>\n<strong>Studiu-cheie:</strong> Ajiboye et al. (2017) — BCI intracortical + stimulare funcțională electrică a permis unui pacient cu leziune cervicală completă să efectueze mișcări voluntare ale membrului superior.\n</div>\n\n<h3>Aplicații clinice</h3>\n<ul>\n  <li><strong>Neuroprotezare</strong> — controlul protezelor robotice sau al membrelor paralizate prin stimulare electrică funcțională (FES).</li>\n  <li><strong>Comunicare augmentativă</strong> — P300 speller, SSVEP keyboard la pacienți cu scleroza laterală amiotrofică (SLA), locked-in syndrome.</li>\n  <li><strong>Neurofeedback</strong> — utilizatorul vizualizează propria activitate cerebrală și o modulează voluntar; aplicații în ADHD, epilepsie, reabilitare post-AVC.</li>\n  <li><strong>Bypassing leziuni medulare</strong> — BCI cortical → stimulare spinală epidurală (Courtine et al.) → mers restaurat la primate și om.</li>\n  <li><strong>Feedback senzorial</strong> — stimularea tactilă a cortexului somatosenzorial (Tabot et al., 2013) transmite informații de presiune de la mâna proteică.</li>\n</ul>\n\n<h3>Provocări și limite</h3>\n<ul>\n  <li><span class='term'>Rata de transfer a informației (ITR, <em>Information Transfer Rate</em>)</span> — măsurată în biți/minut; BCIs EEG actuale: 20–60 biți/min vs. tastatura normală ~500 biți/min.</li>\n  <li><strong>Variabilitate inter-sesiune și inter-subiect</strong> — semnalele EEG se schimbă zi de zi; necesită re-calibrare sau algoritmi de transfer de domeniu.</li>\n  <li><strong>Antrenament</strong> — imageria motorie necesită săptămâni de practică; ~20–30% din utilizatori nu generează semnal utilizabil (<em>BCI illiteracy</em>).</li>\n  <li><strong>Stabilitate implanturi</strong> — glioza, degradarea electrozilor reduc semnalul în luni–ani.</li>\n  <li><strong>Bucla deschisă vs. închisă</strong> — fără feedback senzorial de la proteză, controlul fin este imposibil; sistemele cu feedback tactil/proprioceptiv sunt în curs de dezvoltare.</li>\n  <li><strong>Flexibilitatea reprezentărilor neuronale</strong> — neuronii individuali îți schimbă selectivitatea în funcție de context, compliacând decodarea pe termen lung.</li>\n</ul>",
+ "questions": [
+  {
+   "q": "Care este definiția corectă a unui BCI (brain-computer interface)?",
+   "options": [
+    "Un sistem care amplifică semnalele musculare pentru a controla un dispozitiv extern.",
+    "Un sistem care traduce activitatea cerebrală direct în comenzi pentru dispozitive externe, fără a folosi căile motorii normale.",
+    "Un implant cohlear care convertește sunetele în impulsuri nervoase.",
+    "Un algoritm de inteligență artificială care simulează activitatea neuronală."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "BCI-ul ocoleste căile motorii normale (mușchi, nervi periferici); comanda provine exclusiv din activitatea cerebrală."
+  },
+  {
+   "q": "Care dintre următoarele paradigme EEG utilizează răspunsul evocat la frecvența unui stimul vizual flickering?",
+   "options": [
+    "P300 Speller",
+    "Imagerie motorie",
+    "SSVEP (Steady-State Visual Evoked Potentials)",
+    "Neurofeedback beta"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "SSVEP generează un răspuns EEG la frecvența (și armonicele) stimulului flickering privit; detecția este robustă și necesită antrenament minim."
+  },
+  {
+   "q": "În paradigma P300 Speller, ce component EEG marchează ținta?",
+   "options": [
+    "O undă negativă la ~100 ms (N1) generată de orice stimul vizual.",
+    "O componentă pozitivă la ~300 ms (P300), declanșată de stimulul rar/relevant.",
+    "Desincronizarea ritmului mu la C3 și C4.",
+    "O oscilație gamma la 40 Hz în cortexul prefrontal."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "P300 este un potențial endogen, eveniment-legat, cu latență ~300 ms, declanșat de stimulul target (rar, semnificativ) în paradigme oddball."
+  },
+  {
+   "q": "Imageria motorie produce modificări EEG în benzile:",
+   "options": [
+    "Delta (1–4 Hz) și theta (4–8 Hz) la Fz.",
+    "Mu (8–12 Hz) și beta (13–30 Hz) la C3/C4.",
+    "Gamma (>30 Hz) la Oz.",
+    "Alpha (8–12 Hz) la Pz, prin sincronizare."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Imageria motorie produce desincronizare eveniment-legată (ERD) a ritmurilor mu și beta, predominant la electrozii centrali (C3 = mâna dreaptă, C4 = mâna stângă)."
+  },
+  {
+   "q": "Vectorul populației în cortexul motor primar:",
+   "options": [
+    "Este suma vectorilor individuali ponderați cu rata de activare și prezice direcția mișcării.",
+    "Reprezintă media forțelor aplicate de toți mușchii antebrațului.",
+    "Apare la 300 ms DUPĂ inițierea mișcării, reflectând feedbackul proprioceptiv.",
+    "Este calculat din semnalul EEG de suprafață, nu din spike-uri individuale."
+   ],
+   "correct": 0,
+   "hint": "",
+   "explain": "Vectorul populației = suma vectorilor direcționali individuali ponderați cu rata de activare; apare cu ~300 ms ÎNAINTE de mișcare, reflectând planificarea motorie."
+  },
+  {
+   "q": "Care modalitate de înregistrare oferă cel mai bun compromis între rezoluție spațială și temporală, fără a necesita penetrarea cortexului?",
+   "options": [
+    "EEG scalp",
+    "fMRI",
+    "ECoG (electrocorticografie)",
+    "fNIRS"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "ECoG plasează electrozii pe suprafața cortexului (subdural), obținând rezoluție spațială milimetrică și temporală de milisecunde, fără penetrarea țesutului nervos."
+  },
+  {
+   "q": "Care este principalul dezavantaj al microelectrozilor intracorticali (ex. array Utah) față de ECoG?",
+   "options": [
+    "Rezoluție temporală inferioară.",
+    "Imposibilitatea de a înregistra neuroni individuali.",
+    "Degradarea semnalului în timp din cauza gliozelei și a răspunsului imun.",
+    "Necesitatea sedării permanente a pacientului."
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Glioza (cicatrizarea reactivă) și degradarea electrozilor reduc progresiv calitatea semnalului în luni-ani după implantare."
+  },
+  {
+   "q": "Rata de transfer a informației (ITR) pentru BCI-uri bazate pe EEG este în general:",
+   "options": [
+    "Egală cu viteza de tastare normală (~500 biți/min).",
+    "20–60 biți/min, mult sub viteza de comunicare normală.",
+    "Peste 1000 biți/min, datorită paralelismului neural.",
+    "Identică pentru toate paradigmele EEG (P300, SSVEP, imagerie motorie)."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "BCIs EEG actuale ating tipic 20–60 biți/min, mult inferior tastaturii convenționale; maximizarea ITR este un obiectiv central al cercetării în domeniu."
+  },
+  {
+   "q": "Fenomenul de 'BCI illiteracy' (analfabetism BCI) se referă la:",
+   "options": [
+    "Incapacitatea pacienților de a citi instrucțiunile afișate pe ecranul BCI.",
+    "Faptul că ~20–30% dintre utilizatori nu generează semnale EEG controlabile suficient de clare pentru a opera un BCI.",
+    "Degradarea în timp a performanței unui BCI datorită instabilității electrozilor.",
+    "Refuzul pacienților de a accepta implanturi din motive etice."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "O proporție semnificativă a utilizatorilor (circa 20–30%) nu poate modula suficient ritmurile senzoriomotorii, făcând BCIs bazate pe imagerie motorie inoperabile pentru ei."
+  },
+  {
+   "q": "Studiul Hochberg et al. (2006, 2012) a demonstrat că:",
+   "options": [
+    "EEG scalp poate controla un braț robotic cu precizie de chirurgie.",
+    "Un pacient tetraplegic cu array BrainGate a putut controla un cursor și un braț robotic prin intenție motorie imaginată.",
+    "Vectorul populației nu este suficient pentru a controla o proteză în trei dimensiuni.",
+    "Stimularea epidurală spinală restaurează mersul la pacienți cu leziune medulară completă."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "BrainGate (array Utah, 96 electrozi în M1) a permis pacienților cu tetraplegie să controleze cursorul și un braț robotic 3D prin simpla intenție de mișcare."
+  },
+  {
+   "q": "Care afirmație despre neurofeedback este corectă?",
+   "options": [
+    "Este o formă de BCI invazivă care necesită implanturi intracorticale.",
+    "Utilizatorul vizualizează propria activitate cerebrală și o modulează voluntar, cu aplicații în ADHD, epilepsie și reabilitare.",
+    "Neurofeedback-ul funcționează exclusiv prin paradigma P300.",
+    "Este sinonim cu stimularea transcraniană prin curent continuu (tDCS)."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Neurofeedback-ul oferă utilizatorului feedback în timp real al propriei activități cerebrale (EEG); prin condiționare operantă, el poate modula voluntar ritmuri sau amplitudini specifice."
+  },
+  {
+   "q": "Diferența esențială dintre un BCI cu buclă deschisă și unul cu buclă închisă este:",
+   "options": [
+    "Bucla deschisă folosește EEG, bucla închisă folosește microelectrozi.",
+    "Bucla închisă include feedback senzorial (tactil, vizual, proprioceptiv) care permite corectarea comenzilor în timp real; bucla deschisă nu are acest feedback.",
+    "Bucla deschisă controlează dispozitive fără fir, bucla închisă necesită cablu.",
+    "Bucla închisă este specifică BCIs neinvazive, bucla deschisă celor invazive."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "În bucla închisă (closed-loop), informația senzorială de la dispozitiv (presiune, poziție) este returnată utilizatorului, permițând control fin și adaptativ; fără acest feedback, controlul protezelor este limitat."
+  }
+ ]
+}

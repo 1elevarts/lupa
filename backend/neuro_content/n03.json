@@ -1,0 +1,151 @@
+{
+ "id": "n03",
+ "title": "IRM structural, morfometrie și DTI",
+ "summary_html": "<h3>1. Principiile RMN — Câmpul magnetic și spinii protonilor</h3>\n<p>\n<span class='term'>Imagistica prin rezonanță magnetică (IRM)</span> se bazează pe proprietățile magnetice\nale nucleilor de hidrogen (protoni) din corpul uman. Spre deosebire de radiografia convențională,\nIRM nu utilizează radiații ionizante (raze X), ci câmpuri magnetice și pulsuri de radiofrecvență.\n</p>\n<ul>\n<li><strong>Câmpul magnetic static (B₀)</strong> — magnetul principal al scanerului, întotdeauna\nactiv, cu intensitate de 1,5–3 Tesla în clinică și până la 11,7 T în cercetare.</li>\n<li><strong>Alinierea protonilor</strong> — în prezența câmpului B₀, protonii de hidrogen (care\nse comportă ca mici magneti din cauza sarcinii electrice și a spinului propriu) se aliniază cu\ncâmpul, creând o magnetizare netă longitudinală.</li>\n<li><strong>Pulsul de radiofrecvență (RF)</strong> — un puls RF la frecvența Larmor perturbă\nalinierea protonilor, mutând magnetizarea din planul longitudinal în cel transversal.</li>\n<li><strong>Precesia</strong> — după excitare, magnetizarea <em>precesează</em> (se rotește) la\nfrecvența de rezonanță a câmpului aplicat, generând un semnal electric detectabil de bobinele\nscanerului.</li>\n<li><strong>Relaxarea</strong> — după oprirea pulsului RF, protonii revin treptat la starea de\nechilibru. Aceasta implică două procese distincte: relaxarea T1 și relaxarea T2.</li>\n</ul>\n\n<h4>Relaxarea T1 și T2 — baza contrastului tisular</h4>\n<div class='callout def'>\n<strong>T1 (relaxare longitudinală)</strong> — timpul în care magnetizarea longitudinală revine la\n63% din valoarea de echilibru după un puls RF. T1 reflectă cât de repede cedează protonii energie\nrețelei moleculare înconjurătoare (<em>spin-lattice relaxation</em>). Grăsimea are T1 mai scurt\n(relaxare rapidă) decât apa.\n</div>\n<div class='callout def'>\n<strong>T2 (relaxare transversală)</strong> — timpul în care magnetizarea transversală scade la\n37% din valoarea inițială prin defazare progresivă a protonilor (<em>spin-spin relaxation</em>).\nT2 este întotdeauna mai scurt decât T1. Apa are T2 lung (semnalul persistă), grăsimea are T2 mai\nscurt.\n</div>\n<p>\nDiferențele de T1 și T2 între tipuri de țesuturi (substanță albă, substanță cenușie, LCR) sunt\nbaza <strong>contrastului tisular</strong> în IRM. Prin selectarea parametrilor de achiziție\n(timp de repetiție TR și timp de ecou TE), tehnicianul alege ce tip de contrast să evidențieze.\n</p>\n\n<h3>2. Imagini ponderate T1 vs. T2</h3>\n<table class='ctab'>\n<thead>\n<tr><th>Caracteristică</th><th>T1-ponderat</th><th>T2-ponderat</th></tr>\n</thead>\n<tbody>\n<tr><td>Ce apare strălucitor</td><td>Grăsime, substanță albă</td><td>Apă, LCR, edem</td></tr>\n<tr><td>Ce apare întunecat</td><td>LCR (negru)</td><td>Grăsime</td></tr>\n<tr><td>Substanță cenușie vs. albă</td><td>SGA gri, SGA mai închis decât SAlbă</td><td>SGA mai strălucitoare relativ</td></tr>\n<tr><td>Aplicație principală</td><td>Anatomie, morfometrie, volum</td><td>Patologie, edem, leziuni, demielinizare</td></tr>\n<tr><td>Parametru de contrast</td><td>TR scurt (maximizează diferența T1)</td><td>TE lung (maximizează diferența T2)</td></tr>\n</tbody>\n</table>\n<p>\nImaginile T1-ponderate sunt standardul de aur pentru <strong>neuroanatomia structurală</strong>:\ndelimitează clar cortexul cerebral, structurile subcorticale și LCR. Imaginile T2-ponderate\nși varianta FLAIR (Fluid Attenuated Inversion Recovery — LCR supresat) sunt esențiale în\ndetectarea leziunilor de substanță albă (scleroza multiplă, accidente vasculare).\n</p>\n\n<h3>3. Ce măsoară IRM structural (sMRI)</h3>\n<p>\n<span class='term'>IRM structural (sMRI)</span> surprinde morfologia creierului <em>la un moment dat</em>,\nspre deosebire de IRM funcțional (fMRI), care surprinde activitatea creierului. Unitatea de bază\na analizei este <strong>voxelul</strong> — pixelul tridimensional, tipic de 1 mm³ în studii de\ncercetare la 3 T.\n</p>\n<ul>\n<li><strong>Volum cerebral total</strong> — la ~70 ani: 500–600 cm³ substanță cenușie,\n400–500 cm³ substanță albă, 450 cm³ LCR.</li>\n<li><strong>Structuri subcorticale</strong> — hipocamp (~3,54 cm³), amigdală (~1,2 cm³),\nganglioni bazali, talamus — segmentate automat cu software dedicat (ex. FSL-FIRST).</li>\n<li><strong>Grosime corticală</strong> — distanța dintre suprafața pială și joncțiunea\nsubstanță cenușie–albă, tipic 2–4 mm. Variază sistematic cu vârsta, boala și experiența.</li>\n<li><strong>Suprafața corticală</strong> — aria totală a cortexului, un indicator distinct de\ngrosime (cele două pot varia independent).</li>\n</ul>\n\n<h3>4. Morfometrie computațională</h3>\n<h4>4.1 VBM — Voxel-Based Morphometry</h4>\n<div class='callout'>\n<span class='term'>VBM (morfometrie bazată pe voxeli)</span> este cea mai utilizată metodă de\nmorfometrie computațională. Compară densitatea sau volumul de substanță cenușie voxel cu voxel,\n<em>la nivelul întregului creier</em>, fără a defini regiuni de interes în prealabil (spre deosebire\nde analizele ROI clasice). Pașii esențiali: (1) segmentarea imaginii T1 în substanță cenușie,\nsubstanță albă și LCR; (2) normalizare spațială la un șablon (ex. MNI152); (3) netezire spațială\n(kernel Gaussian); (4) analiză statistică voxel cu voxel.\n</div>\n<p>\nVBM poate detecta diferențe subtile de volum asociate cu vârsta, boala (ex. atrofia hipocampală\nîn boala Alzheimer) sau experiența (ex. hipocamp posterior mai mare la taximetriștii londonezi —\nMaguire et al., 2000).\n</p>\n\n<h4>4.2 Grosime corticală (Cortical Thickness)</h4>\n<p>Există două abordări principale:</p>\n<ol>\n<li><strong>VBCT (Voxel-Based Cortical Thickness)</strong> — calculează distanța perpendiculară\nla joncțiunea SA/SC pentru fiecare voxel cortical.</li>\n<li><strong>SBCT (Surface-Based Cortical Thickness)</strong> — reconstruiește suprafețele piale\nși ale joncțiunii SA/SC ca mesh-uri 3D și calculează distanța punct cu punct între ele\n(implementare clasică: FreeSurfer/Fischl &amp; Dale, 2000). Evită artefactele din sulci adânci.</li>\n</ol>\n<p>\nGrosimea corticală scade odată cu vârsta și cu neurodegenerarea. În boala Alzheimer, subțierea\ncorticală în cortexul temporal medial, parietal și precuneus poate preceda simptomele clinice.\nMăsurarea longitudinală poate detecta schimbări asociate cu remisiunea în depresie sau cu\nplasticitatea indusă de antrenament.\n</p>\n\n<h4>4.3 Neuroanatomie computațională — atlasuri și registrare spațială</h4>\n<p>\nPentru compararea creierelor între indivizi, imaginile trebuie normalizate la un <strong>spațiu\nstandard</strong> (ex. MNI152 — media a 152 de creiere sănătoase). Procesul implică:\n</p>\n<ul>\n<li><strong>Registrare liniară (afină)</strong> — alinierea globală (translație, rotație, scalare)\nprin algoritmi precum FLIRT (FSL).</li>\n<li><strong>Registrare non-liniară</strong> — deformarea locală a imaginii pentru a potrivi\nstructurile individuale la șablon (FNIRT, ANTs).</li>\n<li><strong>Atlasuri probabilistice</strong> — ex. atlasul JuBrain (citoarhitectură) sau atlasele\nBrodmann adaptate pentru spațiul MNI, care permit atribuirea activărilor sau structurilor la\narii anatomice definite.</li>\n</ul>\n\n<h3>5. DTI și tractografie — conectivitate structurală</h3>\n<h4>5.1 Difuzia apei și anizotropia</h4>\n<p>\n<span class='term'>Imagistica prin tensor de difuzie (DTI)</span> extinde principiile IRM standard\npentru a detecta <strong>mișcarea browniană</strong> a moleculelor de apă. În substanța albă,\nmoleculele de apă difuzează preferențial <em>de-a lungul</em> axonilor, nu transversal, deoarece\nteaca de mielină (hidrofobă) restricționează difuzia laterală. Această difuzie direcțională se\nnumește <strong>anizotropie</strong>.\n</p>\n<ul>\n<li>În <strong>substanța albă</strong>: difuzie anizotropică (preferențial de-a lungul fibrelor).</li>\n<li>În <strong>substanța cenușie</strong> și LCR: difuzie izotropică (uniform în toate direcțiile).</li>\n</ul>\n<p>\nDTI necesită achiziții în multiple direcții de gradient (minimum 6, tipic 32–64 sau mai multe)\npentru a reconstrui <strong>tensorul de difuzie</strong> — o elipsoidă 3D care codifică direcția\nși gradul anizotropiei în fiecare voxel.\n</p>\n\n<h4>5.2 Anizotropia fracțională (FA)</h4>\n<div class='callout def'>\n<strong>Anizotropia fracțională (FA)</strong> este cel mai utilizat indice derivat din DTI.\nValorile FA variază de la 0 (difuzie perfect izotropică — sferă) la 1 (difuzie perfect anizotropică\n— un singur sens). Substanța albă sănătoasă are FA ridicat (0,3–0,9), substanța cenușie are FA\nscăzut. FA scăzut este interpretat ca semn al <em>pierderii integrității substanței albe</em>\n(demielinizare, axoni lezați) — cu precauție, deoarece fibrele încrucișate (<em>crossing fibres</em>)\nreduc artificial FA chiar și în țesut intact.\n</div>\n<p>\nAlți indici DTI: <strong>MD (mean diffusivity)</strong> — cantitatea totală de difuzie,\nindiferent de direcție; <strong>RA (relative anisotropy)</strong>; <strong>VR (volume ratio)</strong>.\n</p>\n\n<h4>5.3 Tractografie</h4>\n<p>\n<span class='term'>Tractografia</span> este procesul computațional de reconstituire a traseelor\nfasciculelor de substanță albă pornind de la hărțile de difuzie. Există două abordări principale:\n</p>\n<ol>\n<li><strong>Tractografie deterministă (streamlining)</strong> — pornind dintr-un voxel-sămânță,\nalgoritmul urmărește direcția principală de difuzie prin voxelii adiacenți până la un criteriu\nde oprire (FA sub prag, curbură prea mare). Rapidă, dar sensibilă la erori locale.</li>\n<li><strong>Tractografie probabilistică</strong> — rulează streamlining de multiple ori, modelând\nincertitudinea în direcția de difuzie. Produce hărți de probabilitate, mai robuste la fibre\nîncrucișate sau zgomot.</li>\n</ol>\n<p>\nTractografia permite identificarea marilor fascicule de asociație (fasciculul arcuat, fasciculul\nuncinate, corpul calos), cuantificarea integrității lor și cartografierea\n<strong>conectomului structural</strong> — matricea conexiunilor albe inter-regionale.\n</p>\n<div class='callout'>\n<strong>Limitări importante:</strong> DTI nu indică <em>direcția</em> informației de-a lungul\nunui tract (numai direcția fizică a fibrelor). Tractografia din date DWI inferă, nu vizualizează\ndirect axonii. Fibrele încrucișate și efectele de volum parțial pot genera artefacte.\n</div>\n\n<h3>6. Aplicații clinice și de cercetare ale sMRI + DTI</h3>\n<ul>\n<li><strong>Studii de leziune</strong> — IRM localizează leziunile; VLSM (voxel-based\nlesion-symptom mapping) corelează deficitele cognitive cu voxelii lezați pentru a identifica\nregiunile necesare pentru o funcție cognitivă.</li>\n<li><strong>Demență</strong> — boala Alzheimer: atrofie hipocampală și subțiere corticală\ntemporo-parietală detectabile înainte de simptome; scorul MTA (medial temporal lobe atrophy)\nbazat pe T1.</li>\n<li><strong>Scleroză multiplă</strong> — FA redus în plăcile de demielinizare; FLAIR evidențiază\nleziunile de substanță albă.</li>\n<li><strong>Dezvoltare și îmbătrânire</strong> — substanța cenușie urmează un traseu în 'U\ninversat' (crește în copilărie, peak la adolescență, scade ulterior); substanța albă crește\ncontinuu până în a treia decadă de viață (Giedd et al., 1999).</li>\n<li><strong>Plasticitate structurală</strong> — antrenamentul (juggling, bilingvism, navigație)\ninduce modificări locale măsurabile prin VBM sau grosime corticală în decurs de săptămâni.</li>\n</ul>\n\n<h3>7. Siguranță IRM</h3>\n<p>\nIRM nu folosește radiații ionizante și este considerat sigur pentru cele mai multe persoane.\nCu toate acestea, există contraindicații importante:\n</p>\n<ul>\n<li><strong>Obiecte metalice feromagnetice</strong> — clipuri anevrismale feroase, schije metalice\nintraoculare, implanturi feroase vechi pot fi deplasate sau încălzite de câmpul magnetic puternic.</li>\n<li><strong>Stimulatoare cardiace (pacemaker)</strong> și defibrilatoare implantabile (ICD) —\ncâmpul magnetic poate interfera cu funcționarea lor; IRM este contraindicat în absența\nunui model certificat MR-safe.</li>\n<li><strong>Cochlearele implantate</strong>, anumiți stimulatori ai măduvei spinării — necesită\nevaluare individuală.</li>\n<li><strong>Claustrofobie</strong> — poate necesita sedare ușoară sau utilizarea scanerelor\nopen-bore.</li>\n<li><strong>Zgomotul</strong> — gradienții se comutată rapid producând zgomote intense\n(80–120 dB); protecție auditivă obligatorie.</li>\n<li>Substanțele de contrast pe bază de gadoliniu pot fi utilizate în sMRI avansat; necesită\nverificarea funcției renale.</li>\n</ul>",
+ "questions": [
+  {
+   "q": "Care dintre următoarele afirmații descrie corect relaxarea T1 în IRM?",
+   "options": [
+    "T1 reprezintă defazarea protonilor în planul transversal după oprirea pulsului RF.",
+    "T1 este timpul necesar pentru ca magnetizarea longitudinală să revină la 63% din valoarea de echilibru.",
+    "T1 este întotdeauna mai scurt decât T2 pentru același țesut.",
+    "T1 măsoară viteza de difuzie a apei de-a lungul axonilor."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "T1 (relaxarea longitudinală sau spin-rețea) descrie revenirea magnetizării longitudinale la echilibru; prin definiție, T1 este timpul la care aceasta atinge 63% din valoarea maximă. T1 este mereu mai lung decât T2, nu mai scurt."
+  },
+  {
+   "q": "Pe o imagine T1-ponderată a creierului, care țesut apare cel mai strălucitor (hiperintens)?",
+   "options": [
+    "Lichidul cefalorahidian (LCR)",
+    "Substanța cenușie corticală",
+    "Substanța albă",
+    "Edemul cerebral"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Substanța albă conține o proporție ridicată de mielină (bogată în grăsime), care are T1 scurt și apare hiperintens (strălucitor) pe imaginile T1-ponderate. LCR apare negru (hipointens), iar edemul este mai bine evidențiat pe T2."
+  },
+  {
+   "q": "Un neurolog dorește să identifice plăci de demielinizare în scleroza multiplă. Ce secvență IRM este cea mai potrivită?",
+   "options": [
+    "T1-ponderat standard",
+    "T2-FLAIR (Fluid Attenuated Inversion Recovery)",
+    "DTI (Diffusion Tensor Imaging) — hărți FA",
+    "Imagistică ponderată în densitate protonică (PD)"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "T2-FLAIR suprimă semnalul LCR și amplifică leziunile de substanță albă (hiperintense pe T2), făcând plăcile de demielinizare mult mai vizibile decât pe T1 standard sau PD. DTI poate detecta modificări de integritate, dar nu este prima alegere pentru localizarea plăcilor."
+  },
+  {
+   "q": "VBM (Voxel-Based Morphometry) se diferențiază de analiza ROI (Region of Interest) clasică prin faptul că:",
+   "options": [
+    "Necesită definirea manuală a structurilor de interes înainte de analiză.",
+    "Compară densitatea substanței cenușii voxel cu voxel, la nivelul întregului creier, fără presupuneri apriorice despre regiuni.",
+    "Măsoară exclusiv grosimea corticală, nu volumul subcortical.",
+    "Se aplică doar imaginilor T2-ponderate, nu T1."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "VBM este o metodă whole-brain, nesupervizată de ipoteze apriorice despre localizare: după normalizare la șablon și segmentare, compară statistic densitatea/volumul SA în fiecare voxel. Analiza ROI clasică impune alegerea structurilor de interes înainte de achiziție."
+  },
+  {
+   "q": "Care metodă de măsurare a grosimii corticale reconstruiește suprafețele pială și a joncțiunii substanță cenușie–albă ca mesh-uri 3D și calculează distanța punct cu punct?",
+   "options": [
+    "VBM (Voxel-Based Morphometry)",
+    "DBM (Deformation-Based Morphometry)",
+    "SBCT (Surface-Based Cortical Thickness)",
+    "VBCT (Voxel-Based Cortical Thickness)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "SBCT (ex. implementarea FreeSurfer) reconstruiește suprafețele corticale ca mesh-uri și calculează distanța normală între suprafața pială și joncțiunea SA/SC. VBCT lucrează direct pe voxeli și poate subevalua grosimea în sulcii adânci."
+  },
+  {
+   "q": "Anizotropia fracțională (FA) în DTI reprezintă:",
+   "options": [
+    "Cantitatea totală de difuzie a apei, indiferent de direcție (mean diffusivity).",
+    "Gradul în care difuzia apei este preferențial orientată într-o direcție, cu valori de la 0 (izotropic) la 1 (perfect anizotropic).",
+    "Frecvența pulsului RF necesară pentru excitarea protonilor de hidrogen.",
+    "Volumul relativ al substanței albe față de substanța cenușie într-un voxel."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "FA (fractional anisotropy) cuantifică anizotropia difuziei apei; 0 = difuzie egală în toate direcțiile (ex. LCR), 1 = difuzie exclusiv pe o singură axă. Substanța albă intactă are FA ridicat (0,3–0,9) deoarece axonii orientați paralel restricționează difuzia laterală."
+  },
+  {
+   "q": "De ce tractografia DTI nu poate determina direcția de transmitere a semnalelor electrice de-a lungul unui tract?",
+   "options": [
+    "Deoarece DTI măsoară mișcarea browniană a apei, care are loc aleator în ambele sensuri de-a lungul axonului, independent de potențialele de acțiune.",
+    "Deoarece DTI utilizează pulsuri de radiofrecvență care blochează fluxul ionic.",
+    "Deoarece tractografia deterministă se oprește la voxelii cu FA < 0,2, pierzând informația de polaritate.",
+    "Deoarece imaginile T1-ponderate nu pot distinge teaca de mielină de axoplasm."
+   ],
+   "correct": 0,
+   "hint": "",
+   "explain": "Difuzia browniană a apei este un fenomen fizic termic, nu biologic: moleculele de apă difuzează în ambele direcții de-a lungul fibrei cu probabilitate egală, indiferent dacă un potențial de acțiune se propagă sau nu. DTI rămâne o metodă structural-anatomică, nu funcțională."
+  },
+  {
+   "q": "Care dintre următoarele situații reprezintă o contraindicație absolută pentru IRM la 3 Tesla?",
+   "options": [
+    "Prezența unor proteze dentare din ceramică",
+    "Istoricul de claustrofobie ușoară",
+    "Implantarea unui stimulator cardiac (pacemaker) feroase non-MR-safe",
+    "Tatuaje cu cerneluri moderne, non-metalice"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Stimulatoarele cardiace feroase non-MR-safe pot fi deplasate mecanic de câmpul static B₀ și pot suferi interferențe electromagnetice care perturbă funcționarea lor; acesta este riscul cel mai sever. Claustrofobia ușoară se gestionează cu sedare sau open-bore, nu este contraindicație absolută."
+  },
+  {
+   "q": "În tractografia deterministă (streamlining), care criteriu de oprire este incorect?",
+   "options": [
+    "FA sub un prag prestabilit (ex. FA < 0,15)",
+    "Curbura streamline-ului depășind un unghi maxim admis între voxeli consecutivi",
+    "Atingerea regiunii de interes țintă în tractografia punct-la-punct",
+    "Semnalul T2* scăzând sub valoarea medie a creierului"
+   ],
+   "correct": 3,
+   "hint": "",
+   "explain": "Tractografia streamlining folosește criterii bazate pe FA și unghi (curbură), nu pe semnalul T2*. T2* este relevant pentru fMRI-BOLD, nu pentru analiza traseelor de fibre albe."
+  },
+  {
+   "q": "Studiul lui Maguire et al. (2000) privind taximetriștii londonezi a demonstrat că:",
+   "options": [
+    "Substanța albă frontală este mai groasă la persoanele cu expertiză în navigație.",
+    "Hipocampul posterior are volum mai mare la taximetriști, corelat cu durata experienței.",
+    "FA în corpul calos este semnificativ mai mare la taximetriști față de martori.",
+    "Cortexul parietal drept prezintă subțiere corticală la taximetriști prin compensare."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Maguire et al. (2000) au raportat că hipocampul posterior (implicat în navigația alocentrică) era semnificativ mai mare la taximetriști, iar volumul corelat pozitiv cu numărul de ani de experiență — exemplu clasic de plasticitate structurală indusă de experiență, măsurabilă prin sMRI/VBM."
+  },
+  {
+   "q": "Ce afirmație despre difuzia apei în substanța albă față de LCR este corectă, conform principiilor DTI?",
+   "options": [
+    "Apa difuzează izotropic în substanța albă și anizotropic în LCR.",
+    "Difuzia este restricționată egal în toate direcțiile atât în substanța albă, cât și în LCR.",
+    "Apa difuzează anizotropic (preferențial de-a lungul axonilor) în substanța albă și izotropic în LCR.",
+    "Teaca de mielină permite difuzia liberă transaxonală dar blochează difuzia longitudinală."
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Mielina hidrofobă restricționează difuzia transversală; apa difuzează preferențial de-a lungul axonilor (anizotropic). LCR nu are bariere structurale, astfel difuzia este izotropică (FA ≈ 0), de aceea LCR apare negru pe hărțile FA."
+  },
+  {
+   "q": "Ce este conectomul structural și prin ce tehnică IRM este cartografiat non-invaziv?",
+   "options": [
+    "Harta activității neuronale sincronizate între regiuni, cartografiată prin fMRI de repaus (rs-fMRI).",
+    "Matricea completă a conexiunilor de substanță albă dintre regiunile cerebrale, cartografiată prin tractografie DTI/DWI.",
+    "Distribuția receptorilor de neurotransmițători la nivelul cortexului, cuantificată prin PET.",
+    "Densitatea sinaptică locală în substanța cenușie, estimată prin VBM pe imagini T1."
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Conectomul structural reprezintă ansamblul conexiunilor de substanță albă (fascicule de axoni mielinizați) dintre ariile cerebrale. Prin tractografie bazată pe DTI/DWI se poate construi o matrice de conectivitate ce codifică prezența și proprietățile traseelor de fibre albe între perechi de regiuni."
+  }
+ ]
+}

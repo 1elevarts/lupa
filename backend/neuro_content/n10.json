@@ -1,0 +1,151 @@
+{
+ "id": "n10",
+ "title": "Stimularea Cerebrală Profundă (DBS)",
+ "summary_html": "<h3>Ce este DBS? Definiție și clasificare</h3>\n<p><span class='term'>Stimularea Cerebrală Profundă</span> (<em>Deep Brain Stimulation, DBS</em>) este o metodă <strong>invazivă</strong> de neuromodulare care presupune implantarea chirurgicală a unor <strong>electrozi</strong> în structuri subcorticale profunde ale creierului. Electrozii sunt conectați printr-un cablu subcutanat la un <span class='term'>generator de impulsuri implantabil</span> (<em>Implantable Pulse Generator, IPG</em>) — similar unui stimulator cardiac — plasat sub clavicula sau în abdomenul superior. IPG livrează <strong>stimulare electrică de înaltă frecvență</strong> (tipic 130–185 Hz) continuu în structura-țintă (Krauss et al., 2021; Gazzaniga et al., 2019).</p>\n\n<div class='callout def'>\n<strong>DBS vs. metode neinvazive:</strong> Spre deosebire de TMS sau tES — care sunt <em>neinvazive</em> și acționează pe cortexul superficial — DBS este <em>invazivă</em> (necesită neurochirurgie), dar permite accesul la structuri <strong>subcorticale profunde</strong> inaccesibile metodelor transcraniene.\n</div>\n\n<h3>Principiul stimulării electrice de înaltă frecvență</h3>\n<p>Electrozii DBS livrează trenuri de pulsuri electrice cu parametri programabili:</p>\n<ul>\n<li><strong>Frecvența</strong>: 100–185 Hz (cel mai frecvent ~130 Hz) — înaltă frecvență produce suprimarea activității patologice a nucleului țintă</li>\n<li><strong>Amplitudinea</strong>: 1–3,5 V (sau echivalent în curent)</li>\n<li><strong>Lățimea pulsului</strong>: 60–90 µs</li>\n<li><strong>Polaritate</strong>: monopolară sau bipolară (influențează volumul tisular activat)</li>\n</ul>\n<p>Mecanismul exact rămâne incomplet elucidat. Ipotezele principale sunt: <em>inhibiție funcțională</em> (suprimă activitatea dezordonată, hipersincrona a nucleului — similar unei leziuni funcționale), <em>perturbarea informației patologice</em> (blocarea propagării semnalelor aberante), și <em>modularea rețelelor</em> (modifică activitatea întregilor circuite cortical-subcorticale, inclusiv prin efect antidromic pe fibrele aferente) (Krauss et al., 2021).</p>\n\n<h3>Structuri-țintă clasice</h3>\n<table class='ctab'>\n  <thead>\n    <tr><th>Structura-țintă</th><th>Abreviere</th><th>Indicație principală</th></tr>\n  </thead>\n  <tbody>\n    <tr><td><strong>Nucleul subtalamic</strong></td><td>STN</td><td>Boala Parkinson (standard aur); distonie</td></tr>\n    <tr><td><strong>Globus pallidus intern</strong></td><td>GPi</td><td>Boala Parkinson; distonie generalizată; dischinezie</td></tr>\n    <tr><td><strong>Nucleul intermedioventral talamic</strong></td><td>Vim</td><td>Tremor esențial; tremor parkinsonian rezistent</td></tr>\n    <tr><td><strong>Nucleus accumbens / Capsula internă anterioară</strong></td><td>NAcc / ALIC</td><td>TOC sever rezistent la tratament; depresie refractară</td></tr>\n    <tr><td><strong>Aria subcaloasă (Cg25)</strong></td><td>SCC</td><td>Depresie rezistentă (tractografie ghidată)</td></tr>\n  </tbody>\n</table>\n\n<h3>Aplicații clinice</h3>\n<h4>Boala Parkinson</h4>\n<p>DBS la nivel de <span class='term'>STN</span> sau <span class='term'>GPi</span> este aprobată FDA și EMA pentru boala Parkinson avansată cu fluctuații motorii. Reduce <strong>tremorul</strong>, <strong>rigiditatea</strong> și <strong>bradikinezia</strong>, permițând de obicei reducerea dozei de levodopa și diminuarea dischineziilor induse de medicație (Gazzaniga et al., 2019; Krauss et al., 2021). Efectul este legat de circuitul ganglionilor bazali: în Parkinson, pierderea neuronilor dopaminergici din <em>substantia nigra</em> dezechilibrează calea directă (facilitatoare) față de calea indirectă (inhibitoare), ducând la hipokinezie. DBS la STN suprimă hiperactivitatea STN care blochează mișcarea (slide-uri curs, Gazzaniga et al., 2019).</p>\n\n<h4>Tremor esențial</h4>\n<p>DBS talamica (nucleul Vim) este prima indicație pentru care DBS a obținut aprobarea (1997, FDA). Este eficientă în tremorele de acțiune și posturale severe care nu răspund la farmacoterapie.</p>\n\n<h4>Distonie</h4>\n<p>DBS la GPi reduce semnificativ distoniile generalizate și segmentare. Efectul poate fi întârziat față de stimulare (săptămâni-luni), spre deosebire de Parkinson unde efectul e imediat.</p>\n\n<h4>TOC și depresie rezistentă</h4>\n<p>DBS este utilizată experimental/compasional în TOC (țintă NAcc / ALIC) cu rate de răspuns de ~60%. Pentru depresia majoră rezistentă, studiile cu DBS la <em>Cg25</em> (aria subcaloasă) ghidată prin <span class='term'>tractografie</span> (P. Riva-Posse et al., 2017) au raportat rate de răspuns de <strong>73% la 6 luni și 82% la 1 an</strong> (slide-uri curs). Tractografia permite personalizarea traiectoriei electrodului pentru a activa fasciculele de substanță albă relevante.</p>\n\n<h3>DBS adaptativ (aDBS) — sisteme cu buclă închisă</h3>\n<p>Sistemele clasice DBS livrează stimulare continuă, indiferent de starea clinică a pacientului (<em>open-loop</em>). <span class='term'>DBS-ul adaptativ</span> (<em>aDBS</em>) reprezintă generația nouă: un algoritm integrat în IPG citește în timp real <strong>potențialele de câmp local</strong> (<em>Local Field Potentials, LFP</em>) din nucleul stimulat — utilizate ca biomarker — și ajustează automat amplitudinea stimulării (Arlotti et al., 2021; slide-uri curs). Sistemul <em>AlphaDBS</em> implementează această procesare on-chip, oferind:</p>\n<ul>\n<li>Consum energetic redus (IPG cu baterie mai mică / viață mai lungă)</li>\n<li>Latențe mai mici față de procesarea externă</li>\n<li>Confidențialitate sporită a datelor</li>\n<li>Flexibilitate crescută pentru cercetare</li>\n</ul>\n\n<h3>Avantaje față de alte intervenții</h3>\n<div class='callout'>\n<strong>Reglabil și reversibil:</strong> Parametrii de stimulare pot fi ajustați non-invaziv după implantare (printr-un programator extern). Dacă apar efecte adverse sau noi terapii devin disponibile, stimularea poate fi oprită sau electrozii explantați — spre deosebire de leziunile chirurgicale ireversibile (talamotomie, palidotomie).\n</div>\n<ul>\n<li><strong>Bilateralizare posibilă</strong>: electrozii pot fi implantați bilateral (spre deosebire de leziunile bilaterale care prezintă risc de dizartrie/disfagie)</li>\n<li><strong>Personalizare</strong>: programarea parametrilor permite optimizarea per pacient</li>\n<li><strong>Acces subcortical</strong>: singura metodă de neuromodulare care acționează direct pe circuitele profunde (STN, GPi, talamus) inaccesibile TMS sau tES</li>\n</ul>\n\n<h3>Riscuri și efecte adverse</h3>\n<h4>Riscuri chirurgicale</h4>\n<ul>\n<li><strong>Hemoragie intracerebrală</strong>: risc ~1–3% (risc major, potențial sever)</li>\n<li><strong>Infecție</strong>: la nivelul IPG sau traiectului electrodului (~3–5%)</li>\n<li><strong>Deplasarea electrodului</strong>: necesitând repoziționare chirurgicală</li>\n<li><strong>Edem cerebral postoperator</strong></li>\n</ul>\n<h4>Efecte adverse legate de stimulare</h4>\n<ul>\n<li><strong>Parestezii</strong> (furnicături) faciale sau la membre</li>\n<li><strong>Probleme de vorbire</strong> (dizartrie) sau de vedere (diplopie)</li>\n<li><strong>Tulburări de echilibru</strong></li>\n<li><strong>Efecte comportamentale</strong>: hiperactivitate, impulsivitate, joc patologic (gambling) — menționate explicit în slide-uri curs la stimularea STN</li>\n<li><strong>Dischinezie</strong> (la setări inadecvate)</li>\n<li>Efectele legate de stimulare sunt de obicei <em>reversibile</em> prin ajustarea parametrilor</li>\n</ul>",
+ "questions": [
+  {
+   "q": "Care este caracteristica fundamentală care clasifică DBS drept metodă INVAZIVĂ?",
+   "options": [
+    "Utilizează câmpuri magnetice care penetrează scalpul",
+    "Implică implantarea chirurgicală de electrozi în structuri cerebrale profunde",
+    "Curentul electric traversează țesuturile fără a necesita contact direct",
+    "Electrozii sunt plasați pe suprafața scalpului prin tehnici stereotaxice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "DBS este invazivă deoarece necesită neurochirurgie pentru implantarea electrozilor direct în nucleii subcorticali (STN, GPi, talamus). TMS și tES sunt neinvazive — nu penetrează chirurgical craniul."
+  },
+  {
+   "q": "Care dintre următoarele structuri este considerate 'standard aur' ca țintă DBS în boala Parkinson?",
+   "options": [
+    "Nucleul caudat (NC)",
+    "Nucleul roșu (Nucleus ruber)",
+    "Nucleul subtalamic (STN)",
+    "Nucleul accumbens (NAcc)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Nucleul subtalamic (STN) este ținta principală în boala Parkinson; DBS la STN suprimă hiperactivitatea STN care blochează inițierea mișcării prin dezechilibrul căilor directă/indirectă din ganglionii bazali."
+  },
+  {
+   "q": "Care este frecvența de stimulare tipică utilizată în DBS clinic?",
+   "options": [
+    "1–10 Hz (frecvență joasă, similară rTMS inhibitor)",
+    "10–50 Hz (frecvență medie, facilitatoare)",
+    "130–185 Hz (frecvență înaltă, suprimantă)",
+    "1000–5000 Hz (ultrafrecvență, ablativă)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "DBS utilizează stimulare de înaltă frecvență (~130–185 Hz) care suprimă funcțional activitatea patologică a nucleului țintă. Frecvențele joase (1–10 Hz) nu au efect terapeutic și pot agrava simptomele."
+  },
+  {
+   "q": "Care este avantajul principal al DBS față de leziunile chirurgicale clasice (talamotomie, palidotomie)?",
+   "options": [
+    "DBS este mai ieftină și nu necesită anestezie generală",
+    "DBS este reglabilă și reversibilă — parametrii pot fi ajustați, stimularea poate fi oprită",
+    "DBS are precizie spațială mai mică, reducând riscul de leziuni colaterale",
+    "DBS poate fi aplicată bilateral fără contraindicații absolute"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Spre deosebire de leziunile chirurgicale ireversibile, DBS este reglabilă (parametrii se ajustează post-implantare) și reversibilă (stimularea poate fi oprită sau electrozii explantați dacă apar probleme sau terapii noi)."
+  },
+  {
+   "q": "Care structură talamic este ținta DBS în tratamentul tremorului esențial sever?",
+   "options": [
+    "Nucleul ventral posterolateral (VPL)",
+    "Nucleul intermedioventral (Vim)",
+    "Nucleul dorsomedian (MD)",
+    "Pulvinar"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Nucleul intermedioventral talamic (Vim) este ținta DBS pentru tremorul esențial și tremorul parkinsonian rezistent — aceasta a fost prima indicație aprobată FDA pentru DBS (1997)."
+  },
+  {
+   "q": "Ce biomarker utilizează sistemele DBS adaptative (aDBS) pentru reglarea automată a stimulării?",
+   "options": [
+    "Frecvența cardiacă și tensiunea arterială",
+    "Potențiale evocate motorii (MEP) înregistrate prin EMG",
+    "Potențiale de câmp local (LFP) din nucleul stimulat",
+    "Activitatea EEG scalp în banda beta (13–30 Hz)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Sistemele aDBS (ex. AlphaDBS) citesc potențialele de câmp local (LFP) direct din electrodul implantat în nucleu și folosesc aceste semnale ca biomarker pentru a ajusta în timp real amplitudinea stimulării (Arlotti et al., 2021)."
+  },
+  {
+   "q": "Care este rata de răspuns raportată la 1 an în studiul DBS ghidat prin tractografie pentru depresie rezistentă (Riva-Posse et al., 2017)?",
+   "options": [
+    "Aproximativ 35%",
+    "Aproximativ 50%",
+    "Aproximativ 82%",
+    "Aproape 100%"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Riva-Posse et al. (2017) au raportat rate de răspuns de 73% la 6 luni și 82% la 1 an pentru DBS ghidat prin tractografie la aria subcaloasă (Cg25) în depresia majoră rezistentă."
+  },
+  {
+   "q": "Care dintre afirmațiile următoare descrie CORECT mecanismul propus al DBS la înaltă frecvență?",
+   "options": [
+    "Depolarizează suplimentar neuronii din nucleu, amplificând activitatea patologică",
+    "Suprimă funcțional activitatea dezordonată și hipersincronă a nucleului-țintă, similar unei leziuni funcționale reversibile",
+    "Induce apoptoză selectivă a neuronilor hiperactivați, producând o leziune permanentă",
+    "Acționează exclusiv prin efect placebo — nu există diferență față de sham DBS"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Ipoteza principală este că DBS la frecvențe înalte suprimă/perturbă activitatea patologică a nucleului (hipersincronă în Parkinson — oscilații beta patologice la STN), similar funcțional cu o leziune, dar reversibil."
+  },
+  {
+   "q": "Un pacient cu TOC sever, rezistent la farmacoterapie și psihoterapie, este evaluat pentru DBS. Care este ținta clasică utilizată?",
+   "options": [
+    "Nucleul subtalamic (STN) — același ca în Parkinson",
+    "Nucleul intermedioventral talamic (Vim) — ca în tremor",
+    "Nucleus accumbens / Capsula internă anterioară (NAcc/ALIC)",
+    "Hipocampul — pentru efectul anxiolitic"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Pentru TOC rezistent la tratament, ținta DBS este nucleus accumbens / capsula internă anterioară (NAcc/ALIC), nu STN (Parkinson) sau Vim (tremor). Hipocampul nu este țintă DBS aprobată pentru TOC."
+  },
+  {
+   "q": "Care este principalul risc chirurgical serios al implantării electrozilor DBS?",
+   "options": [
+    "Crize convulsive (epileptice) similare celor din rTMS",
+    "Hemoragie intracerebrală (~1–3%)",
+    "Arsuri tisulare severe la locul electrodului",
+    "Pierderea permanentă a auzului"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Riscul chirurgical major al DBS este hemoragia intracerebrală (rată ~1–3%), legată de traiectul electrodului. Crizele epileptice sunt riscul principal al rTMS (neinvaziv). Arsurile și pierderea auzului sunt riscuri specifice TMS."
+  },
+  {
+   "q": "Ce DIFERENȚIAZĂ DBS de TMS și tES ca metodă de neuromodulare?",
+   "options": [
+    "DBS utilizează câmpuri magnetice, TMS utilizează curent electric direct",
+    "DBS este neinvazivă și temporară; TMS și tES sunt invazive și permanente",
+    "DBS poate modula structuri subcorticale profunde (STN, GPi); TMS/tES acționează doar cortical superficial",
+    "DBS are efecte exclusiv inhibitorii; TMS are efecte exclusiv excitatorii"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Avantajul unic al DBS este accesul la structuri subcorticale profunde (STN, GPi, talamus, NAcc) inaccesibile metodelor transcraniene neinvazive (TMS, tES), care sunt limitate la cortexul superficial."
+  },
+  {
+   "q": "Efectele adverse comportamentale — cum ar fi jocul patologic (gambling) — au fost raportate în asociere cu DBS la care structură?",
+   "options": [
+    "Nucleul intermedioventral talamic (Vim)",
+    "Nucleul subtalamic (STN)",
+    "Aria subcaloasă (Cg25)",
+    "Nucleul caudat"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Jocul patologic și alte comportamente impulsive/hipomaniacale au fost raportate ca efecte adverse ale DBS la STN în boala Parkinson, probabil prin modularea conexiunilor STN cu circuitele limbice și de recompensă (slide-uri curs, Krauss et al., 2021)."
+  }
+ ]
+}

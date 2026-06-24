@@ -1,0 +1,188 @@
+"""
+Thin Claude client.
+
+Priority:
+1. ANTHROPIC_API_KEY in env  -> fast SDK call (streaming-capable).
+2. otherwise                 -> `claude -p` OAuth ($0 on the Max subscription).
+
+We deliberately bypass the shared claude_cached wrapper here: it forces
+ENABLE_TOOL_SEARCH=1 (heavy CLI cold-start) which we don't want for a snappy
+lens. Best-effort cost logging into app.api_calls is still attempted on the
+OAuth path so usage stays visible.
+"""
+from __future__ import annotations
+import json
+import os
+import re
+import subprocess
+import time
+
+MODEL = os.environ.get("LENS_MODEL", "claude-sonnet-4-6")
+_OAUTH_MODEL = {
+    "claude-sonnet-4-6": "sonnet",
+    "claude-opus-4-8": "opus",
+    "claude-opus-4-7": "opus",
+    "claude-haiku-4-5": "haiku",
+}
+
+
+def _balanced_objects(text: str):
+    """Yield every top-level {...} substring via brace-depth scanning.
+    Robust to ```json fences, preambles, and nested objects."""
+    depth = 0
+    start = -1
+    in_str = False
+    esc = False
+    for i, ch in enumerate(text):
+        if in_str:
+            if esc:
+                esc = False
+            elif ch == "\\":
+                esc = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}":
+            if depth > 0:
+                depth -= 1
+                if depth == 0 and start >= 0:
+                    yield text[start:i + 1]
+
+
+def _extract_json(text: str) -> dict | None:
+    if not text:
+        return None
+    text = text.strip()
+    # 1) clean fast path: whole thing (minus fences) is the object
+    stripped = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.MULTILINE).strip()
+    for cand in (stripped, text):
+        try:
+            d = json.loads(cand)
+            if isinstance(d, dict):
+                return d
+        except Exception:
+            pass
+    # 2) scan every balanced {...}; prefer one that has our schema keys.
+    fallback = None
+    for chunk in _balanced_objects(text):
+        try:
+            d = json.loads(chunk)
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        if "explain" in d or "concept" in d:
+            return d
+        fallback = fallback or d
+    if fallback:
+        return fallback
+    # 3) last resort: schema-anchored field extraction. Robust to invalid JSON
+    #    caused by stray ASCII quotes inside Romanian text (mixed „ " / ") — we
+    #    split on the next field's key, not on quote balance.
+    return _loose_fields(text)
+
+
+def _loose_fields(text: str) -> dict | None:
+    def grab_str(name, nexts):
+        # value between  "name": "  and the next field key (or closing brace)
+        stop = "|".join(re.escape(f'"{n}"') for n in nexts) or r"\}"
+        m = re.search(rf'"{name}"\s*:\s*"(.*?)"\s*,?\s*(?:{stop}|\}})',
+                      text, re.DOTALL)
+        return m.group(1).strip().rstrip('"').strip() if m else ""
+
+    concept = grab_str("concept", ["explain", "keys", "hint", "verdict", "chapter"])
+    explain = grab_str("explain", ["keys", "hint", "verdict", "chapter"])
+    hint = grab_str("hint", ["verdict", "chapter"])
+    verdict = ""
+    mv = re.search(r'"verdict"\s*:\s*"([^"]*)"', text)
+    if mv:
+        verdict = mv.group(1).strip()
+    chapter = ""
+    mc = re.search(r'"chapter"\s*:\s*"([^"]*)"', text)
+    if mc:
+        chapter = mc.group(1).strip()
+    keys = []
+    mk = re.search(r'"keys"\s*:\s*\[(.*?)\]', text, re.DOTALL)
+    if mk:
+        keys = [k.strip().strip('"').strip() for k in re.findall(r'"([^"]*)"', mk.group(1))]
+    if not (concept or explain):
+        return None
+    return {"concept": concept, "explain": explain, "keys": keys,
+            "hint": hint, "verdict": verdict, "chapter": chapter}
+
+
+def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:
+    import anthropic  # lazy: only when a key is present
+    client = anthropic.Anthropic()
+    resp = client.messages.create(
+        model=model,
+        max_tokens=max_tokens,
+        system=system,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+
+
+def _via_oauth(system: str, prompt: str, model: str) -> str:
+    full = f"{system}\n\n---\n\n{prompt}"
+    env = dict(os.environ)
+    env.pop("ANTHROPIC_API_KEY", None)
+    # DELIBERATE EXCEPTION to the CLAUDE.md rule "claude -p => ENABLE_TOOL_SEARCH=1".
+    # That rule targets agentic RUNNERS that need tools. This lens is a single-shot,
+    # tool-free JSON generation: with =1, `claude -p` turns conversational (adds
+    # preamble/postamble, sometimes truncating the JSON) which corrupts parsing.
+    # With =0 it returns clean JSON directly. Verified empirically 2026-06-24.
+    env["ENABLE_TOOL_SEARCH"] = "0"
+    cli_model = _OAUTH_MODEL.get(model, "sonnet")
+    proc = subprocess.run(
+        ["claude", "-p", full, "--model", cli_model],
+        capture_output=True, text=True, env=env, timeout=90,
+    )
+    if proc.returncode != 0 and not proc.stdout:
+        raise RuntimeError(f"claude -p exit {proc.returncode}: {(proc.stderr or '')[:200]}")
+    return (proc.stdout or "").strip()
+
+
+def ask(system: str, prompt: str, model: str | None = None, max_tokens: int = 1000) -> dict:
+    """Return {'data': <parsed json or None>, 'raw': str, 'ms': int, 'auth': str}."""
+    model = model or MODEL
+    t0 = time.time()
+    use_api = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+    auth = "api" if use_api else "oauth"
+    try:
+        raw = _via_api(system, prompt, model, max_tokens) if use_api else _via_oauth(system, prompt, model)
+    except Exception as e:
+        return {"data": None, "raw": "", "ms": int((time.time() - t0) * 1000),
+                "auth": auth, "error": str(e)}
+    ms = int((time.time() - t0) * 1000)
+    data = _extract_json(raw)
+    _log_best_effort(model, ms, auth)
+    return {"data": data, "raw": raw, "ms": ms, "auth": auth}
+
+
+def _log_best_effort(model: str, ms: int, auth: str) -> None:
+    try:
+        import sys
+        sys.path.insert(0, os.path.expanduser("~/.claude/memory/scripts"))
+        from lib.db import get_pg
+        pg = get_pg()
+        cur = pg.cursor()
+        cur.execute(
+            """INSERT INTO app.api_calls
+               (model, purpose, project, tokens_input, tokens_cached_read,
+                tokens_cached_write, tokens_output, cost_usd, duration_ms, metadata)
+               VALUES (%s,%s,%s,0,0,0,0,0,%s,%s)""",
+            (model, "study_lens_explain", "study-lens", ms,
+             json.dumps({"auth": auth})),
+        )
+        pg.commit()
+        cur.close()
+        pg.close()
+    except Exception:
+        pass  # logging is best-effort; never break the lens

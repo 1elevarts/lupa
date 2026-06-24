@@ -1,0 +1,151 @@
+{
+ "id": "n06",
+ "title": "EEG topografie, localizarea surselor și MEG",
+ "summary_html": "<h3>Hărți topografice ale potențialelor pe scalp</h3>\n<p>Activitatea electrică cerebrală înregistrată cu EEG poate fi reprezentată ca o <span class='term'>hartă topografică</span> — o distribuție spațială a potențialelor (pozitive și negative) pe întreaga suprafață a scalpului la un moment dat. Această distribuție reflectă <strong>suma tuturor dipol-ilor activi</strong> din creier în acel moment.</p>\n<ul>\n  <li>Un component ERP este definit prin: polaritate, latență, <strong>distribuție pe scalp</strong> și condiții de elicitare.</li>\n  <li>Aceeași distribuție pe scalp poate rezulta din configurații complet diferite de generatori subcorticali — aceasta este esența problemei inverse.</li>\n  <li>Dipol-ul echivalent de curent (<span class='term'>ECD</span>) al unui grup de neuroni piramidali aliniați produce câmpuri electrice care se propagă prin volum și ajung la scalp; orientarea dipol-ului determină complet modelul topografic.</li>\n</ul>\n<div class='callout def'>\n  <strong>Distribuție pe scalp (scalp distribution):</strong> modelul spațial al amplitudinilor EEG/ERP măsurate la electrozi, utilizat ca una din cele patru proprietăți definitorii ale unui component ERP (alături de polaritate, latență și condiții).\n</div>\n\n<h3>Analiza topografică — independentă de referință</h3>\n<p>Alegerea electrodului de referință modifică valorile absolute ale amplitudinilor, dar <strong>nu modifică distribuția relativă</strong> a potențialelor între electrozi (diferențele de amplitudine dintre electrozi rămân constante). Din această cauză, <em>analiza topografică este independentă de referință</em> (Brunet et al., 2011).</p>\n<ul>\n  <li><strong>Referința medie</strong> (<span class='term'>average reference</span>) este neutră teoretic, deoarece suma tuturor potențialelor de pe suprafața capului este zero (fiecare generator = dipol cu poli egali și opuși).</li>\n  <li>În practică, referința medie funcționează optim doar dacă electrozii acoperă uniform întregul scalp.</li>\n  <li>Analiza bazată pe topografie (de ex. microstări EEG) evită artefactele introduse de referință, lucrând cu <em>diferențe relative</em> între electrozi.</li>\n</ul>\n\n<h3>Problema inversă și localizarea surselor EEG</h3>\n<div class='callout'>\n  <strong>Problema directă (forward problem):</strong> dacă se cunosc numărul, localizarea, orientarea și puterea dipol-ilor, există o <em>soluție unică</em> pentru distribuția potențialelor pe scalp. Calculul este relativ simplu.\n</div>\n<div class='callout'>\n  <strong>Problema inversă (inverse problem):</strong> pornind de la distribuția potențialelor pe scalp, se încearcă determinarea generatorilor cerebrali. Aceasta este <em>matematic incorect pusă</em> — există o <strong>infinitate de soluții posibile</strong> pentru orice hartă topografică dată.\n</div>\n<p>Localizarea surselor EEG este dificilă din mai multe motive:</p>\n<ul>\n  <li>Orientarea dipol-ului afectează drastic topografia: un dipol cu aceeași putere, în aceeași locație, produce distribuții complet diferite pe scalp în funcție de orientare.</li>\n  <li>Un dipol orientat <strong>tangențial la scalp</strong> poate genera potențiale puternice atât la electrozi apropiați (nealiați cu axa dipol-ului), cât și la electrozi îndepărtați (aliați cu axa) — inversul intuiției.</li>\n  <li>Factori care complică soluția directă: <strong>grosimea craniului</strong> (variabilă inter- și intra-individual), morfologia sulcilor, forma creierului și a craniului, zgomotul din date.</li>\n  <li>Cel mai simplu model presupune craniul ca <strong>sferă perfectă cu grosime uniformă</strong> — inexact în practică.</li>\n  <li>Localizarea surselor EEG funcționează cel mai bine în scop <em>confirmator</em> (testarea unei ipoteze despre o regiune specifică), nu exploratoriu.</li>\n</ul>\n<h4>Algoritmi de localizare a surselor</h4>\n<table class='ctab'>\n  <thead><tr><th>Algoritm</th><th>Principiu</th><th>Limitare cheie</th></tr></thead>\n  <tbody>\n    <tr><td>Dipole fitting</td><td>Cercetătorul specifică numărul/locația dipol-ilor; minimizează eroarea față de datele reale</td><td>Dependent de operator; funcționează doar pentru 1–2 surse predictibile</td></tr>\n    <tr><td>Modele distribuite (MNE, sLORETA)</td><td>Estimează dipoli pe toată suprafața corticală simultan</td><td>Rezoluție spațială scăzută; supraestimează extensia activării</td></tr>\n    <tr><td>Beamforming</td><td>Filtru spațial care izolează activitatea dintr-un voxel țintă</td><td>Eșuează când două surse sunt puternic corelate</td></tr>\n  </tbody>\n</table>\n\n<h3>Microstări EEG</h3>\n<p>EEG-ul spontan (neevocată de stimuli externi) nu este haotic — topografia câmpului electric pe scalp rămâne <strong>cvasistabilă pentru perioade scurte de 60–120 ms</strong>, apoi trece brusc la o altă configurație. Aceste perioade de stabilitate topografică se numesc <span class='term'>microstări EEG</span>.</p>\n<ul>\n  <li>Microstările reprezintă analiză a <em>activității spontane</em>, nu a potențialelor evocate.</li>\n  <li>Se identifică de obicei 4–6 clase de microstări, reproduse cross-cultural și cross-modal.</li>\n  <li>Analiza se bazează pe topografie (independentă de referință) — nu pe amplitudine absolută.</li>\n  <li>Microstările sunt considerate <em>atomii gândirii</em> sau <em>stările de repaus ale rețelelor</em> cerebrale.</li>\n  <li>Sursa: câmpuri deschise (<span class='term'>open fields</span>) de neuroni piramidali aliniați care generează EPSP-uri sincrone.</li>\n</ul>\n\n<h3>MEG — Magnetoencefalografia</h3>\n<p><span class='term'>Magnetoencefalografia (MEG)</span> măsoară câmpurile magnetice generate de activitatea electrică cerebrală, folosind senzori (magnetometre și gradiometre) dispuși într-un coif. A fost dezvoltată de David Cohen în 1968.</p>\n<h4>Baza fiziologică</h4>\n<ul>\n  <li>Aceleași surse ca EEG: câmpuri deschise de neuroni piramidali cu EPSP-uri sincrone.</li>\n  <li>MEG este sensibil <em>preferențial la neuroni de pe <strong>pereții sulcilor</strong></em> (dipoli orientați tangențial față de scalp) — câmpurile lor magnetice radiază în afara capului.</li>\n  <li>EEG este sensibil preferențial la neuroni de pe <em>girusuri</em> (dipoli radiali față de scalp).</li>\n  <li>Un dipol pur radial (perpendicular pe scalp) este <strong>invizibil pentru MEG</strong> — câmpul magnetic rămâne în interiorul capului.</li>\n</ul>\n<h4>Avantaje MEG față de EEG</h4>\n<ul>\n  <li><strong>Localizare mai precisă a surselor:</strong> câmpurile magnetice nu sunt distorsionate de craniu (spre deosebire de potențialele electrice), deci semnalul MEG apare mai <em>focal</em>.</li>\n  <li>Câmpul magnetic scade rapid cu distanța (aproape exponențial) → mai puțină ambiguitate în profunzimea/locația generatorului față de EEG (unde semnalul se conduce prin volum).</li>\n  <li>MEG nu necesită electrod de referință — datele nu sunt relative la o referință.</li>\n  <li>Timp de pregătire mai scurt (nu trebuie redusă impedanța la fiecare senzor).</li>\n</ul>\n<h4>Dezavantaje și limitări MEG</h4>\n<ul>\n  <li><strong>Cost extrem de ridicat</strong>: comparabil cu MRI, nu cu EEG; senzori SQUID trebuie răciți aproape de zero absolut cu <em>heliu lichid</em>.</li>\n  <li>Necesită <strong>cameră ecranată electromagnetic</strong>: scuturi pasive (10–15 tone de cupru, aluminiu, mu-metal) sau active.</li>\n  <li>Insensibil la surse <strong>profunde</strong> (ex. hipocamp, trunchi cerebral) — câmpul scade rapid cu distanța.</li>\n  <li>Insensibil la dipoli radiali (neuroni pe girusuri).</li>\n  <li>Localizarea surselor MEG rămâne mai puțin precisă decât fMRI sau PET.</li>\n  <li>Coiful MEG are dimensiuni fixe → distanța senzor–craniu variază între participanți; mișcările capului >câțiva mm pot invalida măsurătorile.</li>\n</ul>\n<h4>Senzori MEG</h4>\n<table class='ctab'>\n  <thead><tr><th>Tip senzor</th><th>Configurație</th><th>Sensibil la</th><th>Notă</th></tr></thead>\n  <tbody>\n    <tr><td>Magnetometru</td><td>O bobină</td><td>Componenta radială (perpendiculară) a câmpului</td><td>Sensibil la zgomot de mediu</td></tr>\n    <tr><td>Gradiometru axial</td><td>Două bobine înfășurate opus, ~5 cm distanță</td><td>Componenta radială; anulează zgomotul uniform</td><td>Semnal zero direct deasupra dipol-ului</td></tr>\n    <tr><td>Gradiometru planar</td><td>Două bobine în cifra 8, același plan</td><td>Componenta tangențială (paralelă)</td><td>Semnal maxim direct deasupra dipol-ului; folosit în perechi ortogonale</td></tr>\n  </tbody>\n</table>\n<div class='callout def'>\n  <strong>SQUID</strong> (superconducting quantum interference device): singurul dispozitiv suficient de sensibil pentru câmpurile magnetice cerebrale (~10⁻¹⁵ Tesla = femtotesla). Funcționează în stare supraconductoare, necesitând răcire cu heliu lichid la temperaturi aproape de zero absolut.\n</div>\n<p>Câmpurile magnetice cerebrale sunt de ~10⁻¹⁵ T (femtotesla), față de câmpul magnetic al Pământului de ~25–65 × 10⁻⁶ T — de aceea ecranarea este esențială.</p>\n<h4>MEG combinat cu EEG</h4>\n<p>Înregistrarea simultană MEG+EEG oferă avantaje complementare: MEG este preferențial sensibil la surse de pe pereții sulcilor, EEG la surse mai profunde și pe girusuri. Combinația furnizează constrângeri suplimentare pentru localizarea surselor și confirmă că un component ERP este prezent și în sesiunea MEG (deși cu distribuție spațială diferită pe senzori).</p>",
+ "questions": [
+  {
+   "q": "Care este una dintre proprietățile definitorii ale unui component ERP, conform Newman (2019)?",
+   "options": [
+    "Frecvența oscilației în banda theta",
+    "Distribuția pe scalp (unde este maxim pe scalp)",
+    "Numărul de electrozi activi simultan",
+    "Latența față de stimulul precedent"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman definește un component ERP prin: polaritate, latență, distribuție pe scalp și condiții de elicitare. Frecvența oscilației nu face parte din această definiție."
+  },
+  {
+   "q": "De ce analiza topografică EEG este considerată 'independentă de referință' (Brunet et al., 2011)?",
+   "options": [
+    "Deoarece EEG nu folosește electrozi de referință fizici",
+    "Deoarece re-referențierea scade valoarea absolută la toți electrozii cu aceeași constantă, păstrând diferențele relative între electrozi",
+    "Deoarece câmpurile magnetice nu necesită referință",
+    "Deoarece media tuturor electrozi este întotdeauna zero exact"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Re-referențierea scade o constantă din fiecare electrod; distribuția relativă (diferențele de amplitudine între electrozi) nu se modifică, doar valorile absolute. Aceasta face analiza topografică independentă de alegerea referinței."
+  },
+  {
+   "q": "Problema inversă în localizarea surselor EEG este descrisă de Newman ca:",
+   "options": [
+    "Calculul relativ simplu al distribuției potențialelor pe scalp, dat un set de generatori cunoscuți",
+    "O problemă matematic incorect pusă, cu o infinitate de soluții posibile pentru orice hartă topografică",
+    "O problemă rezolvabilă unic dacă se folosesc cel puțin 128 de electrozi",
+    "O problemă specifică doar MEG, nu și EEG"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman explicitează: 'inverse solution...is mathematically ill-posed – there are in principle an infinite number of possible configurations...that could all result in the same pattern of scalp potentials'."
+  },
+  {
+   "q": "Cum diferă problema directă (forward problem) față de problema inversă în localizarea surselor EEG?",
+   "options": [
+    "Problema directă este dificilă; problema inversă are soluție unică",
+    "Ambele sunt matematic incorect puse",
+    "Problema directă are soluție unică dacă se specifică generatorii; problema inversă nu are soluție unică",
+    "Problema directă se aplică MEG; problema inversă se aplică EEG"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Problema directă: dacă se specifică localizarea, orientarea și puterea dipol-ilor → soluție unică pentru distribuția pe scalp. Problema inversă: pornind de la distribuția pe scalp, nu există o soluție unică pentru generatori."
+  },
+  {
+   "q": "Un dipol electric cu aceeași putere și locație cerebrală generează topografii pe scalp diferite în funcție de:",
+   "options": [
+    "Frecvența de eșantionare a amplificatorului EEG",
+    "Numărul de electrozi folosiți",
+    "Orientarea dipol-ului",
+    "Tipul referinței folosite"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Newman (Fig. 3.3): 'a dipole with the same electrical potential strength, in the same location in the brain, would generate very different scalp topography patterns depending on its orientation'."
+  },
+  {
+   "q": "Care este suprafața minimă de cortex necesară pentru a genera un semnal EEG detectabil la scalp?",
+   "options": [
+    "1 cm²",
+    "5 cm²",
+    "10 cm²",
+    "50 cm²"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Conform slide-urilor (Biasiucci et al., 2019), este nevoie de minimum 10 cm² de cortex activ pentru a genera un semnal EEG detectabil la nivel de scalp."
+  },
+  {
+   "q": "MEG este sensibil preferențial la activitatea neuronilor din:",
+   "options": [
+    "Vârfurile girusurilor (dipoli radiali față de scalp)",
+    "Pereții sulcilor (dipoli tangențiali față de scalp)",
+    "Substanța albă subcorticală",
+    "Nucleii talamici profunzi"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman: 'MEG is primarily sensitive to activity of neurons along the banks of sulci...because neurons on the gyri and in the depths of the sulci will be oriented such that their magnetic fields do not radiate outside of the head'. Doar câmpurile magnetice generate de dipoli tangențiali radiază în afara capului."
+  },
+  {
+   "q": "Care este principalul avantaj al MEG față de EEG în localizarea surselor cerebrale?",
+   "options": [
+    "MEG poate detecta surse din hipocamp mai bine decât EEG",
+    "Câmpurile magnetice nu sunt distorsionate de craniu, permițând o localizare mai precisă a surselor",
+    "MEG nu necesită ecranare electromagnetică",
+    "MEG poate înregistra simultan mai multe frecvențe de oscilație"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman: 'magnetic fields are almost entirely unaffected by the skull, so they are not blurred the way EEG signals are'. Aceasta face semnalul MEG mai focal și localizarea surselor mai precisă. MEG este totuși mai puțin sensibil la surse profunde."
+  },
+  {
+   "q": "De ce sistemele MEG cu senzori SQUID necesită răcire cu heliu lichid?",
+   "options": [
+    "Pentru a preveni supraîncălzirea amplificatoarelor",
+    "Deoarece SQUID funcționează în stare supraconductoare, care necesită temperaturi aproape de zero absolut",
+    "Pentru a ecrana câmpul magnetic al Pământului",
+    "Deoarece semnalele EEG sunt amplificate termic la temperatura camerei"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman: 'The only device sensitive enough to measure the brain's evoked magnetic fields is the SQUID. The sensors must be cooled to a temperature near absolute zero [in liquid helium so] materials become superconducting – that is, they have almost zero resistance to current flow'."
+  },
+  {
+   "q": "Față de EEG, MEG are sensibilitate mai redusă pentru:",
+   "options": [
+    "Activitatea neuronilor de pe pereții sulcilor corticali",
+    "Sursele cerebrale profunde (ex. hipocamp, trunchi cerebral)",
+    "Potențialele post-sinaptice excitatorii (EPSP)",
+    "Componentele vizuale precoce (P1)"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman: câmpurile magnetice scad rapid (aproape exponențial) cu distanța față de sursă. MEG este mai sensibil la activitate corticală superficială. Sursele profunde (hipocamp, trunchi cerebral) generează semnale prea slabe pentru a fi detectate reliabil."
+  },
+  {
+   "q": "Care dintre afirmațiile următoare despre gradiometrul planar MEG este corectă?",
+   "options": [
+    "Este cel mai sensibil la componenta radială a câmpului magnetic și înregistrează zero direct deasupra unui dipol",
+    "Este utilizat în perechi ortogonale și înregistrează semnal maxim direct deasupra unui dipol",
+    "Nu poate anula zgomotul de mediu deoarece are o singură bobină",
+    "Necesită răcire separată față de celelalte tipuri de senzori"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman descrie gradiometrul planar ca sensibil la componenta tangențială a câmpului magnetic, cu semnal maxim direct deasupra dipol-ului. Este întotdeauna utilizat în perechi ortogonale (dipoli orientați la 90° față de direcția optimă sunt invizibili pentru un singur gradiometru planar)."
+  },
+  {
+   "q": "Care este cel mai recomandat mod de utilizare a localizării surselor EEG, conform Newman?",
+   "options": [
+    "Explorator — pentru a descoperi care regiuni sunt implicate într-un proces cognitiv nou",
+    "Confirmator — pentru a testa o ipoteză despre activitatea temporală dintr-o regiune cerebrală specifică",
+    "Exclusiv în combinație cu fMRI pentru a obține acuratețe spațială maximă",
+    "Doar pe date de repaus (resting-state), nu pe potențiale evocate"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman: 'the best way to use EEG source localization is for confirmatory, rather than exploratory, purposes – in other words to test a hypothesis about the time course of activity in a specific brain region, rather than fishing to determine which regions might be involved'."
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+# anthropic only needed if you set ANTHROPIC_API_KEY (otherwise OAuth `claude -p` is used)
+# anthropic>=0.40

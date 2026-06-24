@@ -1,0 +1,151 @@
+{
+ "id": "n07",
+ "title": "Metodologia leziunilor cerebrale",
+ "summary_html": "<h3>Metoda lezională — inferență cauzală în neuroștiințe</h3>\n<p>Studiile lezionale reprezintă una dintre cele mai vechi și mai puternice metode de investigare a relației dintre <strong>structura</strong> și <strong>funcția</strong> cerebrală. Spre deosebire de neuroimagistică (fMRI, PET), care furnizează <em>corelații</em> între activitatea cerebrală și comportament, metoda lezională permite inferențe de tip <strong>cauzal</strong>: dacă distrugerea unei arii produce un deficit specific și reproductibil, acea arie este <em>necesară</em> pentru funcția respectivă (Newman, 2018).</p>\n\n<div class='callout def'>\n<strong>Principiu fundamental:</strong> Leziunea unei arii cerebrale → deficit funcțional specific → concluzie că aria respectivă este <em>cauzal necesară</em> pentru funcția afectată. Neuroimagistica arată că o arie <em>este activată</em>; metoda lezională demonstrează că activarea ei <em>este critic necesară</em>.\n</div>\n\n<h3>Tipuri de leziuni cerebrale</h3>\n<table class='ctab'>\n  <thead>\n    <tr><th>Tip leziune</th><th>Mecanism</th><th>Caracteristici</th></tr>\n  </thead>\n  <tbody>\n    <tr><td><strong>AVC (stroke)</strong></td><td>Ischemie sau hemoragie</td><td>Cel mai frecvent studiat; afectează teritorii vasculare specifice; debuit brusc</td></tr>\n    <tr><td><strong>Traumatice (TBI)</strong></td><td>Impact mecanic</td><td>Distribuție neuniformă; leziuni difuze posibile; variabilitate mare</td></tr>\n    <tr><td><strong>Chirurgicale</strong></td><td>Rezecție planificată</td><td>Localizare precisă; motivate de epilepsie sau tumori (ex. lobectomia temporală H.M.)</td></tr>\n    <tr><td><strong>Tumori</strong></td><td>Masă expansivă</td><td>Efect compresiv și infiltrativ; mai greu de delimitat</td></tr>\n    <tr><td><strong>Boli degenerative</strong></td><td>Moarte neuronală progresivă</td><td>Alzheimer, Parkinson — afectare caracteristică de structuri specifice</td></tr>\n    <tr><td><strong>Leziuni virtuale (TMS)</strong></td><td>Perturbație electromagnetică</td><td>Reversibile, controlate experimental; gold standard cauzal modern</td></tr>\n  </tbody>\n</table>\n\n<h3>Cazuri clasice: pietre de temelie ale neuropsihologiei</h3>\n\n<h4>Paul Broca și pacientul 'Tan' (1865)</h4>\n<p>În 1859, Pierre Paul Broca a întâlnit pacientul <span class='term'>Louis Victor Leborgne</span>, capabil să înțeleagă limbajul, dar care putea rosti doar silaba 'tan'. Post-mortem, Broca a identificat leziunea în <strong>girusul frontal inferior stâng</strong> (aria Broca, câmpul Brodmann 44/45). Concluzia: această arie este responsabilă de <em>producerea vorbirii</em>. Afazia rezultată — <span class='term'>afazie expresivă (Broca)</span> — se caracterizează prin vorbire nefluentă cu comprehensiune relativ păstrată. Leziunile lui Leborgne se extindeau și în cortexul insular și ganglionii bazali (slide-uri curs; Newman, 2018).</p>\n\n<h4>Carl Wernicke și afazia receptivă (1874)</h4>\n<p>Carl Wernicke a descris pacienți cu <em>vorbire fluentă dar lipsită de sens</em> și <strong>comprehensiune profund afectată</strong>, corelate cu leziuni ale <span class='term'>cortexului temporal posterior superior stâng</span> (aria Wernicke). Afazia Wernicke este condiționată și de lezarea fasciculului arcuat — tractul de substanță albă ce conectează ariile de limbaj temporal și frontal (slide-uri curs).</p>\n\n<h4>Pacientul H.M. — Henry Gustave Molaison (1926–2008)</h4>\n<p>La 27 de ani, H.M. a suferit o <strong>lobectomie temporală bilaterală</strong> (îndepărtarea hipocampului, amigdalei, cortexurilor entorinal și parahipocampal) pentru tratarea a 10 crize epileptice zilnice. Consecința: incapacitatea permanentă de a forma noi <span class='term'>amintiri declarative pe termen lung</span> (<em>amnezie anterogradă</em>) și pierderea parțială a amintirilor anterioare operației (<em>amnezie retrogradă</em>). Memoria de lucru și memoria procedurală au rămas intacte, demonstrând disocierea dintre sistemele de memorie (slide-uri curs; Newman, 2018).</p>\n\n<h4>Alte cazuri notabile</h4>\n<ul>\n  <li><strong>Pacientul T.N.</strong> — <span class='term'>blindsight</span>: leziune cortex vizual primar (V1); răspunde la stimuli pe care nu îi 'vede' conștient</li>\n  <li><strong>Pacientul M.P.</strong> — <span class='term'>akineotopsie</span>: leziune MT/V5; pierderea selectivă a percepției mișcării</li>\n  <li><strong>Pacientul P.T.</strong> — <span class='term'>achromatopsie</span>: leziune V4; pierderea selectivă a percepției culorii</li>\n  <li><strong>Pacientul S.M.</strong> — leziune amigdală bilaterală (boala Urbach–Wiethe); deficit în recunoașterea fețelor cu expresie de frică</li>\n</ul>\n\n<h3>Disocierea simplă și dubla disociere</h3>\n\n<div class='callout def'>\n<strong>Disociere simplă:</strong> Pacientul A are leziune în aria X și prezintă deficit la sarcina 1, dar nu la sarcina 2. Sugerează că aria X contribuie la sarcina 1. Interpretare limitată: sarcina 2 poate fi pur și simplu mai ușoară.\n</div>\n\n<div class='callout'>\n<strong>Dublă disociere (<em>double dissociation</em>):</strong> Pacientul A (leziune X) are deficit la sarcina 1, dar NU la sarcina 2. Pacientul B (leziune Y) are deficit la sarcina 2, dar NU la sarcina 1. Aceasta demonstrează că procesele cognitive 1 și 2 sunt <em>independent susținute</em> de structuri cerebrale distincte — argumentul cel mai puternic pentru specializarea funcțională.\n</div>\n\n<p>Exemplu clasic de dublă disociere: <strong>afazia Broca vs. afazia Wernicke</strong>. Leziunile frontale stângi produc deficit de producere cu comprehensiune relativ intactă; leziunile temporale posterioare stângi produc deficit de comprehensiune cu producere fluentă. Cele două sisteme — producere și comprehensiune — sunt astfel disociabile și localizabile distinct (slide-uri curs; Newman, 2018).</p>\n<p>Al doilea exemplu major: <strong>memoria declarativă vs. memoria procedurală</strong> (cazul H.M.): pacientul nu putea forma amintiri episodice noi, dar putea învăța noi abilități motorii, disociind hipocampul (declarativ) de structurile implicate în memoria procedurală.</p>\n\n<h3>Lesion-Symptom Mapping (VLSM)</h3>\n<p>Metodele moderne de <span class='term'>voxel-based lesion-symptom mapping (VLSM)</span> combină imagistica structurală MRI cu analiza statistică la nivel de voxel. Pacienților li se trasează leziunile pe imaginile MRI; creierele sunt normalizate spațial, iar pentru fiecare voxel se compară statistic performanța la teste cognitive între cei cu și fără leziune în acel punct. Bates et al. (2003) au demonstrat pe 101 pacienți cu AVC stâng că deficitele de <em>producere</em> corelează cu leziuni în <strong>insula stângă</strong>, iar deficitele de <em>comprehensiune</em> corelează cu leziuni în <strong>lobul temporal posterior stâng</strong> — replicând și rafinând clasicele observații Broca–Wernicke (Newman, 2018).</p>\n\n<h3>Avantaje și limitări ale metodei lezionale</h3>\n<table class='ctab'>\n  <thead>\n    <tr><th>Avantaje</th><th>Limitări</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Inferență <strong>cauzală</strong> directă (nu corelație)</td><td>Leziunile naturale sunt <strong>neuniforme</strong> și afectează structuri multiple</td></tr>\n    <tr><td>Rezoluție spațială bună prin VLSM modern</td><td><strong>Plasticitate cerebrală</strong>: creierul se reorganizează după leziune</td></tr>\n    <tr><td>Acces la disocieri funcționale imposibile experimental</td><td><strong>Variabilitate interindividuală</strong>: aceeași leziune → deficite diferite</td></tr>\n    <tr><td>Date ecologic valide din patologie reală</td><td>Același deficit poate apărea din <strong>leziuni diferite</strong> (rețele distribuite)</td></tr>\n    <tr><td>Fundament pentru designul studiilor neuroimagistice</td><td>Nu pot fi studiate <strong>imediat după leziune</strong> în multe cazuri; recuperare parțială</td></tr>\n    <tr><td>Confirmate de TMS (leziuni virtuale controlate)</td><td>Localizarea leziunilor histologic era imposibilă înainte de MRI; CT = rezoluție limitată</td></tr>\n  </tbody>\n</table>\n\n<div class='callout'>\n<strong>Concluzie metodologică (Newman, 2018):</strong> Studiile lezionale furnizează dovada că o arie este <em>necesară</em> pentru o funcție — dovadă cauzală pe care neuroimagistica singură nu o poate oferi. TMS-ul (leziuni virtuale) completează această abordare în condiții controlate experimental.\n</div>",
+ "questions": [
+  {
+   "q": "Care este principala diferență metodologică dintre studiile lezionale și neuroimagistica funcțională (fMRI/PET)?",
+   "options": [
+    "Studiile lezionale au rezoluție spațială mai bună decât fMRI",
+    "Studiile lezionale permit inferențe cauzale, în timp ce neuroimagistica furnizează corelații",
+    "Neuroimagistica este mai veche ca metodă și oferă date mai solide cauzal",
+    "Studiile lezionale măsoară activitatea neuronală direct, fMRI măsoară indirect"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018) subliniază explicit că neuroimagistica indică că o arie 'este activată' în timpul unei sarcini (corelație), în timp ce studiile lezionale demonstrează că activarea acelei arii este 'critic necesară' (cauzalitate). Metoda lezională permite concluzia că o structură este necesară funcției respective."
+  },
+  {
+   "q": "Pacientul H.M. (Henry Molaison) prezenta amnezie anterogradă severă după lobectomia temporală bilaterală. Ce tip de memorie i-a rămas INTACT?",
+   "options": [
+    "Memoria episodică declarativă pentru evenimente noi",
+    "Memoria semantică pentru fapte noi dobândite post-operator",
+    "Memoria procedurală (abilități motorii noi)",
+    "Memoria de recunoaștere pentru fețe familiare"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "H.M. nu putea forma amintiri declarative noi (episodice sau semantice), dar putea învăța noi abilități motorii (memorie procedurală), deoarece aceasta nu depinde de hipocamp. Cazul a demonstrat disocierea dintre sistemele de memorie declarativă (hipocampal) și procedurală (striatum/cerebel)."
+  },
+  {
+   "q": "Ce definește o 'dublă disociere' (double dissociation) în neuropsihologie?",
+   "options": [
+    "Un singur pacient cu leziune X are deficit la sarcina 1, dar nu la sarcina 2",
+    "Pacientul A (leziune X) are deficit la sarcina 1 dar nu la 2, și pacientul B (leziune Y) are deficit la sarcina 2 dar nu la 1",
+    "Doi pacienți cu aceeași leziune prezintă deficite identice la aceeași sarcină",
+    "O leziune dublă (în două arii) produce un deficit dublu față de leziunea unică"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Dubla disociere necesită două cazuri complementare: un pacient cu leziune X are deficit selectiv la sarcina 1 (nu la 2), și un alt pacient cu leziune Y are deficit selectiv la sarcina 2 (nu la 1). Aceasta demonstrează că cele două procese cognitive sunt susținute independent de structuri distincte — argumentul cel mai puternic pentru specializarea funcțională."
+  },
+  {
+   "q": "Afazia Broca și afazia Wernicke reprezintă un exemplu clasic de dublă disociere. Care este profilul afaziei Broca?",
+   "options": [
+    "Vorbire fluentă dar lipsită de sens, cu comprehensiune profund afectată",
+    "Vorbire nefluentă, cu comprehensiune relativ păstrată",
+    "Imposibilitatea de a repeta cuvinte, cu producere și comprehensiune normale",
+    "Deficit de denumire a obiectelor cu producere și comprehensiune intacte"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Broca (1865): leziunea girusului frontal inferior stâng produce vorbire nefluentă, efort articulatoriu, agramatism, dar comprehensiunea este relativ păstrată. Contrar, afazia Wernicke = vorbire fluentă dar semanticidă + comprehensiune sever afectată. Cele două profile disociabile susțin specializarea distinctă a celor două arii."
+  },
+  {
+   "q": "Care structură cerebrală este asociată cu leziunile care produc afazia Wernicke?",
+   "options": [
+    "Girusul frontal inferior stâng (aria Broca)",
+    "Cortexul motor primar stâng",
+    "Cortexul temporal posterior superior stâng și fasciculul arcuat",
+    "Insula anterioară stângă și ganglionii bazali"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Carl Wernicke a identificat cortexul temporal posterior superior stâng ca sediu al comprehensiunii vorbirii. Studiile moderne (Bates et al., 2003, VLSM) au confirmat că deficitele de comprehensiune corelează cu leziuni în lobul temporal posterior stâng. Fasciculul arcuat, ce conectează ariile Broca și Wernicke, este de asemenea implicat."
+  },
+  {
+   "q": "Pacientul M.P., cu leziune în aria MT/V5, prezenta:",
+   "options": [
+    "Incapacitatea de a recunoaște fețele (prosopagnozie)",
+    "Pierderea selectivă a percepției culorii (achromatopsie corticală)",
+    "Pierderea selectivă a percepției mișcării (akineotopsie)",
+    "Incapacitatea de a percepe simultan mai multe obiecte (simultanagnozie)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Leziunea ariei MT/V5 la pacientul M.P. a produs akineotopsie — deficit selectiv al percepției direcției și vitezei obiectelor în mișcare, cu alte funcții vizuale relativ intacte. Acesta este un exemplu clasic de disociere în cadrul sistemului vizual, susținând specializarea MT/V5 pentru procesarea mișcării."
+  },
+  {
+   "q": "Ce este 'voxel-based lesion-symptom mapping' (VLSM)?",
+   "options": [
+    "O tehnică de stimulare cerebrală neinvazivă care creează leziuni virtuale în voxeli specifici",
+    "O metodă de analiză statistică ce corelează prezența leziunii în fiecare voxel cu performanța la teste cognitive, pe grupuri de pacienți",
+    "O metodă de reconstrucție 3D a leziunilor bazată exclusiv pe simptome clinice, fără imagistică",
+    "O formă de neuroimagistică funcțională care măsoară metabolismul în zona perilesională"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "VLSM (Bates et al., 2003) suprapune imaginile MRI ale mai multor pacienți, normalizate spațial, și testează statistic pentru fiecare voxel dacă prezența leziunii acolo se asociază cu un deficit specific. A demonstrat că deficitele de producere corelează cu insula stângă, iar cele de comprehensiune cu lobul temporal posterior stâng (Newman, 2018)."
+  },
+  {
+   "q": "Care dintre următoarele reprezintă o limitare majoră a studiilor lezionale naturale (AVC, TBI)?",
+   "options": [
+    "Nu permit inferențe cauzale, spre deosebire de neuroimagistică",
+    "Leziunile naturale nu sunt uniforme și afectează adesea structuri multiple; plasticitatea cerebrală poate masca efectele reale",
+    "Sunt aplicabile doar în studii pe animale, nu pe oameni",
+    "Oferă rezoluție temporală scăzută comparativ cu EEG"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018) listează limitări esențiale: leziunile naturale nu sunt uniforme, nu afectează creierul aleator (stroke-urile urmează teritorii vasculare), plasticitatea cerebrală poate compensa prin recrutarea altor arii, iar același deficit poate apărea din leziuni diferite. Aceste confunde slăbesc inferența structură-funcție."
+  },
+  {
+   "q": "Pacientul 'Tan' (Leborgne), descris de Broca, prezenta:",
+   "options": [
+    "Comprehensiune afectată și vorbire fluentă cu parafazii semantice",
+    "Pierderea completă a vorbirii și a comprehensiunii",
+    "Înțelegea limbajul, dar putea rosti doar silaba 'tan'; post-mortem s-a descoperit leziune în girusul frontal inferior stâng",
+    "Putea vorbi fluent, dar nu putea scrie sau citi"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Leborgne înțelegea vorbirea celorlalți, dar singurul sunet pe care îl putea produce era silaba 'tan'. Post-mortem, Broca a identificat leziunea în girusul frontal inferior stâng (aria Broca). Cazul a stat la baza teoriei localizaționiste a funcțiilor cerebrale (Newman, 2018; slide-uri curs)."
+  },
+  {
+   "q": "De ce este important că plasticitatea cerebrală și reorganizarea funcțională reprezintă limitări ale metodei lezionale?",
+   "options": [
+    "Pentru că plasticitatea previne formarea de leziuni permanente în creier",
+    "Deoarece creierul se poate reorganiza după leziune, recrutând alte arii, astfel încât deficitul observat poate nu reflecta funcția originală a ariei lezionate",
+    "Plasticitatea cerebrală crește dimensiunea leziunii în timp, îngreunând localizarea",
+    "Deoarece pacienții cu plasticitate crescută nu pot fi incluși în studii neuropsihologice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018) și slide-urile curs subliniază că reorganizarea circuitelor după leziune poate masca sau modifica deficitul inițial. Studiul efectuat la mult timp după leziune poate subestima deficitul real sau poate reflecta funcționarea compensatorie a altor arii, nu funcția originală a ariei lezionate. De aceea se recomandă studiul imediat post-leziune."
+  },
+  {
+   "q": "Ce demonstrează cazul pacientului S.M. (cu leziune bilaterală a amigdalei prin boala Urbach–Wiethe)?",
+   "options": [
+    "Amigdala este necesară pentru memoria declarativă pe termen lung",
+    "Amigdala are rol în recunoașterea expresiilor faciale de teamă și în procesarea stimulilor de amenințare-incertitudine",
+    "Amigdala controlează producerea vorbirii în situații emoționale",
+    "Leziunea amigdalei produce achromatopsie bilaterală"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Pacientul S.M. (44 ani, boala Urbach–Wiethe = calcificarea bilaterală a amigdalei) prezenta dificultăți în recunoașterea fețelor cu expresie de frică, deoarece era mai puțin capabilă să folosească direcția privirii ca semnal de amenințare-incertitudine. Cazul demonstrează rolul cauzal al amigdalei în procesarea stimulilor emoționali de tip amenințare (slide-uri curs; Lisa Feldman Barrett, 2018)."
+  },
+  {
+   "q": "Comparativ cu studiile lezionale naturale, de ce reprezintă TMS ('leziuni virtuale') un avantaj pentru inferența cauzală?",
+   "options": [
+    "TMS permite imagistica directă a leziunii, spre deosebire de leziunile naturale care nu pot fi vizualizate MRI",
+    "TMS induce perturbații tranzitorii, reversibile, localizate precis, pe participanți sănătoși, eliminând confundele leziunilor naturale (variabilitate, plasticitate, comorbidități)",
+    "TMS are rezoluție temporală mai scăzută decât leziunile naturale, permițând studii longitudinale",
+    "TMS afectează întreaga emisferă simultan, oferind o perspectivă sistemică"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Newman (2018): TMS poate induce 'leziuni virtuale' tranzitorii, prin perturbarea focală a activității unei arii, pe participanți sănătoși în condiții controlate. Aceasta elimină confundele leziunilor naturale: leziunile nu variază în cauză, localizare sau comorbidități; nu există plasticitate compensatorie; intensitatea și localizarea sunt controlabile experimental — oferind cea mai puternică inferență cauzală disponibilă."
+  }
+ ]
+}

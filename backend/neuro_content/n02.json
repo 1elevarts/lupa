@@ -1,0 +1,211 @@
+{
+ "id": "n02",
+ "title": "Rezoluție spațială și temporală",
+ "summary_html": "<h3>Ce înseamnă rezoluția spațială și temporală?</h3>\n<p><span class='term'>Rezoluția temporală</span> se referă la scala de timp la care o metodă poate detecta schimbări în activitatea cerebrală. O metodă cu rezoluție temporală înaltă surprinde evenimente care durează <strong>milisecunde</strong>. <span class='term'>Rezoluția spațială</span> se referă la precizia localizării sursei activității cerebrale — cât de mic este cel mai mic volum de țesut distins. O metodă cu rezoluție spațială înaltă poate localiza activarea la nivel de <strong>milimetru</strong> (Newman, cap. 3).</p>\n\n<h3>Trade-off-ul fundamental</h3>\n<div class='callout'>Nicio metodă nu oferă simultan rezoluție spațială și temporală maximă. Metodele care măsoară activitatea electrică directă (EEG, MEG) câștigă la timp dar pierd la spațiu; metodele hemodinamice (fMRI, PET) câștigă la spațiu dar sunt limitate temporal de viteza lentă a răspunsului vascular.</div>\n\n<h3>Măsuri directe vs. indirecte</h3>\n<p>Newman distinge două categorii funcționale:</p>\n<ul>\n  <li><strong>Măsuri directe</strong> — sensibile la activitatea electrică neuronală. Exemplu: <span class='term'>EEG</span> (electroencefalografie) și <span class='term'>MEG</span> (magnetoencefalografie). Aceste metode reflectă <em>direct</em> semnalul electric al neuronilor, deși reprezintă agregate ale mii de neuroni din zone multiple.</li>\n  <li><strong>Măsuri indirecte</strong> — inferează activitatea neuronală dintr-un proces fiziologic intermediar. Exemplu: <span class='term'>fMRI</span> — măsoară concentrația de oxigen din sânge (<em>BOLD signal</em>), care crește local în urma activării neuronale printr-un lanț biochimic complex. <span class='term'>PET</span> — detectează emisia de radioactivitate dintr-un trasor radioactiv introdus în organism.</li>\n</ul>\n<div class='callout def'><strong>Răspuns hemodinamic (haemodynamic response):</strong> modificarea fluxului și oxigenării sângelui în zone activate ale creierului, cu un vârf la 5–8 secunde după stimul. Este baza fMRI și fNIRI. Deoarece este mult mai lent decât activitatea electrică, limitează rezoluția temporală a metodelor indirecte (Newman, 1521–1522).</div>\n\n<h3>Clasificarea metodelor pe axele spațial–temporal</h3>\n<table class='ctab'>\n  <thead>\n    <tr>\n      <th>Metodă</th>\n      <th>Rezoluție spațială</th>\n      <th>Rezoluție temporală</th>\n      <th>Tip de măsură</th>\n      <th>Invazivitate</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td><strong>EEG / ERP</strong></td>\n      <td>Slabă (~1 cm, adesea mai rău)</td>\n      <td>Excelentă (ms; 10.000 măsurători/s)</td>\n      <td>Directă — electrică</td>\n      <td>Non-invaziv</td>\n    </tr>\n    <tr>\n      <td><strong>MEG</strong></td>\n      <td>Mai bună decât EEG, inferioară fMRI</td>\n      <td>Excelentă (ms)</td>\n      <td>Directă — magnetică</td>\n      <td>Non-invaziv</td>\n    </tr>\n    <tr>\n      <td><strong>fMRI</strong></td>\n      <td>Bună (mm; sub-mm avansat)</td>\n      <td>Slabă (1–2 s per volum; vârf BOLD la 5–8 s)</td>\n      <td>Indirectă — hemodinamică (BOLD)</td>\n      <td>Non-invaziv</td>\n    </tr>\n    <tr>\n      <td><strong>PET</strong></td>\n      <td>Bună (mm), dar smoothing necesar</td>\n      <td>Foarte slabă (~90 s per scan)</td>\n      <td>Indirectă — radioactivă</td>\n      <td>Semi-invaziv (trasor radioactiv)</td>\n    </tr>\n    <tr>\n      <td><strong>MRI structural</strong></td>\n      <td>Excelentă (sub-mm)</td>\n      <td>Nu măsoară activitate (structurală)</td>\n      <td>Structurală</td>\n      <td>Non-invaziv</td>\n    </tr>\n    <tr>\n      <td><strong>sEEG / ECoG</strong></td>\n      <td>Excelentă (cortex local)</td>\n      <td>Excelentă (ms)</td>\n      <td>Directă — electrică</td>\n      <td>Invaziv (implantat intracranian)</td>\n    </tr>\n  </tbody>\n</table>\n\n<h3>EEG — putere și limite</h3>\n<p>EEG măsoară câmpuri electrice de la electrozi plasați pe scalp (tipic 64–256 electrozi). Rezoluția temporală este excepțională: poate detecta modificări în <strong>zeci de milisecunde</strong>. Limita majoră este spațială: semnalul electric este distorsionat și atenuat de craniu (<em>skull blurring</em>), iar localizarea sursei este dificilă — în condiții optime ~1 cm, adesea mai rău. EEG capturează suma activității din zone multiple simultan (Newman, 1380–1386). <span class='term'>ERP (Event-Related Potentials)</span> = media semnalului EEG aliniat la un eveniment (stimul/răspuns), din ~100 de trial-uri, pentru a izola activitatea relevantă de zgomot.</p>\n\n<h3>MEG — avantajele față de EEG</h3>\n<p>MEG măsoară câmpurile magnetice produse de curenții electrici neuronali (legea lui Ampère). Avantaj esențial: câmpurile magnetice <em>nu sunt distorsionate de craniu</em>, ceea ce permite o localizare mai precisă decât EEG, menținând rezoluția temporală de milisecunde. Dezavantaj major: MEG necesită ecranare magnetică și echipamente criogenice — cost mult mai mare decât EEG, deci mai rar folosit (Newman, 1497–1508).</p>\n\n<h3>fMRI — putere și limite</h3>\n<p>fMRI detectează raportul hemoglobină oxigenată/dezoxigenată (<span class='term'>BOLD — Blood Oxygenation Level Dependent</span>) cu precizie de milimetru. Rata de achiziție practică este 1–2 s per volum cerebral complet. Limita temporală este impusă de <em>răspunsul hemodinamic</em>: vascular răspunde lent față de activitatea neuronală, cu vârf la 5–8 s după stimul. Cea mai mare limitare spațială nu vine din hardware, ci din faptul că modificările de oxigenare se extind pe o arie mai mare decât activitatea neuronală reală (Newman, 1387–1391).</p>\n\n<h3>PET — nișa specifică</h3>\n<p>PET a precedat fMRI și a fost prima metodă non-invazivă cu imagini fiziologice de înaltă rezoluție. Utilizează trasori radioactivi (O<sup>15</sup>, glucoză marcată, neurotransmițători radioactivi). Rezoluție temporală foarte slabă (~90 s per scan). Avantajul unic: <strong>singura metodă non-invazivă care urmărește distribuția spațio-temporală a agenților neurofarmacologici</strong> (neurotransmițători, droguri) in vivo (Newman, 1555–1587).</p>\n\n<h3>Cum alegi metoda potrivită?</h3>\n<p>Newman (1391–1403) subliniază că nu există o metodă unică optimă. Alegerea depinde de:</p>\n<ol>\n  <li><strong>Întrebarea de cercetare</strong>: procesele rapide (ms) → EEG/MEG; localizarea precisă → fMRI; farmacologie cerebrală → PET.</li>\n  <li><strong>Invazivitate admisă</strong>: populații vulnerabile (sugari, copii mici) → fNIRI; pacienți cu implante metalice → nu MRI.</li>\n  <li><strong>Resurse disponibile</strong>: MEG și fMRI sunt costisitoare; EEG este accesibil.</li>\n  <li><strong>Studii multimodale</strong>: combinarea EEG + fMRI permite ambele rezoluții, dar ridică provocări practice (artefacte, sincronizare).</li>\n</ol>\n<div class='callout'><strong>Principiu de bază:</strong> metodele electromagnetice directe (EEG/MEG) = <em>când?</em> cu precizie de milisecunde; metodele hemodinamice indirecte (fMRI/PET) = <em>unde?</em> cu precizie de milimetri. Trade-off-ul este structural și nu poate fi eliminat complet nici prin tehnici avansate.</div>",
+ "questions": [
+  {
+   "q": "Conform Newman, ce înseamnă rezoluția temporală a unei metode de neuroimagistică?",
+   "options": [
+    "Precizia cu care poate localiza sursa activității în spațiul cerebral",
+    "Scala de timp la care metoda poate detecta schimbări în activitatea cerebrală",
+    "Numărul de electrozi sau senzori utilizați pentru măsurare",
+    "Tipul de semnal fiziologic măsurat (electric, magnetic sau hemodinamic)"
+   ],
+   "correct": 1,
+   "hint": "Newman definește separat rezoluția temporală și cea spațială în capitolul despre metode.",
+   "explain": [
+    "Aceasta este definiția rezoluției spațiale, nu temporale.",
+    "Corect. Newman (1362–1363): 'Temporal resolution refers to the time scale that a technique is sensitive to changes over.'",
+    "Numărul de senzori influențează rezoluția, dar nu o definește.",
+    "Tipul de semnal (direct/indirect) este o altă dimensiune de clasificare, nu rezoluția temporală."
+   ]
+  },
+  {
+   "q": "EEG poate achiziționa până la 10.000 de măsurători pe secundă. Care este consecința directă pentru cercetare?",
+   "options": [
+    "Permite localizarea activității cu precizie de milimetru",
+    "Poate detecta modificări neuronale care durează zeci sau chiar câțiva milisecunde",
+    "Elimină necesitatea medierii semnalului pe multiple trial-uri",
+    "Oferă rezoluție spațială superioară față de fMRI"
+   ],
+   "correct": 1,
+   "hint": "Gândește-te la ce rezoluție temporală înaltă permite să surprinzi.",
+   "explain": [
+    "Localizarea milimetrică este caracteristica fMRI, nu a EEG.",
+    "Corect. Newman (1369–1371): EEG surprinde 'changes in neural activity over the course of tens or even a few milliseconds.'",
+    "Media pe trial-uri (ERP) este tocmai necesară pentru a reduce zgomotul — rata de achiziție nu o elimină.",
+    "EEG are rezoluție spațială slabă (~1 cm în condiții optime), inferioară fMRI."
+   ]
+  },
+  {
+   "q": "De ce distorsionarea semnalului de către craniu este o problemă specifică EEG, dar nu și MEG?",
+   "options": [
+    "MEG utilizează mai mulți senzori decât EEG, compensând distorsiunile",
+    "Câmpurile magnetice nu sunt distorsionate de craniu, spre deosebire de curenții electrici",
+    "MEG măsoară activitatea direct pe cortex, evitând craniul",
+    "Craniul amplifică semnalul electric, dar atenuează cel magnetic"
+   ],
+   "correct": 1,
+   "hint": "Newman explică avantajul fizic principal al MEG față de EEG.",
+   "explain": [
+    "Numărul de senzori nu rezolvă problema distorsiunii impuse de os.",
+    "Corect. Newman (1497–1500): 'the skull does not affect magnetic fields as it does electrical current' — de aceea localizarea e mai precisă la MEG.",
+    "MEG este tot non-invaziv, senzorii sunt în afara craniului.",
+    "Craniul <em>atenuează</em> și distorsionează semnalul electric, nu îl amplifică."
+   ]
+  },
+  {
+   "q": "Care este principala limită a rezoluției temporale a fMRI, conform Newman?",
+   "options": [
+    "Hardware-ul nu poate achiziționa imagini mai rapid de 5–8 secunde",
+    "Răspunsul hemodinamic (modificarea oxigenării sângelui) este mult mai lent decât activitatea electrică neuronală",
+    "fMRI necesită administrarea unui trasor radioactiv care durează minute să fie eliminat",
+    "Craniul distorsionează undele radio utilizate de MRI, reducând temporalitatea"
+   ],
+   "correct": 1,
+   "hint": "Gândește-te la ce măsoară fMRI — BOLD — și cât de rapid apare acel semnal.",
+   "explain": [
+    "Hardware-ul poate achiziționa un volum în sub 100 ms; problema nu e hardware-ul.",
+    "Corect. Newman (1375–1377): 'blood oxygenation changes that fMRI measures occur over much slower time scales than electrical activity — typically several seconds.'",
+    "Trasorul radioactiv este specific PET, nu fMRI.",
+    "MRI folosește câmpuri magnetice și unde radio — craniul nu le distorsionează semnificativ."
+   ]
+  },
+  {
+   "q": "Conform Newman, care metodă funcțională este considerată 'măsură directă' a activității neuronale?",
+   "options": [
+    "fMRI, deoarece detectează schimbări locale în oxigenarea sângelui",
+    "PET, deoarece urmărește trasori radioactivi cu precizie milimetrică",
+    "EEG și MEG, deoarece sunt sensibile direct la activitatea electrică a neuronilor",
+    "fNIRI, deoarece folosește lumină infraroșie care penetrează creierul direct"
+   ],
+   "correct": 2,
+   "hint": "Newman face distincția explicită directe vs. indirecte în subcapitolele metodelor funcționale.",
+   "explain": [
+    "fMRI este metodă <em>indirectă</em> — măsoară BOLD, nu activitatea electrică.",
+    "PET este metodă <em>indirectă</em> — inferează activitatea din distribuția trasorului radioactiv.",
+    "Corect. Newman (1508–1509): 'Both EEG and MEG can be considered direct measures of neural activity.'",
+    "fNIRI măsoară hemoglobina prin lumină infraroșie — metodă <em>indirectă</em>, hemodinamică."
+   ]
+  },
+  {
+   "q": "Ce caracteristică unică justifică utilizarea PET în neuroștiințele cognitive, în ciuda rezoluției temporale foarte slabe (~90 s/scan)?",
+   "options": [
+    "PET oferă cea mai bună rezoluție spațială dintre toate metodele de neuroimagistică",
+    "PET este singura metodă non-invazivă care urmărește distribuția neurofarmacologică (neurotransmițători, droguri) in vivo",
+    "PET nu necesită introducerea niciunei substanțe în organism, spre deosebire de fMRI",
+    "PET poate fi combinat cu EEG pentru rezoluție temporală superioară"
+   ],
+   "correct": 1,
+   "hint": "Newman menționează o nișă specifică PET pe care nicio altă metodă nu o acoperă.",
+   "explain": [
+    "fMRI și MRI structural au rezoluție spațială comparabilă sau superioară PET.",
+    "Corect. Newman (1578–1584): PET permite urmărirea 'neurotransmitters, neuromodulators, and psychoactive drugs' — unica metodă non-invazivă pentru asta.",
+    "Dimpotrivă: PET <em>necesită</em> un trasor radioactiv introdus în organism; fMRI folosește contrast intrinsec.",
+    "PET+EEG nu este o combinație standard; PET+MRI este combinația descrisă de Newman."
+   ]
+  },
+  {
+   "q": "Newman descrie că fMRI poate localiza activarea cu precizie de milimetru, dar cea mai mare limitare spațială nu vine din hardware. Care este aceasta?",
+   "options": [
+    "Normalizarea creierului individual pe un șablon comun introduce imprecizie spațială",
+    "Modificările de oxigenare a sângelui (BOLD) se extind pe o arie mai mare decât activitatea neuronală reală",
+    "Craniul absoarbe undele radio ale MRI, reducând rezoluția în cortexul profund",
+    "Numărul limitat de voxeli disponibili în imaginile funcționale versus structurale"
+   ],
+   "correct": 1,
+   "hint": "Newman (1387–1391) explică explicit de unde vine această limitare biologică.",
+   "explain": [
+    "Normalizarea introduce imprecizie, dar Newman identifică altă limitare ca principală.",
+    "Corect. Newman (1388–1391): 'the biggest spatial limitation of this technique is not the ability of the hardware, but the fact that the blood oxygenation changes... change over a larger spatial area than the actual neural activity.'",
+    "MRI folosește câmpuri magnetice și unde radio care nu sunt absorbite semnificativ de craniu.",
+    "Rezoluția voxelilor este un parametru hardware, nu limitarea biologică descrisă de Newman."
+   ]
+  },
+  {
+   "q": "În slide-urile cursului, metodele sunt grupate în două categorii principale. Care este clasificarea corectă?",
+   "options": [
+    "Metode structurale (MRI, CT, DTI) și metode funcționale (EEG, fMRI, PET, MEG)",
+    "Metode cu rezoluție spațială înaltă (mm, secunde) și metode cu rezoluție temporală înaltă (ms, centimetri)",
+    "Metode invazive (sEEG, ECoG) și metode non-invazive (EEG, fMRI, PET)",
+    "Metode electromagnetice (EEG, MEG) și metode hemodinamice (fMRI, PET, fNIRI)"
+   ],
+   "correct": 1,
+   "hint": "Slide-urile prezintă explicit două blocuri: 'High spatial resolution' și 'High temporal resolution'.",
+   "explain": [
+    "Deși MRI/CT sunt structurale, clasificarea din slide-uri este după rezoluție, nu structural vs. funcțional.",
+    "Corect. Slide-urile organizează metodele pe axa spațial (fMRI, PET, MRI = mm, dar secunde) versus temporal (EEG, MEG = ms, dar cm).",
+    "Invazivitate este o dimensiune, dar nu criteriul principal de grupare din slide-uri.",
+    "Aceasta corespunde cu distincția Newman directe/indirecte, dar nu cu organizarea principală din slide-uri."
+   ]
+  },
+  {
+   "q": "Un cercetător vrea să studieze cronometria precisă a procesării faciale — când apare recunoașterea feței la milisecunde după prezentarea stimulului. Ce metodă este cea mai potrivită?",
+   "options": [
+    "fMRI, deoarece oferă rezoluție spațială milimetrică și poate localiza precis ariile implicate",
+    "PET, deoarece permite corelarea cu neurotransmițătorii implicați în recunoașterea facială",
+    "EEG/ERP, deoarece are rezoluție temporală de milisecunde și poate detecta componente ca N170",
+    "MEG combinat cu PET pentru rezoluție optimă pe ambele axe"
+   ],
+   "correct": 2,
+   "hint": "Slide-urile menționează explicit componenta N170 ca semnătură ERP pentru fețe.",
+   "explain": [
+    "fMRI are rezoluție temporală slabă (secunde), nepotrivită pentru cronometria ms.",
+    "PET are rezoluție temporală extrem de slabă (~90 s) — complet nepotrivit.",
+    "Corect. EEG/ERP surprinde exact cronometria ms; N170 este componenta ERP specifică procesării faciale, exemplificată în slide-uri.",
+    "PET+MEG nu este o combinație standard și PET nu adaugă nimic la rezoluția temporală."
+   ]
+  },
+  {
+   "q": "De ce MEG oferă o localizare mai bună a surselor decât EEG, dar inferioară față de fMRI?",
+   "options": [
+    "MEG folosește mai puțini senzori decât EEG, dar mai mulți decât fMRI",
+    "MEG nu e distorsionat de craniu (avantaj față de EEG), dar localizarea bazată pe câmpuri magnetice implică inferențe și asumpții (dezavantaj față de fMRI)",
+    "MEG măsoară semnale electrice și magnetice simultan, dublând informația disponibilă",
+    "MEG are rezoluție spațială mai bună decât fMRI deoarece senzorii sunt mai aproape de craniu"
+   ],
+   "correct": 1,
+   "hint": "Newman (1500–1506) explică ambele laturi ale comparației MEG cu EEG și fMRI.",
+   "explain": [
+    "Numărul de senzori nu este argumentul din Newman pentru această comparație.",
+    "Corect. Newman: craniul nu distorsionează câmpurile magnetice → MEG > EEG; dar localizarea MEG 'relies on certain assumptions and inferences, and so its spatial resolution is lower and less accurate than fMRI in most cases.'",
+    "MEG măsoară câmpuri magnetice, nu semnale electrice direct.",
+    "Senzorii MEG sunt exteriori craniului ca și EEG; fMRI are rezoluție spațială superioară."
+   ]
+  },
+  {
+   "q": "Care afirmație despre fMRI și EEG este corectă conform Newman?",
+   "options": [
+    "fMRI are rezoluție temporală superioară deoarece poate achiziționa o imagine în sub 100 ms",
+    "EEG are rezoluție spațială superioară deoarece senzorii sunt mai apropiați de cortex",
+    "fMRI are rezoluție spațială superioară (mm), iar EEG are rezoluție temporală superioară (ms)",
+    "Ambele metode sunt 'măsuri directe' ale activității neuronale electrice"
+   ],
+   "correct": 2,
+   "hint": "Newman compară explicit cele două metode pe ambele axe de rezoluție.",
+   "explain": [
+    "Deși hardware-ul poate achiziționa sub 100 ms, în practică un volum complet durează 1–2 s, plus răspunsul BOLD e de ordinul secundelor.",
+    "EEG are rezoluție spațială <em>inferioară</em> (~1 cm) din cauza distorsiunilor craniene.",
+    "Corect. Newman (1379–1388): 'While fMRI has lower temporal resolution than EEG, it has much higher spatial resolution... fMRI can localize activity with millimetre-level precision.'",
+    "EEG este metodă directă; fMRI este metodă <em>indirectă</em> (hemodinamică)."
+   ]
+  },
+  {
+   "q": "Conform Newman, care este avantajul major al studiilor multimodale care combină EEG și fMRI?",
+   "options": [
+    "Elimină complet nevoia de mediere a semnalului pe multiple trial-uri",
+    "Permit obținerea concomitentă a rezoluției temporale milisecundă și a rezoluției spațiale milimetrică",
+    "Reduc costurile totale ale cercetării prin partajarea infrastructurii",
+    "Oferă măsuri directe ale activității neuronale fără inferențe indirecte"
+   ],
+   "correct": 1,
+   "hint": "Newman (1399–1403) explică motivul pentru care cercetătorii combină tehnicile.",
+   "explain": [
+    "Medierea pe trial-uri (ERP) rămâne necesară pentru EEG indiferent de combinație.",
+    "Corect. Combinând EEG (ms temporal) cu fMRI (mm spatial) se obține complementaritate pe ambele axe — motivul principal pentru studii multimodale (Newman 1399–1403).",
+    "Newman nu menționează reducerea costurilor ca motiv; dimpotrivă, există 'practical constraints.'",
+    "fMRI rămâne metodă indirectă chiar și în combinație cu EEG."
+   ]
+  }
+ ]
+}

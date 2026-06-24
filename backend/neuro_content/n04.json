@@ -1,0 +1,151 @@
+{
+ "id": "n04",
+ "title": "IRM funcțional (fMRI)",
+ "summary_html": "<h3>Ce măsoară fMRI?</h3>\n<p><span class='term'>IRM funcțional (fMRI)</span> este cea mai utilizată tehnică în neuroștiințele cognitive. Introdus în 1992 (Ogawa, Kwong, Bandettini), se bazează pe proprietățile magnetice ale hemoglobinei și permite cartografierea activității cerebrale <em>in vivo</em>, neinvaziv.</p>\n\n<div class='callout def'>\n  <strong>Principiu fundamental:</strong> fMRI nu măsoară direct activitatea neuronală — ci modificări ale oxigenării sângelui corelate cu aceasta. Este întotdeauna o <em>măsură indirectă</em>.\n</div>\n\n<h3>Semnalul BOLD</h3>\n<p>fMRI exploatează <strong>contrastul BOLD</strong> (<span class='term'>Blood Oxygenation Level Dependent</span>). Hemoglobina dezoxigenată (deoxy-Hb) este paramagnetică și accelerează decăderea T2*, reducând semnalul în imagini T2*-ponderate. Hemoglobina oxigenată (oxy-Hb) nu are acest efect.</p>\n\n<table class='ctab'>\n  <thead><tr><th>Stare</th><th>Deoxy-Hb</th><th>T2* decay</th><th>Semnal BOLD</th></tr></thead>\n  <tbody>\n    <tr><td>Repaus</td><td>niveluri normale</td><td>moderat</td><td>linie de bază</td></tr>\n    <tr><td>Activare neuronală</td><td>↓ (vasodilatație → aflux oxy-Hb)</td><td>↓</td><td>↑ (creștere)</td></tr>\n  </tbody>\n</table>\n\n<h3>Funcția hemodinamică (HRF)</h3>\n<p><span class='term'>Hemodynamic Response Function (HRF)</span> descrie evoluția temporală a semnalului BOLD după un stimul tranzitoriu:</p>\n<ul>\n  <li>Început: ~1–2 s după stimul</li>\n  <li>Vârf: 6–8 s</li>\n  <li>Revenire la linie de bază: ~12–15 s</li>\n  <li>Adesea urmată de un <em>undershoot</em> (~15–18 s)</li>\n</ul>\n<div class='callout'>\n  <strong>Consecință practică:</strong> HRF introduce o latență majoră față de activitatea neuronală. Rezoluția temporală a fMRI este mult inferioară EEG/MEG (care detectează răspunsuri la &lt;50 ms). Secvența de activare între arii cerebrale <em>nu poate fi inferată</em> din momentul de vârf al HRF.\n</div>\n\n<h3>Rezoluție spațială vs. temporală</h3>\n<table class='ctab'>\n  <thead><tr><th>Parametru</th><th>fMRI</th><th>EEG</th></tr></thead>\n  <tbody>\n    <tr><td>Rezoluție spațială</td><td><strong>Bună</strong> (voxeli 2–3 mm)</td><td>Slabă (cm)</td></tr>\n    <tr><td>Rezoluție temporală</td><td><strong>Slabă</strong> (TR ~2 s; HRF ~6–8 s)</td><td>Excelentă (ms)</td></tr>\n    <tr><td>Măsoară</td><td>Oxigenare sânge (indirect)</td><td>Activitate electrică (direct)</td></tr>\n  </tbody>\n</table>\n\n<h3>Design experimental</h3>\n<h4>Design în blocuri (Block Design)</h4>\n<p>Condiții experimentale prezentate în blocuri de 20–100 s, alternând cu o condiție de control (<em>boxcar design</em>). Avantaj: semnal BOLD mare prin sumarea HRF-urilor. Limitare: nu permite randomizarea stimulilor, nu pot fi izolate răspunsuri la trialuri individuale.</p>\n\n<h4>Design event-related (ER-fMRI)</h4>\n<p>Stimulii sunt prezentați individual, în ordine randomizată, cu <em>jittering</em> al intervalului dintre stimuli (SOA variabil). Permite:</p>\n<ul>\n  <li>Analiza răspunsurilor la trialuri individuale</li>\n  <li>Sortarea post-hoc după comportament (ex: amintit vs. uitat)</li>\n  <li>Designuri oddball (paradigme P3)</li>\n</ul>\n<div class='callout'>\n  <strong>Jittering SOA:</strong> Varierea intervalelor dintre stimuli creează variație sistematică în semnalul BOLD predicted, esențială pentru detectabilitatea statistică în ER-fMRI. SOA fix scurt → răspuns BOLD plat, nedistinguibil de zgomot.\n</div>\n\n<h3>Preprocesare fMRI</h3>\n<ol>\n  <li><strong>Filtrare temporală</strong> — elimină artefacte de joasă frecvență (respirație, puls, drift scanner) prin filtrare trece-sus (~0.1–0.2 Hz)</li>\n  <li><strong>Corecția mișcării (motion correction)</strong> — alinierea volumelor succesive la un volum de referință. Limitare critică: mișcări &gt;~2 mm produc artefacte irecuperabile datorită gradienților de câmp magnetic</li>\n  <li><strong>Smoothing spațial</strong> — aplicarea unui kernel Gaussian (FWHM = 1.5–2× dimensiunea voxelului) pentru reducerea zgomotului și îmbunătățirea SNR; scade rezoluția spațială aparentă</li>\n  <li><strong>Normalizare spațială</strong> — alinierea creierului individual la un șablon standard (ex: MNI152) pentru a permite comparații între subiecți. Metode: Talairach, aliniere afină liniară, warping non-liniar, normalizare sferică bazată pe suprafață</li>\n</ol>\n\n<h3>Analiză statistică — Modelul Linear General (GLM)</h3>\n<p>Analiza standard fMRI utilizează <span class='term'>General Linear Model (GLM)</span> în abordare <em>mass univariată</em>: seria temporală BOLD a fiecărui voxel este corelată cu un predictor obținut prin convoluția timpului de stimulare cu modelul HRF. Coeficienții rezultați (beta weights) reflectă forța activării. Problema <strong>comparațiilor multiple</strong> (zeci de mii de voxeli testați simultan) impune corecții: Gaussian Random Field Theory, False Discovery Rate (FDR) sau teste non-parametrice de permutare.</p>\n\n<h3>Conectivitate funcțională vs. efectivă</h3>\n<table class='ctab'>\n  <thead><tr><th>Tip</th><th>Definiție</th><th>Metodă</th><th>Limitare</th></tr></thead>\n  <tbody>\n    <tr><td><strong>Conectivitate funcțională</strong></td><td>Corelarea semnalelor BOLD între arii cerebrale; nu implică conexiuni structurale directe</td><td>Seed-based correlation, ICA, Graph Theory</td><td>Nu furnizează direcția influenței; corelație ≠ cauzalitate</td></tr>\n    <tr><td><strong>Conectivitate efectivă</strong></td><td>Estimarea direcției influenței dintre arii; încearcă inferența cauzalității</td><td>Granger Causality, PPI (Psychophysiological Interactions), DCM</td><td>Variabilitatea HRF între arii invalidează inferențele temporale directe</td></tr>\n  </tbody>\n</table>\n\n<div class='callout'>\n  <strong>Starea de repaus (resting-state fMRI):</strong> Participanții nu efectuează nicio sarcină. Rețele de conectivitate funcțională identificate (ex: Default Mode Network) sunt reproductibile și utilizate ca biomarkeri ai bolilor neurologice/psihiatrice.\n</div>",
+ "questions": [
+  {
+   "q": "Semnalul BOLD în fMRI reflectă în principal:",
+   "options": [
+    "Activitatea electrică directă a neuronilor corticali",
+    "Modificări ale raportului oxihemoglobină/deoxihemoglobină în vasele de sânge",
+    "Consumul de glucoză în celulele gliale",
+    "Potențialele de câmp local măsurate la suprafața scalpului"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "BOLD (Blood Oxygenation Level Dependent) reflectă modificările magnetice produse de deoxy-Hb paramagnetică. Este o măsură indirectă a activității neuronale, mediată de vasodilatație și modificări ale fluxului sangvin cerebral (Newman, cap. 7)."
+  },
+  {
+   "q": "Care este forma tipică a funcției hemodinamice (HRF) în răspuns la un stimul tranzitoriu?",
+   "options": [
+    "Creștere imediată (sub 50 ms), vârf la 1 s, revenire rapidă la linie de bază",
+    "Debut la ~1–2 s, vârf la 6–8 s, revenire la linie de bază după ~12–15 s, adesea cu undershoot",
+    "Debut la ~5 s, platou constant timp de 30 s, revenire bruscă",
+    "Semnal bifazic: creștere inițială la 2 s urmată de scădere la 4 s, fără undershoot"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "HRF are un debut la ~1–2 s, vârf la 6–8 s și revenire la linie de bază după 10–15 s, uneori urmată de undershoot până la ~18 s (Newman, cap. 7). Această evoluție lentă limitează rezoluția temporală a fMRI."
+  },
+  {
+   "q": "De ce semnalul BOLD crește în timpul activării neuronale, deși creșterea activității implică inițial consum mai mare de oxigen?",
+   "options": [
+    "Neuronii inhibitori domină răspunsul și reduc consumul de oxigen",
+    "Vasodilatația locală indusă de astrocite aduce un aflux de oxihemoglobină care depășește consumul crescut de oxigen",
+    "Glucoza înlocuiește oxigenul ca substrat energetic în timpul activării",
+    "T2* crește proporțional cu nivelul de deoxihemoglobină, producând semnal mai mare"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Activarea neuronală → eliberare glutamat → astrocitele declanșează vasodilatație via prostaglandine → aflux masiv de oxy-Hb care supracompensează consumul de O2. Acest mecanism ('watering the entire garden for one thirsty flower') explică paradoxul creșterii BOLD în activare (Malonek & Grinvald, 1996; Newman, cap. 7)."
+  },
+  {
+   "q": "Comparând fMRI cu EEG, care afirmație este corectă?",
+   "options": [
+    "fMRI are rezoluție temporală superioară și rezoluție spațială inferioară față de EEG",
+    "Atât fMRI cât și EEG măsoară direct activitatea electrică neuronală",
+    "fMRI are rezoluție spațială mai bună (mm) dar rezoluție temporală mult mai slabă față de EEG (ms)",
+    "EEG și fMRI au rezoluții spațiale comparabile, diferind doar prin costul echipamentului"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "fMRI oferă localizare spațială la nivel de mm (voxeli 2–3 mm), dar rata de eșantionare (TR ~2 s) și dinamica HRF (vârf la 6–8 s) conferă o rezoluție temporală net inferioară EEG-ului care detectează răspunsuri sub 50 ms (Newman, cap. 7)."
+  },
+  {
+   "q": "Principalul avantaj al designului în blocuri (block design) față de designul event-related în fMRI este:",
+   "options": [
+    "Permite izolarea răspunsurilor la stimuli individuali și sortarea post-hoc după comportament",
+    "Produce un semnal BOLD mai mare prin sumarea lineară a HRF-urilor stimulilor din bloc",
+    "Elimină nevoia de condiție de control (baseline)",
+    "Este singurul design compatibil cu preprocesarea standard (motion correction)"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "În designul în blocuri, HRF-urile stimulilor succesivi se sumează aproximativ liniar, producând un semnal BOLD mai mare și mai ușor de detectat statistic față de designul event-related. Dezavantajul: nu permite analiza trialurilor individuale (Newman, cap. 8)."
+  },
+  {
+   "q": "Ce rol are 'jittering-ul' SOA (stimulus onset asynchrony) în designul event-related?",
+   "options": [
+    "Reduce durata scanării prin comprimarea timpului de achiziție",
+    "Elimină artefactele de mișcare prin sincronizarea stimulilor cu ciclul respirator",
+    "Creează variație sistematică în semnalul BOLD predicted, permițând detectarea statistică a activării",
+    "Uniformizează amplitudinea HRF între arii cerebrale cu timpi de vârf diferiți"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "SOA fix scurt produce un răspuns BOLD predictat aproape plat (nedistinguibil de zgomot). Jittering-ul SOA creează variație temporală în semnalul BOLD, esențială pentru detectabilitate. Intervalele lungi ('null events') permit revenirea parțială/completă la linie de bază (Newman, cap. 8)."
+  },
+  {
+   "q": "Corecția mișcării (motion correction) în preprocesarea fMRI are o limitare fundamentală deoarece:",
+   "options": [
+    "Calculatoarele moderne nu pot efectua corecțiile în timp real",
+    "Mișcările mai mari de ~2 mm produc artefacte irecuperabile din cauza modului în care gradienții de câmp magnetic codifică poziția spațială",
+    "Algoritmii de corecție sunt valabili doar pentru rotații, nu și pentru translații",
+    "Corecția mișcării elimină și semnalul BOLD adevărat odată cu artefactele"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Codificarea spațială MRI se bazează pe diferențe precise ale frecvenței/fazei de precesie a protonilor prin gradienți de câmp. Mișcările capului modifică relația dintre locație și frecvență/fază, iar mișcările >~2 mm (jumătate din dimensiunea voxelului) produc distorsiuni irecuperabile (Newman, cap. 7)."
+  },
+  {
+   "q": "Smoothing-ul spațial în preprocesarea fMRI se realizează prin:",
+   "options": [
+    "Scăderea rezoluției de achiziție prin creșterea grosimii slice-urilor",
+    "Aplicarea unui kernel Gaussian pentru a 'blura' imaginea și reduce zgomotul voxel-cu-voxel",
+    "Eliminarea voxelilor cu semnal sub un prag de intensitate",
+    "Subsampling-ul temporal al seriei BOLD la o rată mai mică"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Smoothing-ul spațial aplică un kernel Gaussian (FWHM recomandat: 1.5–2× dimensiunea voxelului) care mediază valorile voxelilor adiacenți. Reduce zgomotul punctiform, îmbunătățește SNR și corespunde matched filter theorem — maximizând detectarea semnalului de mărimea kernelului (Newman, cap. 7)."
+  },
+  {
+   "q": "Normalizarea spațială în fMRI este necesară pentru că:",
+   "options": [
+    "Creierele individuale diferă în formă și dimensiune, făcând imposibilă media directă a datelor între subiecți",
+    "Semnalul BOLD variază în unități arbitrare și trebuie convertit în valori absolute",
+    "Algoritmul EPI distorsionează sistematic creierul într-un volum standard",
+    "Corecția mișcării deplasează creierul față de poziția inițială și trebuie compensat"
+   ],
+   "correct": 0,
+   "hint": "",
+   "explain": "Fiecare creier are dimensiuni, formă și anatomie sulcală/girală unice. Normalizarea spațială aliniează creierul fiecărui participant la un șablon standard (ex: MNI152) pentru a permite comparații voxel-cu-voxel la nivel de grup (Newman, cap. 7)."
+  },
+  {
+   "q": "În analiza statistică fMRI cu GLM (General Linear Model), regressorul din model este obținut prin:",
+   "options": [
+    "Corelarea directă a seriei temporale BOLD cu o undă dreptunghiulară (boxcar) a condiției",
+    "Convoluția timpului de prezentare a stimulilor cu un model al HRF",
+    "Transformata Fourier a seriei temporale pentru identificarea frecvențelor dominante",
+    "Scăderea activității din condiția de control din activitatea condiției experimentale, voxel cu voxel"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Seria temporală a stimulilor (spikes la momentele de prezentare) este convoluată cu modelul HRF pentru a genera predicția semnalului BOLD așteptat. Aceasta este regresat față de seria BOLD reală la fiecare voxel — abordare mass univariată (Newman, cap. 8)."
+  },
+  {
+   "q": "Diferența esențială dintre conectivitatea funcțională și conectivitatea efectivă în fMRI este:",
+   "options": [
+    "Conectivitatea funcțională se aplică doar datelor resting-state, iar cea efectivă doar datelor task-based",
+    "Conectivitatea funcțională măsoară corelații de semnal BOLD fără a infera direcția influenței; conectivitatea efectivă încearcă să determine direcția și cauzalitatea",
+    "Conectivitatea funcțională necesită tractografie DTI pentru a valida conexiunile identificate",
+    "Conectivitatea efectivă se bazează exclusiv pe ICA, iar cea funcțională pe seed-based correlation"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Conectivitatea funcțională = corelația semnalului BOLD între arii (nu implică cauzalitate sau direcție). Conectivitatea efectivă (Granger Causality, PPI, DCM) încearcă să estimeze direcția influenței. Ambele au limitări: HRF variabilă face interpretările cauzale bazate pe timing BOLD problematice (Newman, cap. 8)."
+  },
+  {
+   "q": "Care dintre următoarele afirmații despre fMRI resting-state (rs-fMRI) este corectă?",
+   "options": [
+    "rs-fMRI nu poate identifica rețele cerebrale deoarece nu există niciun stimul experimental care să le activeze",
+    "Rețelele de conectivitate funcțională din starea de repaus (ex: Default Mode Network) sunt inconsistente între indivizi și nu au valoare clinică",
+    "rs-fMRI identifică rețele de conectivitate funcțională reproductibile, utilizate ca biomarkeri în boli neurologice și psihiatrice",
+    "rs-fMRI măsoară conectivitatea structurală (axonală) între arii cerebrale, spre deosebire de fMRI task-based"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Deși nu există sarcină explicită, rs-fMRI revelează rețele de conectivitate funcțională consistente (ex: DMN, rețeaua senzori-motorie) reproductibile între indivizi și studii. Acestea sunt utilizate ca biomarkeri în boli Alzheimer, schizofrenie etc. Conectivitatea funcțională ≠ conectivitate structurală (Newman, cap. 8)."
+  }
+ ]
+}

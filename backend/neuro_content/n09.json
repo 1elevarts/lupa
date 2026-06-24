@@ -1,0 +1,151 @@
+{
+ "id": "n09",
+ "title": "Stimularea Electrică Transcraniană (tES)",
+ "summary_html": "\n<h3>Ce este tES și cum diferă de TMS</h3>\n<p><span class='term'>Stimularea electrică transcraniană (tES)</span> este o familie de tehnici noninvazive de stimulare cerebrală ce implică pasarea unui curent electric relativ slab prin scalp și craniu. Spre deosebire de TMS, tES <strong>nu declanșează potențiale de acțiune</strong> — curenții folosiți (1–2 mA) sunt mult prea slabi pentru asta. În schimb, tES <em>modulează</em> potențialele de membrană neuronală, făcând neuronii mai mult sau mai puțin susceptibili să răspundă la inputuri ulterioare. Acesta este motivul pentru care efectele tES sunt descrise ca <span class='term'>neuromodulare</span>, nu neurostimulare directă.</p>\n\n<div class='callout def'>\n  <strong>Principiu fundamental:</strong> Țesuturile craniene (mai ales osul) sunt izolatori electrici. Curentul care ajunge la creier este mult mai slab decât cel aplicat la suprafața capului — de aceea nu se produc potențiale de acțiune. tES <em>nudges</em> (împinge ușor) membrana neuronală spre depolarizare sau hiperpolarizare.\n</div>\n\n<h3>Tipuri principale de tES</h3>\n\n<table class='ctab'>\n  <thead>\n    <tr><th>Parametru</th><th>tDCS</th><th>tACS</th><th>tRNS</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Forma curentului</td><td>Continuu (DC fix)</td><td>Sinusoidal alternativ</td><td>Zgomot aleator</td></tr>\n    <tr><td>Amplitudine tipică</td><td>1–2 mA</td><td>1–2 mA</td><td>±0,5 mA (centrat pe zero)</td></tr>\n    <tr><td>Durată tipică</td><td>5–20 min</td><td>10 min</td><td>~10 min</td></tr>\n    <tr><td>Frecvență</td><td>N/A (0 Hz)</td><td>3–100+ Hz (EEG band)</td><td>0,1–640 Hz (broadband)</td></tr>\n    <tr><td>Polaritate electrod</td><td>Anod fix / Catod fix</td><td>Fiecare electrod alternează</td><td>Fiecare electrod alternează</td></tr>\n    <tr><td>Efect primar</td><td>Depolarizare (anod) / Hiperpolarizare (catod)</td><td>Entrainment oscilații</td><td>Stochastic resonance; efect similar tDCS</td></tr>\n    <tr><td>Termenii anod/catod</td><td>Aplicabili</td><td>Nu se aplică</td><td>Nu se aplică</td></tr>\n    <tr><td>Senzație la participant</td><td>Furnicătură / mâncărime la onset</td><td>Similară tDCS</td><td>De obicei absente</td></tr>\n  </tbody>\n</table>\n\n<h3>tDCS — Stimularea prin curent direct transcranial</h3>\n<p><span class='term'>tDCS</span> este cea mai frecventă formă de tES. Un curent de amplitudine fixă circulă de la <strong>anod</strong> (electrod 'trimițător') la <strong>catod</strong> (electrod 'receptor') prin cap, timp de câteva minute. Ramping-ul (creșterea/descreșterea graduală) la start și final reduce senzațiile neplăcute.</p>\n<ul>\n  <li><strong>Stimulare anodală:</strong> depolarizează membrana — neuronii devin mai sensibili la input, cresc probabilitatea de a fi declanșați → <em>excitabilitate crescută</em> → facilitează LTP și învățarea</li>\n  <li><strong>Stimulare catodală:</strong> hiperpolarizează membrana → <em>excitabilitate scăzută</em> → facilitează LTD</li>\n  <li>Efectul anodal se poate <strong>inversa</strong> dacă stimularea durează prea mult (ex. 26 min vs. 13 min)</li>\n</ul>\n\n<div class='callout'>\n  <strong>Modelul AECI (Anodal Excitation — Cathodal Inhibition):</strong> Modelul de bază al tDCS. Anodal tDCS → depolarizare → LTP. Catodal tDCS → hiperpolarizare → LTD. Simplist, dar explică cele mai multe efecte de bază.\n</div>\n\n<h4>Montaj electrozi în tDCS</h4>\n<p>Electrozii tradiționali sunt burete mare (ex. 5×7 cm) înmuiat în soluție salină. HD-tES folosește electrozi mici (EEG-like) în configurație <strong>4×1 ring</strong>: un anod central înconjurat de 4 catozi la ~3 cm distanță — stimulare mai focală. Localizarea catodului influențează semnificativ distribuția curentului intra-cerebral.</p>\n\n<h4>Aplicații tDCS</h4>\n<ul>\n  <li>Cortex motor: crește amplitudinea MEP (confirmată prin TMS post-tDCS)</li>\n  <li>DLPC (cortex prefrontal dorsolateral): îmbunătățește memoria de lucru, control executiv, reglare emoțională</li>\n  <li>Offline (înainte de task): facilitează consolidarea memoriei, inclusiv în timpul somnului REM</li>\n  <li>Aplicații clinice: depresie majoră, schizofrenie, abuz de substanțe</li>\n</ul>\n\n<h3>tACS — Stimularea prin curent alternativ transcranial</h3>\n<p><span class='term'>tACS</span> utilizează un curent sinusoidal la o frecvență aleasă în funcție de oscilațiile neurale naturale. Scopul principal este <span class='term'>entrainment-ul</span> oscilațiilor corticale — sincronizarea activității neurale cu ritmul stimulării. Efectele includ:</p>\n<ul>\n  <li>Inducerea/amplificarea oscilațiilor la frecvența de stimulare</li>\n  <li><strong>Phase locking</strong> — sincronizarea fazei oscilațiilor cerebrale cu faza stimulului</li>\n  <li>Îmbunătățirea memoriei de lucru (ex. tACS theta 6 Hz fronto-parietal sincronizat)</li>\n</ul>\n<p>Deoarece curentul alternează între pozitiv și negativ, <strong>termenii anod/catod nu se aplică</strong>, iar efectul net de polarizare pe termen lung este zero. Ambii electrozi modulează zona corticală subiacentă la frecvența de stimulare, dar cu faze opuse.</p>\n\n<h3>tRNS — Stimularea prin zgomot aleator transcranial</h3>\n<p><span class='term'>tRNS</span> variază amplitudinea curentului aleatoriu la fiecare moment (centrat pe zero, ~±0,5 mA, ~1000 valori/secundă). Spectrul de frecvențe este practic <em>white noise</em> (0,1–640 Hz). Varianta <strong>high-frequency tRNS</strong> (hf-tRNS: 100–640 Hz) este mai eficientă decât cea low-frequency.</p>\n<ul>\n  <li>Efect mai puternic și mai durabil decât tDCS în unele studii</li>\n  <li>MEP crescut cu 20–50% după 10 min, efecte >60 min</li>\n  <li>Mecanismul propus: <span class='term'>rezonanță stochastică</span> — zgomotul aleator crește sensibilitatea neuronilor la semnale slabe fără să inducă polarizare netă</li>\n  <li>Nu depinde de receptorii NMDA (spre deosebire de tDCS), dar depinde de canalele de sodiu și GABA</li>\n  <li>Avantaj practic: participanții nu resimt senzații tactile → blinding mai ușor față de sham</li>\n</ul>\n\n<h3>Mecanisme farmacologice</h3>\n<p>Efectele tDCS sunt mediate de:</p>\n<ul>\n  <li><strong>Canale de sodiu și calciu:</strong> blocarea lor elimină efectele online ale anodului</li>\n  <li><strong>Receptori NMDA și glutamat:</strong> esențiali pentru efectele offline (after-effects); agonistul NMDA prelungește efectele anodului</li>\n  <li><strong>GABA:</strong> tDCS anodal reduce GABA → facilitează LTP (efect offline)</li>\n  <li>Neuromodulatori: acetilcolină, dopamină, serotonină influențează efectele tDCS</li>\n</ul>\n\n<h3>Design experimental: controlul placebo (sham)</h3>\n<p>Controlul efectelor placebo este esențial în studiile tES. <span class='term'>Stimularea sham</span> constă în creșterea și apoi scăderea rapidă a curentului (10–45 s) — suficient pentru a induce senzații, dar insuficient pentru a modifica excitabilitatea corticală. Probleme:</p>\n<ul>\n  <li>Participanții experimentați pot distinge tDCS real de sham prin senzații</li>\n  <li>tRNS oferă un avantaj: absența senzațiilor facilitează blinding-ul</li>\n  <li>Eritemul cutanat (roșeața pielii sub electrod) poate deconspira condiția experimentatorului</li>\n</ul>\n\n<h3>Siguranță</h3>\n<ul>\n  <li>Curenți 1–2 mA — similari cu cei produși de o baterie de 9V pe limbă; pragul dureros este ~5 mA</li>\n  <li>Nicio dovadă de leziune ireversibilă la protocoale convenționale (review Bikson et al., 2016: >33.000 sesiuni)</li>\n  <li>Riscul de arsuri cutanate apare la impedanță mare electrod-piele (prevenție: soluție salină, gel conductiv)</li>\n  <li>Niciun caz de criză epileptică raportat în condiții de protocol corect</li>\n  <li>Populații speciale: copii (craniu mai subțire → curent mai mult ajunge la creier), vârstnici (CSF mai mult → conductivitate mai mare)</li>\n  <li>Dispozitivele de consum (75–300 USD) ridică îngrijorări: necalibrate, fără supervizare, risc de utilizare incorectă</li>\n</ul>\n\n<div class='callout def'>\n  <strong>Rezumat comparativ:</strong> tDCS = modulare susținută a excitabilității (anod↑, catod↓). tACS = entrainment oscilații la frecvență specifică. tRNS = rezonanță stochastică, efecte posibil mai puternice, blinding mai ușor. Toate = neuromodulare, NU declanșare potențiale de acțiune.\n</div>\n",
+ "questions": [
+  {
+   "q": "Ce distinge fundamental mecanismul de acțiune al tES față de TMS?",
+   "options": [
+    "tES declanșează potențiale de acțiune prin câmpuri magnetice, TMS prin curent electric",
+    "tES modulează potențialele de membrană neuronală fără a declanșa potențiale de acțiune, TMS declanșează direct potențiale de acțiune",
+    "tES are efecte mai puternice și mai rapide decât TMS",
+    "tES necesită electrozi implantați intracranial pentru a produce efecte"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "tES 'împinge ușor' (nudges) membrana neuronală spre depolarizare sau hiperpolarizare, dar curentul prea slab ajunge la creier pentru a declanșa potențiale de acțiune. TMS, prin câmpuri magnetice care penetrează craniul fără atenuare, depolarizează direct neuronii și declanșează potențiale de acțiune."
+  },
+  {
+   "q": "Ce efect are stimularea anodală în tDCS asupra neuronilor din cortexul subiacent?",
+   "options": [
+    "Hiperpolarizare — neuronii devin mai greu de activat",
+    "Depolarizare — neuronii devin mai sensibili la input și mai probabili să se activeze",
+    "Entrainment la frecvența alfa",
+    "Blocare completă a transmisiei sinaptice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Anodul în tDCS depolarizează membranele neuronale (potențialul intracelular devine mai puțin negativ), crescând excitabilitatea — neuronii răspund mai ușor la inputuri ulterioare. Aceasta facilitează LTP și este baza modelului AECI (Anodal Excitation — Cathodal Inhibition)."
+  },
+  {
+   "q": "Care este scopul principal al tACS în cercetarea neuroștiințifică?",
+   "options": [
+    "Blocarea oscilațiilor corticale patologice prin hiperinhibiție",
+    "Entrainment-ul (sincronizarea) oscilațiilor neurale intrinseci la frecvența de stimulare",
+    "Inducerea depolarizării susținute pentru a facilita LTP",
+    "Crearea unor leziuni corticale reversibile pentru studii cauzale"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "tACS folosește curent sinusoidal la o frecvență aleasă în funcție de benzile EEG relevante (ex. theta 4–8 Hz, alfa 8–14 Hz). Scopul este entrainment-ul oscilațiilor — inducerea sau amplificarea oscilațiilor la frecvența de stimulare și phase locking (sincronizarea fazei)."
+  },
+  {
+   "q": "De ce termenii 'anod' și 'catod' nu sunt aplicabili în tACS și tRNS?",
+   "options": [
+    "Electrozii sunt prea mari pentru a defini o polaritate",
+    "Curentul alternează astfel încât fiecare electrod funcționează atât ca anod cât și ca catod în timp",
+    "Curentul este prea slab pentru a crea o diferență de polaritate",
+    "Acești termeni sunt rezervați exclusiv pentru tehnicile invazive"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "În tACS și tRNS, curentul alternează între valori pozitive și negative la fiecare electrod. Astfel, fiecare electrod este succesiv anod și catod, iar efectul net de polarizare pe durata stimulării este zero — nu există o polaritate fixă, deci termenii devin inaplicabili."
+  },
+  {
+   "q": "Ce parametri trebuie optimizați în tDCS pentru a evita inversarea efectului anodal?",
+   "options": [
+    "Frecvența și faza curentului",
+    "Intensitatea curentului și durata stimulării, care împreună determină sarcina totală și trebuie să rămână sub pragul de inversare (~13–15 min la 1 mA)",
+    "Tipul de electrod (sponge vs. HD) și grosimea craniului",
+    "Tipul de neurotransmițător țintit (GABA vs. glutamat)"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Studiile arată că stimularea anodală crește excitabilitatea la durate de 5–13 min, dar durate mai lungi (ex. 26 min) pot inversa efectul prin mecanisme homeostatice (influx excesiv de calciu). Intensitatea și durata sunt interdependente și nelineare."
+  },
+  {
+   "q": "Care este mecanismul propus pentru efectele tRNS, diferit de cel al tDCS?",
+   "options": [
+    "tRNS blochează canalele NMDA, crescând selectiv activitatea inhibitorie",
+    "Rezonanță stochastică: zgomotul aleator crește sensibilitatea neuronilor la semnale subliminare fără a induce polarizare netă",
+    "tRNS acționează exclusiv prin entrainment gamma (30–100 Hz)",
+    "tRNS depolarizează neuronii similar anodului tDCS, dar mai rapid"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "tRNS nu produce polarizare netă (curent centrat pe zero). Mecanismul propus este rezonanța stochastică: zgomotul de intrare crește activitatea sistemului nelinear (creierul), permițând semnalelor subliminale să depășească pragul de activare, fără dependență de receptorii NMDA (spre deosebire de tDCS)."
+  },
+  {
+   "q": "Ce evidență farmacologică susține rolul NMDA în efectele offline ale tDCS anodal?",
+   "options": [
+    "Blocanții NMDA elimină efectele ONLINE ale stimulării anodale",
+    "Blocanții NMDA nu afectează efectele online, dar reduc after-effects; agonistul NMDA prelungește after-effects",
+    "NMDA este irelevant pentru tDCS; efectele sunt mediate exclusiv de GABA",
+    "Antagoniștii NMDA potențează efectele catodului, nu ale anodului"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Blocarea receptorilor NMDA nu modifică efectele din timpul stimulării anodale (online), dar reduce semnificativ after-effects (offline). Administrarea unui agonist NMDA prelungește after-effects. Aceasta indică că glutamatul via NMDA este critic pentru plasticitatea post-stimulare, nu pentru efectele directe."
+  },
+  {
+   "q": "Ce este stimularea 'sham' în studiile tES și care este scopul ei?",
+   "options": [
+    "Stimulare la frecvență gamma pentru a anula efectele stimulării principale",
+    "Creșterea și scăderea rapidă a curentului (10–45 s) — suficient pentru senzații similare, insuficient pentru modificarea excitabilității corticale; controlează efectele placebo",
+    "Stimulare catodală la intensitate maximă pentru a suprima răspunsurile",
+    "Aplicarea electrozilor fără conectare la aparat"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Sham mimează senzațiile fizice ale stimulării (furnicătură la onset/offset) prin rampare rapidă, dar durata este prea scurtă pentru a modifica excitabilitatea corticală. Este esențial pentru a controla demand characteristics — modificări comportamentale datorate convingerii participantului că 'ceva' ar trebui să se schimbe."
+  },
+  {
+   "q": "Ce avantaj practic major oferă tRNS față de tDCS în designul experimental?",
+   "options": [
+    "tRNS are efecte mai focale datorită distribuției frecvențelor",
+    "Participanții de obicei nu resimt senzații tactile în tRNS, facilitând blinding-ul față de sham",
+    "tRNS permite stimularea simultană a mai multor arii corticale",
+    "tRNS nu necesită electrozi pe scalp — se administrează prin căști"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Spre deosebire de tDCS (care induce furnicătură/mâncărime la onset), tRNS nu produce senzații perceptibile la amplitudini tipice. Aceasta face mult mai dificil pentru participanți să distingă stimularea reală de sham, reducând riscul de bias prin demand characteristics sau efecte placebo."
+  },
+  {
+   "q": "Ce au demonstrat studiile cu tACS utilizând trei electrozi (Polanía et al., 2012)?",
+   "options": [
+    "Stimularea gamma sincronă fronto-parietală îmbunătățește detecția vizuală",
+    "tACS theta în fază (0°) fronto-parietal îmbunătățește memoria de lucru; tACS theta în antifază (180°) o deteriorează față de sham",
+    "Phase locking-ul alfa este critic pentru consolidarea memoriei în timpul somnului",
+    "Entrainment-ul theta necesită intensități de cel puțin 2 mA pentru a produce efecte comportamentale"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Polanía et al. (2012) au aplicat tACS 6 Hz sincronizat sau desincronizat (180°) între DLPC stâng și cortexul parietal. Stimularea sincronă (0°) a îmbunătățit semnificativ performanța pe task de memorie de lucru, iar cea desincronizată a deteriorat-o. Control cu 35 Hz nu a produs efecte — specificitea de frecvență."
+  },
+  {
+   "q": "Care sunt principalele riscuri de siguranță în administrarea tES și cum se previn?",
+   "options": [
+    "Riscul major este inducerea crizelor epileptice; prevenție prin EEG continuu",
+    "Disconfort și arsuri cutanate (prevenite prin impedanță scăzută și electrozi bine hidratați); niciun caz de leziune cerebrală ireversibilă la protocoale convenționale; screening pentru tulburări neurologice",
+    "Riscul de infarct cerebral prin curent prea puternic; prevenție prin limitarea la 0,5 mA",
+    "Perturbarea somnului REM pe termen lung; prevenție prin sesiuni matinale exclusiv"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Conform review-ului Bikson et al. (2016) pe >33.000 sesiuni, nu există dovezi de leziuni ireversibile la protocoale convenționale. Arsurile cutanate apar la impedanță mare electrod-piele și se previn prin curățarea pielii, electrozi hidratați și gel conductiv. Nu s-au raportat crize epileptice cu tES convențional."
+  },
+  {
+   "q": "De ce HD-tES (configurația 4×1 ring) este superioară tES convenționale cu electrozi mari?",
+   "options": [
+    "HD-tES folosește curenți mai mari (>4 mA), producând efecte mai puternice",
+    "HD-tES produce o distribuție mult mai focală a curentului intracranian, limitând stimularea la zona corticală țintită; electrozii mari distribuie curentul neuniform pe arii largi, adesea altele decât zona vizată",
+    "HD-tES elimină complet nevoia de soluție salină sau gel conductiv",
+    "HD-tES poate fi folosit simultan cu TMS fără interferențe electromagnetice"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Modelarea prin FEM (Datta et al., 2009) a arătat că electrozii mari sponge (7×5 cm) distribuie curentul maximal NU sub electrod, ci adesea în lobul frontal contralateral. Configurația 4×1 (un anod central + 4 catozi la 3 cm distanță) produce câmpuri electrice semnificativ mai focale direct sub anod, deși variabilitatea cu anatomia circumvoluțiunilor rămâne."
+  }
+ ]
+}

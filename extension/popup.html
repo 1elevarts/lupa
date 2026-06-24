@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --accent:#8c7be6; --ink:#3a3850; --muted:#8a889c; --line:rgba(40,36,70,.07); }
+  * { box-sizing:border-box; font-family:-apple-system,"Segoe UI",Roboto,sans-serif; }
+  body { width:280px; margin:0; padding:16px; color:var(--ink);
+         background:linear-gradient(180deg,#fbfbfd,#f3f3f7); }
+  h1 { font-size:14px; margin:0 0 2px; display:flex; align-items:center; gap:8px; color:#34324a; font-weight:650; }
+  h1 .o { width:18px;height:18px;border-radius:50%;border:1.5px solid var(--accent);
+          background:radial-gradient(circle at 35% 30%, #fff, #ece9fb); }
+  .sub { font-size:11px; color:var(--muted); margin:0 0 14px; }
+  .row { display:flex; align-items:center; justify-content:space-between; padding:9px 0;
+         border-top:1px solid var(--line); }
+  .row label { font-size:12.5px; }
+  .row .hint { font-size:10.5px; color:#9b99ab; display:block; margin-top:2px; }
+  select { background:#fff; color:var(--ink); border:1px solid #e0deea; border-radius:8px;
+           padding:5px 8px; font-size:12px; }
+  .sw { position:relative; width:40px; height:22px; }
+  .sw input { opacity:0; width:0; height:0; }
+  .sl { position:absolute; cursor:pointer; inset:0; background:#dcdae6; border-radius:22px; transition:.2s; }
+  .sl:before { content:""; position:absolute; width:16px; height:16px; left:3px; top:3px;
+               background:#fff; border-radius:50%; transition:.2s; box-shadow:0 1px 2px rgba(40,36,70,.2); }
+  input:checked + .sl { background:var(--accent); }
+  input:checked + .sl:before { transform:translateX(18px); }
+  .status { margin-top:13px; font-size:11.5px; padding:8px 10px; border-radius:9px; color:#5a5870;
+            background:rgba(140,123,230,.08); border:1px solid rgba(140,123,230,.18); }
+  .status.bad { background:rgba(220,80,80,.08); border-color:rgba(220,80,80,.22); color:#a14444; }
+  .status.ok { color:#4a7a5c; background:rgba(80,180,120,.09); border-color:rgba(80,180,120,.2); }
+  .rng { display:flex; align-items:center; gap:8px; }
+  .rng input[type=range] { width:80px; accent-color:var(--accent); cursor:pointer; }
+  .rng span { font-size:11px; color:var(--muted); min-width:26px; text-align:right; }
+  .keys { margin-top:12px; font-size:10.5px; color:#9b99ab; line-height:1.7; }
+  kbd { background:rgba(40,36,70,.06); color:#5a5870; border-radius:4px; padding:1px 5px; }
+</style>
+</head>
+<body>
+  <h1><span class="o"></span> Lupa — tutore AR</h1>
+  <p class="sub">Te ghidează subtil să înveți materia. Nu îți dă răspunsul la teste.</p>
+
+  <div class="row">
+    <label>Activă</label>
+    <label class="sw"><input type="checkbox" id="enabled"><span class="sl"></span></label>
+  </div>
+  <div class="row">
+    <label>Mod<span class="hint">auto detectează grilă / câmp text</span></label>
+    <select id="mode">
+      <option value="auto">Auto</option>
+      <option value="explain">Explică</option>
+      <option value="quiz">Ghid grilă</option>
+      <option value="write">Schelă răspuns</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Scan la hover<span class="hint">stai pe paragraf ~1s → explică</span></label>
+    <label class="sw"><input type="checkbox" id="scan"><span class="sl"></span></label>
+  </div>
+  <div class="row">
+    <label>Caută singur întrebarea<span class="hint">explică automat grila vizibilă când se schimbă</span></label>
+    <label class="sw"><input type="checkbox" id="autoQuestion"><span class="sl"></span></label>
+  </div>
+  <div class="row">
+    <label>Opacitate bară<span class="hint">cât de discretă e bara în repaus</span></label>
+    <span class="rng"><input type="range" id="barOpacity" min="0.3" max="0.6" step="0.05" value="0.4"><span id="barOpacityVal">0.40</span></span>
+  </div>
+
+  <div class="status" id="status">verific backend…</div>
+  <div class="keys">
+    <kbd>Alt</kbd>+<kbd>L</kbd> explică selecția · <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> pornește/oprește · <kbd>Esc</kbd> închide
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

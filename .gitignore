@@ -1,0 +1,8 @@
+backend/.venv/
+backend/cache/
+backend/__pycache__/
+backend/server.log
+__pycache__/
+*.pyc
+.lupa-version
+update.log

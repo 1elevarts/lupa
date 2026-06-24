@@ -1,0 +1,151 @@
+{
+ "id": "n05",
+ "title": "EEG și potențialele evocate (ERP)",
+ "summary_html": "\n<h3>Ce măsoară EEG</h3>\n<p>Electroencefalograma (<span class='term'>EEG</span>) înregistrează activitatea electrică continuă a creierului prin electrozi plasați pe scalp. Este o metodă <strong>neinvazivă</strong> și oferă o măsură <strong>directă</strong> a activității neuronale — spre deosebire de fMRI, care măsoară indirect fluxul sangvin.</p>\n<div class='callout def'>\n <p>Semnalul EEG provine din <strong>potențialele postsinaptice</strong> (EPSP/IPSP) ale neuronilor dendritici — <em>nu</em> din potențialele de acțiune. Potențialele de acțiune sunt prea scurte și nesincronizate pentru a suma la scalpul la distanță.</p>\n</div>\n<p>Formulă de bază: <strong>EEG = Tensiunea la electrodul activ − Tensiunea la electrodul de referință</strong></p>\n\n<h3>De ce neuronii piramidali</h3>\n<p>Semnalul detectabil la scalp necesită activarea sincronă a unui număr mare de neuroni cu <em>orientare comună</em>. Neuronii <span class='term'>piramidali</span> din cortex sunt orientați <strong>perpendicular pe suprafața corticală</strong>, cu axonii perpendiculari pe scalp. Aceasta creează un <span class='term'>dipol electric echivalent</span> (ECD) detectabil. Grupuri de neuroni cu astfel de configurație se numesc <em>câmpuri deschise</em> (open fields). Configurațiile radiale sau împrăștiate nu generează semnal net la scalp (<em>câmpuri închise</em>).</p>\n\n<h3>Rezoluție temporală și spațială</h3>\n<ul>\n <li><strong>Rezoluție temporală</strong>: excelentă — EEG captează sute de 'instantanee' pe secundă (rate de digitizare 100–1000 Hz), reflectând activitatea neuronală în milisecunde</li>\n <li><strong>Rezoluție spațială</strong>: slabă — craniul conduce prost electricitatea și blurează semnalele; electrozi apropiați înregistrează practic aceeași informație</li>\n</ul>\n\n<h3>Electrozi și electrod de referință</h3>\n<p>Sistemul internațional <span class='term'>10–10</span> standardizează pozițiile electrozilor pe scalp (de la 3 la 256 electrozi). EEG utilizează <strong>amplificatoare diferențiale</strong> cu minim 3 electrozi: activ, referință și ground. Semnalul înregistrat = (A−G) − (R−G).</p>\n<p>Locații comune pentru <span class='term'>electrodul de referință</span>:</p>\n<ul>\n <li><strong>Mastoid</strong> (procesul osos din spatele urechii) — TP9/TP10</li>\n <li><strong>Vârful nasului</strong></li>\n <li><strong>Media tuturor electrozilor</strong> (average reference)</li>\n</ul>\n<p>Alegerea referinței influențează aspectul vizual al datelor, dar re-referențierea ulterioară este posibilă în preprocessing.</p>\n\n<h3>Ritmuri EEG — benzi de frecvență</h3>\n<table class='ctab'>\n <thead>\n  <tr><th>Bandă</th><th>Frecvență (Hz)</th><th>Asociere comportamentală</th></tr>\n </thead>\n <tbody>\n  <tr><td><strong>Delta</strong></td><td>0.5 – 4</td><td>Somn profund, inconștiență</td></tr>\n  <tr><td><strong>Theta</strong></td><td>4 – 8</td><td>Somnolență, meditație, memorie</td></tr>\n  <tr><td><strong>Alpha</strong></td><td>8 – 14</td><td>Relaxare cu ochii închiși, idling cortical; dispare la deschiderea ochilor (ERD)</td></tr>\n  <tr><td><strong>Beta</strong></td><td>14 – 30</td><td>Alertă activă, concentrare, procesare cognitivă</td></tr>\n  <tr><td><strong>Gamma</strong></td><td>&gt;30 (30–100)</td><td>Procesare cognitivă superioară, legarea perceptivă (binding)</td></tr>\n </tbody>\n</table>\n<p>Ritmul <strong>alpha</strong> este cel mai proeminent ritm EEG în repaus cu ochii închiși și dispare (ERD — event-related desynchronization) la deschiderea ochilor sau la stimulare cognitivă.</p>\n\n<h3>ERP — Potențiale Evocate (Event-Related Potentials)</h3>\n<div class='callout def'>\n <p><span class='term'>ERP</span> = segmente de EEG blocate în timp față de un eveniment experimental (stimulus, răspuns), mediate (<em>averaged</em>) pe zeci–sute de trial-uri.</p>\n</div>\n<p>EEG-ul continuu conține multe semnale fără legătură cu stimulii. Prin <strong>mediere (averaging)</strong> pe trial-uri aliniate la un eveniment:</p>\n<ul>\n <li><strong>Zgomotul aleatoriu</strong> (care nu are relație constantă cu evenimentul) se <em>anulează</em></li>\n <li><strong>Semnalul cerebral consistent</strong> (ERP-ul) devine vizibil</li>\n</ul>\n<p>Raportul semnal/zgomot (<span class='term'>SNR</span>) crește proporțional cu <strong>√N</strong> (rădăcina pătrată a numărului de trial-uri). Mai multe trial-uri = SNR mai bun, dar cu randamente descrescătoare.</p>\n\n<h3>Definiția unei componente ERP</h3>\n<p>O <span class='term'>componentă ERP</span> este o caracteristică a formei de undă mediate cu:</p>\n<ol>\n <li><strong>Polaritate</strong> consistentă (pozitivă sau negativă — ambele reflectă activare, nu inhibiție)</li>\n <li><strong>Latență</strong> consistentă (momentul peak față de eveniment)</li>\n <li><strong>Distribuție pe scalp</strong> consistentă (topografie)</li>\n <li><strong>Condiții de elicitare</strong> specifice</li>\n</ol>\n<p>Convenții de denumire: <em>P1, N1, P2, N2, P3</em> (polaritate + secvență) sau <em>P100, N400, P600</em> (polaritate + latență în ms).</p>\n\n<h3>Componente ERP principale</h3>\n<table class='ctab'>\n <thead>\n  <tr><th>Componentă</th><th>Polaritate / Latență</th><th>Semnificație funcțională</th></tr>\n </thead>\n <tbody>\n  <tr><td><strong>P1</strong> (P100)</td><td>Pozitivă, ~100 ms, occipital</td><td>Procesare vizuală precoce; atenție vizuo-spațială — modulată de direcția atenției</td></tr>\n  <tr><td><strong>N1</strong> (N100)</td><td>Negativă, ~100–150 ms</td><td>Atenție selectivă timpurie; mai mare când stimulul este relevant/asistat atențional; vizual = occipital, auditiv = frontal central</td></tr>\n  <tr><td><strong>P2</strong></td><td>Pozitivă, ~200 ms</td><td>Procesare senzorială continuă; detectarea caracteristicilor</td></tr>\n  <tr><td><strong>N2</strong></td><td>Negativă, ~200 ms</td><td>Detectarea noutății, inhibiție răspuns</td></tr>\n  <tr><td><strong>P300</strong> (P3)</td><td>Pozitivă, ~300 ms, centro-parietal</td><td><em>Context updating</em> — integrarea informației noi în memoria de lucru; elicitată de stimuli rari, relevanți pentru sarcină (paradigma oddball)</td></tr>\n  <tr><td><strong>N400</strong></td><td>Negativă, ~400 ms, centro-parietal</td><td>Incongruență semantică — cuvinte al căror sens nu se potrivește contextului (ex: 'a condus la plajă cu o <em>banană</em>')</td></tr>\n  <tr><td><strong>MMN</strong> (Mismatch Negativity)</td><td>Negativă, ~100–250 ms, fronto-central</td><td>Detectarea automată a schimbărilor auditive; semnal al erorii de predicție; nu necesită atenție conștientă</td></tr>\n  <tr><td><strong>LRP</strong> (Lateralized Readiness Potential)</td><td>Negativitate lateralizată, pre-răspuns</td><td>Pregătirea motorie; mai mare contraipsilateral față de mâna care va răspunde; calculat ca diferență C3−C4</td></tr>\n  <tr><td><strong>P600</strong></td><td>Pozitivă, ~600 ms</td><td>Violări sintactice în propoziții; procesare gramaticală</td></tr>\n </tbody>\n</table>\n\n<h3>Componente exogene vs. endogene</h3>\n<ul>\n <li><strong>Exogene</strong> (P1, N1, P2): determinate de proprietățile fizice ale stimulului (luminozitate, intensitate sonoră); obligatorii indiferent de atenție</li>\n <li><strong>Endogene</strong> (P300, N400, MMN): dependente de sarcina cognitivă, context și starea mentală a subiectului</li>\n</ul>\n\n<h3>Design și analiză ERP</h3>\n<p>Principiul de bază: <strong>compararea formelor de undă între condiții</strong> cât mai similare fizic, izolând efectul manipulării experimentale. <span class='term'>Difference waveforms</span> (unde diferențe) — obținute prin scăderea formei de undă dintr-o condiție din alta — identifică precis intervalele temporale și topografiile unde condițiile diferă.</p>\n<div class='callout'>\n <p>EEG spontan = activitate continuă, nestructurată față de eveniment. ERP = medie a segmentelor de EEG blocate în timp față de un stimul, care extrage componenta consistentă din zgomotul de fond.</p>\n</div>\n",
+ "questions": [
+  {
+   "q": "Ce tip de activitate neuronală stă la baza semnalului EEG înregistrat la scalp?",
+   "options": [
+    "Potențialele de acțiune ale neuronilor corticali individuali",
+    "Potențialele postsinaptice (EPSP/IPSP) ale dendritelor neuronale",
+    "Descărcările sincrone ale neuronilor din ganglionii bazali",
+    "Curenții ionici din canalele axonice mielinizate"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "EEG reflectă potențialele postsinaptice (EPSP/IPSP) ale dendritelor, nu potențialele de acțiune — acestea din urmă sunt prea scurte și nesincronizate pentru a produce semnal detectabil la scalp (Newman, cap. 3; slide Cantonas)."
+  },
+  {
+   "q": "De ce neuronii piramidali corticali sunt principala sursă a semnalului EEG?",
+   "options": [
+    "Sunt cei mai numeroși neuroni din creier",
+    "Sunt orientați perpendicular pe suprafața corticală, formând dipoli electrici detectabili la scalp",
+    "Produc potențiale de acțiune cu amplitudine mai mare decât ceilalți neuroni",
+    "Se află mai aproape de scalp decât celelalte tipuri neuronale"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Neuronii piramidali sunt orientați perpendicular pe suprafața corticală (axonii perpendiculari pe scalp), formând 'câmpuri deschise' (open fields) cu dipoli electrici sumabili detectabili la distanță (Newman, cap. 3)."
+  },
+  {
+   "q": "Care este electrodul de referință cel mai frecvent utilizat în studiile ERP moderne?",
+   "options": [
+    "Electrodul plasat pe lobul urechii (A1/A2)",
+    "Electrodul plasat pe claviculă",
+    "Mastoide (TP9/TP10), vârful nasului sau media tuturor electrozilor",
+    "Electrodul Cz (vertex)"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "Locațiile moderne de referință sunt mastoizii, vârful nasului sau average reference. Referința pe claviculă era veche și problematică (conduce zgomotul corporal). Cz nu e bun — stă pe zona de interes (Newman, cap. 3)."
+  },
+  {
+   "q": "Ritmul alpha EEG (8–14 Hz) este caracteristic în special pentru:",
+   "options": [
+    "Somnul profund, cu absența conștiinței",
+    "Starea de relaxare cu ochii închiși; dispare la deschiderea ochilor sau la activitate cognitivă",
+    "Concentrare intensă și rezolvare de probleme complexe",
+    "Procesarea stimulilor vizuali în cortexul occipital activ"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "Alpha este dominant la repaus cu ochii închiși și dispare prin desincronizare (ERD) la deschiderea ochilor sau activare cognitivă. Somnul profund = delta; concentrarea = beta (Newman, Tabel 3.1; slide Cantonas)."
+  },
+  {
+   "q": "Care este principala limitare a EEG comparativ cu fMRI?",
+   "options": [
+    "EEG nu poate măsura activitatea cerebrală în timp real",
+    "EEG are rezoluție spațială slabă — nu poate localiza precis sursele de activitate",
+    "EEG nu poate detecta activitatea din cortexul frontal",
+    "EEG necesită injectarea unui trasor radioactiv"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "EEG are rezoluție temporală excelentă (milisecunde) dar rezoluție spațială slabă: craniul blurează semnalele, electrozi apropiați înregistrează aceeași informație. fMRI are avantajul invers (Newman, cap. 3)."
+  },
+  {
+   "q": "Care este definiția corectă a unui ERP (Event-Related Potential)?",
+   "options": [
+    "Activitatea EEG spontană înregistrată în absența oricărui stimul",
+    "Segmente de EEG blocate temporal față de un eveniment experimental și mediate pe multiple trial-uri",
+    "Amplificarea semnalului EEG printr-un filtru trece-bandă aplicat continuu",
+    "Răspunsul electric al unui singur neuron la un stimul specific"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "ERP = medie a segmentelor EEG aliniate la un eveniment (stimul, răspuns). Medierea extrage componenta consistentă și reduce zgomotul aleatoriu (Newman, cap. 3; slide Cantonas)."
+  },
+  {
+   "q": "De ce este necesară medierea (averaging) unui număr mare de trial-uri pentru a obține un ERP clar?",
+   "options": [
+    "Pentru a crește frecvența de eșantionare a semnalului EEG",
+    "Deoarece SNR crește proporțional cu rădăcina pătrată a numărului de trial-uri, anulând zgomotul aleatoriu",
+    "Pentru a compensa filtrarea trece-jos aplicată datelor brute",
+    "Deoarece componenta P300 apare doar după minimum 500 de prezentări ale stimulului"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "SNR ∝ √N: prin mediere, zgomotul aleatoriu (fără relație constantă cu stimulul) se anulează, iar semnalul consistent (ERP) devine vizibil. Randamentele sunt descrescătoare: de la 10 la 40 trial-uri ajuți mai mult decât de la 400 la 440 (Newman, cap. 3)."
+  },
+  {
+   "q": "Componenta P300 (P3) reflectă în principal:",
+   "options": [
+    "Procesarea senzorială precoce a stimulilor vizuali în cortexul occipital",
+    "Incongruența semantică dintre un cuvânt și contextul propoziției",
+    "Actualizarea contextului în memoria de lucru la stimuli rari și relevanți pentru sarcină",
+    "Pregătirea motorie pentru un răspuns cu mâna dominantă"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "P300 reflectă 'context updating' — integrarea informației noi, surprinzătoare și relevante în memoria de lucru. Apare la stimuli rari și targetați (paradigma oddball), pozitiv centro-parietal la ~300 ms (Newman, cap. 3)."
+  },
+  {
+   "q": "Componenta N400 este elicitată de:",
+   "options": [
+    "Stimuli vizuali rari (oddballs) într-o serie de stimuli frecvenți",
+    "Violări sintactice (gramaticale) în propoziții",
+    "Cuvinte al căror sens este incongruent cu contextul semantic al propoziției",
+    "Mișcările ochilor în timpul citirii"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "N400 (negativitate, ~400 ms, centro-parietal) apare la cuvinte semantic incongruente (ex: 'a condus cu o banană'). Nu este specifică cuvântului per se — același cuvânt în context adecvat nu produce N400 (Newman, cap. 3; Kutas & Hillyard, 1980)."
+  },
+  {
+   "q": "Componenta P1 (P100) vizuală reflectă în principal:",
+   "options": [
+    "Procesarea semantică a cuvintelor în cortexul temporal stâng",
+    "Procesarea vizuală precoce, modulată de atenția vizuo-spațială",
+    "Pregătirea motorie pentru un răspuns manual",
+    "Detectarea automată a schimbărilor în fluxul auditiv"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "P1 (pozitiv, ~100 ms, occipital) este o componentă exogenă a procesării vizuale timpurii, modulată de atenție vizuo-spațială — mai mare pentru stimuli în locațiile atenționate. Este prima componentă a complexului P1–N1–P2 (Newman, cap. 3; slide Cantonas)."
+  },
+  {
+   "q": "Ce este MMN (Mismatch Negativity) și ce caracteristică o face utilă clinic?",
+   "options": [
+    "Componentă pozitivă la ~300 ms care reflectă luarea deciziilor voluntare",
+    "Negativitate fronto-centrală la ~100–250 ms care detectează automat schimbările auditive, fără a necesita atenție conștientă",
+    "Componentă negativă parietală care reflectă erorile motorii din mișcările voluntare",
+    "Ritm gamma care apare în cortexul prefrontal în timpul memoriei de lucru"
+   ],
+   "correct": 1,
+   "hint": "",
+   "explain": "MMN este o negativitate (diferență față de tonul standard) la ~100–250 ms în zonele fronto-centrale, elicitată de orice devianță auditivă. Nu necesită atenție sau sarcină activă — poate fi măsurată chiar la pacienți inconștienți; utilă în schizofrenie și 22q11.2DS (Cantonas; Newman)."
+  },
+  {
+   "q": "Care este diferența fundamentală dintre EEG spontan și ERP?",
+   "options": [
+    "EEG spontan se înregistrează cu electrozi mai puțini decât ERP",
+    "ERP necesită un amplificator special cu bandă mai largă",
+    "EEG spontan este activitatea continuă nestructurată; ERP este media segmentelor EEG aliniate la eveniment, care extrage răspunsul consistent față de zgomotul de fond",
+    "EEG spontan măsoară potențiale de acțiune, iar ERP măsoară potențiale postsinaptice"
+   ],
+   "correct": 2,
+   "hint": "",
+   "explain": "EEG spontan = fluxul continuu de activitate electrică. ERP = medie a epocilor EEG time-locked la stimuli/răspunsuri. Medierea elimină zgomotul necorelat cu evenimentul și scoate la suprafață componentele consistente (Newman, cap. 3; slide Cantonas)."
+  }
+ ]
+}
