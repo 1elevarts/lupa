@@ -124,29 +124,29 @@
                  border-radius:20px; margin-bottom:7px; color:#1e40af;
                  background:rgba(59,130,246,.14); border:1px solid rgba(59,130,246,.32); }
       .p-body { color:#2a2740; }
-      /* DJ crossfader (single-answer) */
+      /* DJ crossfader (single-answer) — compact, decks hugging the track */
       .p-fader { width:100%; }
-      .f-row { display:flex; align-items:center; gap:10px; }
-      .f-deck { flex:1 1 0; min-width:0; font-size:11px; color:#7a7790; text-align:center;
+      .f-row { display:flex; align-items:center; justify-content:center; gap:8px; }
+      .f-deck { flex:0 1 auto; max-width:34%; min-width:0; font-size:11px; color:#7a7790; text-align:center;
                 overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
       .f-deck.fav { color:#5a4db0; font-weight:700; }
-      .f-track { flex:0 0 140px; height:6px; border-radius:6px; position:relative;
+      .f-track { flex:0 0 118px; height:5px; border-radius:5px; position:relative;
                  background:linear-gradient(90deg, rgba(124,92,255,.2), rgba(124,92,255,.05) 50%, rgba(124,92,255,.2)); }
-      .f-mid { position:absolute; left:50%; top:-3px; width:1px; height:12px; background:rgba(20,16,40,.2); }
-      .f-knob { position:absolute; top:50%; width:12px; height:18px; border-radius:4px;
+      .f-mid { position:absolute; left:50%; top:-3px; width:1px; height:11px; background:rgba(20,16,40,.2); }
+      .f-knob { position:absolute; top:50%; width:6px; height:15px; border-radius:3px;
                 background:var(--accent,#7c5cff); transform:translate(-50%,-50%);
-                box-shadow:0 2px 6px rgba(124,92,255,.5); transition:left .35s cubic-bezier(.2,.9,.3,1); }
+                box-shadow:0 1px 4px rgba(124,92,255,.5); transition:left .35s cubic-bezier(.2,.9,.3,1); }
       .b-cap { font-size:10px; color:#9b99ab; text-align:center; margin-top:4px; }
-      /* level faders (multi-answer) — one per option, by chance of being correct */
-      .p-faders { display:flex; flex-direction:column; gap:5px; width:100%; }
-      .m-slider { display:flex; align-items:center; gap:8px; }
-      .m-lbl { flex:0 0 40%; max-width:40%; font-size:11px; color:#4a4763;
-               overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-      .m-track { flex:1 1 0; height:7px; border-radius:7px; background:rgba(20,16,40,.08); overflow:hidden; }
-      .m-fill { height:100%; border-radius:7px; background:var(--accent,#7c5cff); transition:width .35s ease; }
+      /* level faders (multi-answer) — slider first, then option; original order; centered & small */
+      .p-faders { display:flex; flex-direction:column; gap:6px; width:100%; align-items:center; }
+      .m-slider { display:flex; align-items:center; gap:8px; max-width:100%; }
+      .m-track { flex:0 0 84px; height:6px; border-radius:6px; background:rgba(20,16,40,.08); overflow:hidden; }
+      .m-fill { height:100%; border-radius:6px; background:var(--accent,#7c5cff); transition:width .35s ease; }
       .m-fill.hot  { background:#34b37a; }
       .m-fill.cold { background:#cfccdd; }
-      .m-pct { flex:0 0 auto; font-size:10.5px; color:#7a7790; min-width:30px; text-align:right; }
+      .m-pct { flex:0 0 34px; font-size:10.5px; font-weight:700; color:#5a5870; text-align:right; }
+      .m-lbl { flex:0 1 auto; min-width:0; font-size:11px; color:#4a4763;
+               overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
       .p-keys { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
       .p-key { font-size:11px; background:rgba(124,92,255,.12); color:#5a4db0; padding:3px 9px;
                border-radius:20px; border:1px solid rgba(124,92,255,.22); }
@@ -473,11 +473,10 @@
         const t = norm(lb.innerText);
         if (t && (t.includes(target) || target.includes(t))) {
           S.dimmed.push({ el: lb, prev: lb.style.cssText });
-          lb.style.outline = "1px solid rgba(214,69,69,.6)";
-          lb.style.outlineOffset = "1px";
+          // subtle red bar on the LEFT edge only (next to A/B/C), no full outline
+          lb.style.boxShadow = "inset 4px 0 0 rgba(214,69,69,.45)";
           lb.style.borderRadius = "10px";
-          lb.style.opacity = "0.85";
-          lb.style.transition = "opacity .2s, outline .2s";
+          lb.style.transition = "box-shadow .2s";
           break;
         }
       }
@@ -579,9 +578,9 @@
         const pct = Math.round(Math.max(0, Math.min(1, Number(p.score) || 0)) * 100);
         const cls = pct >= 60 ? " hot" : pct <= 30 ? " cold" : "";
         return `<div class="m-slider">
-          <span class="m-lbl" title="${esc(p.opt)}">${esc(p.opt)}</span>
           <div class="m-track"><div class="m-fill${cls}" style="width:${pct}%"></div></div>
           <span class="m-pct">${pct}%</span>
+          <span class="m-lbl" title="${esc(p.opt)}">${esc(p.opt)}</span>
         </div>`;
       }).join("");
       return `<div class="p-faders">${rows}</div>`;

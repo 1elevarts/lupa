@@ -65,7 +65,7 @@ def _norm_finalists(raw) -> list:
 
 
 def _norm_picks(raw) -> list:
-    """[{opt, score 0..1}] for multi-answer questions, sorted high->low."""
+    """[{opt, score 0..1}] for multi-answer — kept in the question's original order."""
     if not isinstance(raw, list):
         return []
     out = []
@@ -80,8 +80,7 @@ def _norm_picks(raw) -> list:
         except (TypeError, ValueError):
             score = 0.5
         out.append({"opt": opt, "score": round(max(0.0, min(1.0, score)), 2)})
-    out.sort(key=lambda x: x["score"], reverse=True)
-    return out[:6]
+    return out[:8]
 
 
 def _norm_eliminate(raw) -> list:
