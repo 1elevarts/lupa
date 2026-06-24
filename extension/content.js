@@ -46,7 +46,7 @@
         backdrop-filter: blur(6px) saturate(1.4); -webkit-backdrop-filter: blur(6px) saturate(1.4);
         border: 1.5px solid var(--accent, #7c5cff);
         box-shadow: 0 6px 22px rgba(40,20,90,.32), inset 0 0 12px rgba(255,255,255,.28);
-        opacity: .88; transition: opacity .25s, transform .18s, border-color .3s, box-shadow .3s;
+        opacity: .3; transition: opacity .25s, transform .18s, border-color .3s, box-shadow .3s;
         display: grid; place-items: center;
       }
       .orb:hover { opacity: 1; transform: scale(1.08); }
@@ -101,6 +101,9 @@
                    display:inline-block; }
       .p-verdict.wrong { color:#9a3412; background:rgba(245,166,35,.18); border:1px solid rgba(245,130,35,.3); }
       .p-verdict.ok    { color:#15803d; background:rgba(52,211,153,.18); border:1px solid rgba(52,180,120,.3); }
+      .p-multi { display:inline-block; font-size:12px; font-weight:700; padding:3px 10px;
+                 border-radius:20px; margin-bottom:7px; color:#1e40af;
+                 background:rgba(59,130,246,.14); border:1px solid rgba(59,130,246,.32); }
       .p-body { color:#2a2740; }
       .p-keys { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
       .p-key { font-size:11px; background:rgba(124,92,255,.12); color:#5a4db0; padding:3px 9px;
@@ -518,6 +521,10 @@
       ? `<div class="p-verdict wrong">🤔 Mai gândește-te</div>`
       : d.verdict === "correct"
         ? `<div class="p-verdict ok">✅ Corect!</div>` : "";
+    const isMulti = d.multi || (S.hlSrc && S.hlSrc.querySelector &&
+      !!S.hlSrc.querySelector('input[type=checkbox]'));
+    const multi = isMulti
+      ? `<div class="p-multi">◳ Răspuns multiplu — bifează TOATE corecte</div>` : "";
     const hint = d.hint ? `<div class="p-hint">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c97f17" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
         <span>${esc(d.hint)}</span></div>` : "";
@@ -531,6 +538,7 @@
           <span class="p-title">${esc(d.concept || "Concept")}</span>
           <span class="p-mode">${modeLabel}</span>
         </div>
+        ${multi}
         ${verdict}
         <div class="p-body">${esc(d.explain || "")}</div>
         ${keys ? `<div class="p-keys">${keys}</div>` : ""}

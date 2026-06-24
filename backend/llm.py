@@ -103,6 +103,8 @@ def _loose_fields(text: str) -> dict | None:
     mv = re.search(r'"verdict"\s*:\s*"([^"]*)"', text)
     if mv:
         verdict = mv.group(1).strip()
+    mm = re.search(r'"multi"\s*:\s*(?:"?(true|false|da|yes|1|0)"?)', text, re.IGNORECASE)
+    multi = bool(mm) and mm.group(1).lower() in ("true", "da", "yes", "1")
     chapter = ""
     mc = re.search(r'"chapter"\s*:\s*"([^"]*)"', text)
     if mc:
@@ -123,7 +125,8 @@ def _loose_fields(text: str) -> dict | None:
     if not (concept or explain):
         return None
     return {"concept": concept, "explain": explain, "keys": keys,
-            "hint": hint, "verdict": verdict, "eliminate": eliminate, "chapter": chapter}
+            "hint": hint, "verdict": verdict, "multi": multi,
+            "eliminate": eliminate, "chapter": chapter}
 
 
 def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:

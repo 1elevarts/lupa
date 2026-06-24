@@ -42,6 +42,7 @@ sunt EXCLUSIV delimitatori JSON.
   "keys": ["<termen cheie 1>", "<termen cheie 2>"],
   "hint": "<un singur indiciu de gândire dacă e o întrebare de test, altfel o legătură utilă>",
   "verdict": "<DOAR la verificarea unui răspuns ales: \\"correct\\" sau \\"wrong\\"; altfel \\"\\">",
+  "multi": "<true DOAR dacă întrebarea cere MAI MULTE răspunsuri corecte (ex. \\"selectați toate\\", \\"alegeți toate care se aplică\\", \\"(2 corecte)\\", bife/checkbox); altfel false>",
   "eliminate": [{"opt": "<textul scurt al unei variante CLAR greșite>", "why": "<de ce e greșită, foarte scurt>"}],
   "chapter": "<id capitol relevant din context, ex n05, sau \\"\\" dacă niciunul>"
 }
@@ -81,7 +82,9 @@ def build_user_prompt(selection: str, context: str, mode: str, course_context: s
                 "clar VALIDE/adevărate (deci NU sunt răspunsul). "
                 "Reguli ferme: lasă MEREU cel puțin 2 variante neeliminate și NU pune NICIODATĂ în "
                 "\"eliminate\" opțiunea care e răspunsul corect la întrebare. La întrebări cu doar 2 "
-                "variante, lasă \"eliminate\" gol.")
+                "variante, lasă \"eliminate\" gol. "
+                "Stabilește și \"multi\": true dacă întrebarea cere mai multe răspunsuri corecte. "
+                "Dacă e multi, menționează în \"hint\" că trebuie bifate TOATE variantele corecte.")
     elif mode == "write":
         task = ("Studentul are de redactat un răspuns. NU scrie răspunsul în locul lui. "
                 "Dă-i schela: ce idei-cheie ar trebui să atingă și în ce ordine, în 2-3 propoziții.")

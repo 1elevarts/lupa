@@ -126,6 +126,7 @@ def explain(req: ExplainReq):
         "keys": data.get("keys", []) or [],
         "hint": data.get("hint", ""),
         "verdict": (data.get("verdict", "") or "").lower(),
+        "multi": str(data.get("multi", "")).strip().lower() in ("true", "1", "da", "yes"),
         "eliminate": _norm_eliminate(data.get("eliminate")),
         "chapter": data.get("chapter", "") or (hits[0]["chapter"] if hits else ""),
         "sources": [{"chapter": h["chapter"], "title": h["chapter_title"],
