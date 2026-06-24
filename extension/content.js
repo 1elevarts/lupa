@@ -23,6 +23,7 @@
     hlEl: null,       // element currently framed by the highlight
     hlSrc: null,      // source element of the current explanation (for dim scoping)
     dimmed: [],       // option labels we greyed out (to restore on close)
+    barExpanded: false, // H toggles the full text under the peek
     panelOpen: false,
     hoverTimer: null,
     autoTimer: null,
@@ -80,7 +81,7 @@
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
         position: fixed; left: 18px; right: 70px; bottom: 16px; pointer-events: auto;
-        display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap;
+        display: block;
         background: rgba(248,247,251,.32); color: #211e33;
         backdrop-filter: blur(8px) saturate(1.05); -webkit-backdrop-filter: blur(8px) saturate(1.05);
         border: 1px solid rgba(20,16,40,.06); border-radius: 14px;
@@ -96,6 +97,19 @@
         box-shadow: 0 12px 40px rgba(20,10,50,.26); }
       .p-main { flex: 1 1 58%; min-width: 260px; }
       .p-side { flex: 1 1 30%; min-width: 200px; }
+      /* auto-hide layout: peek (balance/title) always visible, full body toggled by H */
+      .p-peek { display:flex; align-items:center; justify-content:center; gap:10px; position:relative; min-height:22px; padding-right:26px; }
+      .p-peek .p-balance { margin-top:0; padding-top:0; border-top:none; }
+      .p-peektitle { display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; color:#171527; }
+      .p-toggle { position:absolute; right:0; top:50%; transform:translateY(-50%);
+                  font-size:10px; font-weight:700; color:#9b99ab; border:1px solid rgba(20,16,40,.16);
+                  border-radius:6px; padding:1px 6px; cursor:pointer; line-height:1.4; }
+      .p-toggle:hover { color:#3a3640; border-color:rgba(20,16,40,.32); }
+      .p-full { max-height:0; overflow:hidden; opacity:0;
+                transition:max-height .25s ease, opacity .2s ease, margin-top .2s ease, padding-top .2s ease; }
+      .panel.expanded .p-full { max-height:60vh; overflow:auto; opacity:1; margin-top:10px;
+                padding-top:10px; border-top:1px solid rgba(20,16,40,.07); }
+      .panel.expanded .p-peektitle { display:none; }
       .p-head { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
       .p-dot { width:8px;height:8px;border-radius:50%;background:var(--accent,#7c5cff);
                box-shadow:0 0 8px rgba(124,92,255,.5); flex:0 0 auto;}
@@ -367,8 +381,17 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && S.panelOpen) closePanel();
+    if (e.key === "Escape" && S.panelOpen) { closePanel(); return; }
+    if ((e.key === "h" || e.key === "H") && S.panelOpen
+        && !e.metaKey && !e.ctrlKey && !e.altKey && !isEditable(e.target)) {
+      e.preventDefault(); toggleBar();
+    }
   });
+  function isEditable(el) {
+    if (!el) return false;
+    const t = (el.tagName || "").toLowerCase();
+    return t === "input" || t === "textarea" || t === "select" || el.isContentEditable;
+  }
   // click anywhere outside the bar closes it — except on a quiz option (that path
   // runs the answer check, which manages the bar itself).
   document.addEventListener("mousedown", (e) => {
@@ -520,10 +543,15 @@
   /* ---------- info bar ---------- */
   function openLoading(mode) {
     S.panelOpen = true;
-    panel.classList.remove("p-wrong", "p-ok");
+    S.barExpanded = false;             // every new question starts collapsed (peek only)
+    panel.classList.remove("expanded");
     panel.innerHTML = `<div class="p-loading"><div class="shimmer"></div>
       ${mode === "check" ? "Lupa verifică alegerea ta…" : "Lupa se uită în materie…"}</div>`;
     requestAnimationFrame(() => panel.classList.add("show"));
+  }
+  function toggleBar() {
+    S.barExpanded = !S.barExpanded;
+    panel.classList.toggle("expanded", S.barExpanded);
   }
   function esc(s){ return (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   // a subtle balance beam that tilts toward the more likely of the 2 finalists
@@ -579,8 +607,16 @@
     const elim = elimItems
       .map(e => `<span class="p-elim" title="${esc(e.why || "")}"><b>✕ nu e:</b> ${esc(e.opt)}</span>`).join("");
     const elims = elim ? `<div class="p-elims">${elim}</div>` : "";
+    const bal = balanceHTML(d, isMulti);
+    const peek = bal
+      ? bal
+      : `<div class="p-peektitle"><span class="p-dot"></span>${esc(d.concept || "Concept")}</div>`;
     panel.innerHTML = `
-      <div class="p-main">
+      <div class="p-peek">
+        ${peek}
+        <span class="p-toggle" id="elupa-h" title="Arată / ascunde detaliile (tasta H)">H</span>
+      </div>
+      <div class="p-full">
         <div class="p-head">
           <span class="p-dot"></span>
           <span class="p-title">${esc(d.concept || "Concept")}</span>
@@ -589,14 +625,13 @@
         ${multi}
         ${verdict}
         <div class="p-body">${esc(d.explain || "")}</div>
-        ${balanceHTML(d, isMulti)}
-      </div>
-      <div class="p-side">
         ${elims}
         ${hint}
       </div>
       <span class="p-x" id="elupa-x">✕</span>`;
     root.getElementById("elupa-x").addEventListener("click", closePanel);
+    root.getElementById("elupa-h").addEventListener("click", toggleBar);
+    panel.classList.toggle("expanded", S.barExpanded);
     applyDim(d.eliminate);
     positionHighlight();
     requestAnimationFrame(() => panel.classList.add("show"));
