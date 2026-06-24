@@ -45,6 +45,8 @@ sunt EXCLUSIV delimitatori JSON.
   "verdict": "<DOAR la verificarea unui răspuns ales: \\"correct\\" sau \\"wrong\\"; altfel \\"\\">",
   "multi": "<true DOAR dacă întrebarea cere MAI MULTE răspunsuri corecte (ex. \\"selectați toate\\", \\"alegeți toate care se aplică\\", \\"(2 corecte)\\", bife/checkbox); altfel false>",
   "eliminate": [{"opt": "<textul scurt al unei variante CLAR greșite>", "why": "<de ce e greșită, foarte scurt>"}],
+  "finalists": ["<varianta plauzibilă rămasă 1, scurt>", "<varianta plauzibilă rămasă 2, scurt>"],
+  "lean": {"toward": "<care dintre finalists e mai probabil corectă, scurt>", "strength": 0.65},
   "chapter": "<id capitol relevant din context, ex n05, sau \\"\\" dacă niciunul>"
 }
 REGULĂ pentru "eliminate": completează-l DOAR la întrebări grilă cu variante. Poți tăia maxim \
@@ -85,7 +87,11 @@ def build_user_prompt(selection: str, context: str, mode: str, course_context: s
                 "\"eliminate\" opțiunea care e răspunsul corect la întrebare. La întrebări cu doar 2 "
                 "variante, lasă \"eliminate\" gol. "
                 "Stabilește și \"multi\": true dacă întrebarea cere mai multe răspunsuri corecte. "
-                "Dacă e multi, menționează în \"hint\" că trebuie bifate TOATE variantele corecte.")
+                "Dacă e multi, menționează în \"hint\" că trebuie bifate TOATE variantele corecte. "
+                "DOAR dacă NU e multi și au rămas exact 2 variante plauzibile după eliminate: pune-le "
+                "în \"finalists\" și în \"lean\" înclină spre cea mai probabil corectă — \"strength\" "
+                "între 0.5 (chiar nesigur, 50/50) și 0.9 (aproape sigur). Dacă e multi sau nu poți "
+                "departaja, lasă finalists=[] și lean gol.")
     elif mode == "write":
         task = ("Studentul are de redactat un răspuns. NU scrie răspunsul în locul lui. "
                 "Dă-i schela: ce idei-cheie ar trebui să atingă și în ce ordine, în 2-3 propoziții.")

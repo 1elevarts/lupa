@@ -44,6 +44,26 @@ class ExplainReq(BaseModel):
     nocache: bool = False
 
 
+def _norm_lean(raw) -> dict | None:
+    if not isinstance(raw, dict):
+        return None
+    toward = str(raw.get("toward", "")).strip()[:120]
+    if not toward:
+        return None
+    try:
+        strength = float(raw.get("strength", 0.5))
+    except (TypeError, ValueError):
+        strength = 0.5
+    strength = max(0.5, min(0.9, strength))   # keep it a lean, never absolute
+    return {"toward": toward, "strength": round(strength, 2)}
+
+
+def _norm_finalists(raw) -> list:
+    if not isinstance(raw, list):
+        return []
+    return [str(x).strip()[:120] for x in raw if str(x).strip()][:2]
+
+
 def _norm_eliminate(raw) -> list:
     """Keep at most 2 well-formed {opt, why} entries; tolerate strings too."""
     out = []
@@ -128,6 +148,8 @@ def explain(req: ExplainReq):
         "verdict": (data.get("verdict", "") or "").lower(),
         "multi": str(data.get("multi", "")).strip().lower() in ("true", "1", "da", "yes"),
         "eliminate": _norm_eliminate(data.get("eliminate")),
+        "finalists": _norm_finalists(data.get("finalists")),
+        "lean": _norm_lean(data.get("lean")),
         "chapter": data.get("chapter", "") or (hits[0]["chapter"] if hits else ""),
         "sources": [{"chapter": h["chapter"], "title": h["chapter_title"],
                      "heading": h["heading"], "score": h.get("score")} for h in hits],
@@ -136,6 +158,10 @@ def explain(req: ExplainReq):
         "mode": req.mode,
         "ts": int(time.time()),
     }
+    # the balance lean is only meaningful for single-answer questions with 2 finalists
+    if out["multi"] or not out["lean"] or len(out["finalists"]) != 2:
+        out["finalists"] = []
+        out["lean"] = None
     if use_cache:
         try:
             json.dump(out, open(cache_path, "w", encoding="utf-8"), ensure_ascii=False)

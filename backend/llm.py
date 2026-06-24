@@ -122,11 +122,25 @@ def _loose_fields(text: str) -> dict | None:
             if mo and mo.group(1).strip():
                 eliminate.append({"opt": mo.group(1).strip(),
                                   "why": mw.group(1).strip() if mw else ""})
+    finalists = []
+    mf = re.search(r'"finalists"\s*:\s*\[(.*?)\]', text, re.DOTALL)
+    if mf:
+        finalists = [s.strip() for s in re.findall(r'"([^"]*)"', mf.group(1)) if s.strip()][:2]
+    lean = None
+    ml = re.search(r'"lean"\s*:\s*\{(.*?)\}', text, re.DOTALL)
+    if ml:
+        body = ml.group(1)
+        mt = re.search(r'"toward"\s*:\s*"([^"]*)"', body)
+        ms = re.search(r'"strength"\s*:\s*([0-9.]+)', body)
+        if mt and mt.group(1).strip():
+            lean = {"toward": mt.group(1).strip(),
+                    "strength": float(ms.group(1)) if ms else 0.5}
     if not (concept or explain):
         return None
     return {"concept": concept, "explain": explain, "keys": keys,
             "hint": hint, "verdict": verdict, "multi": multi,
-            "eliminate": eliminate, "chapter": chapter}
+            "eliminate": eliminate, "finalists": finalists, "lean": lean,
+            "chapter": chapter}
 
 
 def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:

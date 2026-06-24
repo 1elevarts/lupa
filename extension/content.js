@@ -110,6 +110,13 @@
                  border-radius:20px; margin-bottom:7px; color:#1e40af;
                  background:rgba(59,130,246,.14); border:1px solid rgba(59,130,246,.32); }
       .p-body { color:#2a2740; }
+      .p-balance { margin-top:12px; padding-top:9px; border-top:1px solid rgba(20,16,40,.06); }
+      .b-row { display:flex; align-items:center; gap:6px; }
+      .b-opt { flex:1 1 0; min-width:0; font-size:11px; color:#7a7790; text-align:center;
+               overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .b-opt.fav { color:#5a4db0; font-weight:700; }
+      .b-svg { flex:0 0 auto; }
+      .b-cap { font-size:10px; color:#9b99ab; text-align:center; margin-top:2px; }
       .p-keys { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
       .p-key { font-size:11px; background:rgba(124,92,255,.12); color:#5a4db0; padding:3px 9px;
                border-radius:20px; border:1px solid rgba(124,92,255,.22); }
@@ -519,6 +526,40 @@
     requestAnimationFrame(() => panel.classList.add("show"));
   }
   function esc(s){ return (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  // a subtle balance beam that tilts toward the more likely of the 2 finalists
+  function balanceHTML(d, isMulti) {
+    if (isMulti) return "";
+    const f = d.finalists || [];
+    const lean = d.lean;
+    if (f.length !== 2 || !lean || !lean.toward) return "";
+    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, " ").trim();
+    const t = norm(lean.toward);
+    const favRight = norm(f[1]).includes(t) || t.includes(norm(f[1]));
+    const s = Math.max(0.5, Math.min(0.9, Number(lean.strength) || 0.5));
+    const ang = ((s - 0.5) / 0.4) * 13;          // 0..13°
+    const deg = (favRight ? 1 : -1) * ang;        // favored side dips down
+    const pct = Math.round(s * 100);
+    const ac = "var(--accent,#7c5cff)";
+    const lFill = favRight ? "#c9c5da" : ac;
+    const rFill = favRight ? ac : "#c9c5da";
+    return `
+      <div class="p-balance">
+        <div class="b-row">
+          <span class="b-opt ${favRight ? "" : "fav"}" title="${esc(f[0])}">${esc(f[0])}</span>
+          <svg class="b-svg" width="118" height="40" viewBox="0 0 118 40" aria-hidden="true">
+            <g transform="rotate(${deg.toFixed(1)} 59 15)">
+              <line x1="16" y1="15" x2="102" y2="15" stroke="${ac}" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="16" cy="15" r="4.5" fill="${lFill}"/>
+              <circle cx="102" cy="15" r="4.5" fill="${rFill}"/>
+            </g>
+            <line x1="59" y1="15" x2="59" y2="33" stroke="#b9b6cc" stroke-width="2"/>
+            <path d="M51 35 L67 35 L59 24 Z" fill="#b9b6cc"/>
+          </svg>
+          <span class="b-opt ${favRight ? "fav" : ""}" title="${esc(f[1])}">${esc(f[1])}</span>
+        </div>
+        <div class="b-cap">înclină ~${pct}% spre „${esc(lean.toward)}"</div>
+      </div>`;
+  }
   function renderPanel(d) {
     S.panelOpen = true;
     const modeLabel = d.mode === "quiz" ? "ghid" : d.mode === "write" ? "schelă"
@@ -548,6 +589,7 @@
         ${multi}
         ${verdict}
         <div class="p-body">${esc(d.explain || "")}</div>
+        ${balanceHTML(d, isMulti)}
       </div>
       <div class="p-side">
         ${elims}
