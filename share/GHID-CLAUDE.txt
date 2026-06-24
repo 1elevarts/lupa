@@ -20,7 +20,12 @@ Contextul instalării (ca să știi unde mergem):
 4) La final, programul îmi deschide singur un folder în Finder (numit „extension") și
    pagina „chrome://extensions" în Chrome.
 5) În acea pagină: activez „Developer mode" (dreapta-sus) → „Load unpacked" →
-   aleg folderul „extension" care mi s-a deschis în Finder. Apoi pin-uiesc iconița 🔍.
+   în fereastra care se deschide apăs ⌘+Shift+G, lipesc calea (⌘+V, e deja în
+   clipboard), Enter → Open. Apoi pin-uiesc iconița 🔍.
+   FOARTE IMPORTANT: calea corectă e „~/PROJECTS/study-lens/extension". NU trebuie
+   să aleg folderul în care am dezarhivat zip-ul (acela are doar installerul +
+   README + acest ghid, NU are extensia — de aceea Chrome zice „Manifest file is
+   missing"). Dacă văd eroarea asta, înseamnă că am ales folderul greșit.
 
 Probleme posibile cu care s-ar putea să am nevoie de ajutor:
 - „install-lupa.command" nu se deschide → click-dreapta → Open → Open.

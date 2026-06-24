@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 # Lupa — one-double-click installer for a friend's Mac.
-# Downloads Lupa from GitHub (anonymous), sets up the local backend with HIS OWN
-# Claude login, and an auto-updater so future changes arrive automatically.
-set -euo pipefail
+# Robust by design: downloads Lupa FIRST (so the extension always exists), then
+# every later step is non-fatal — a hiccup in Claude/backend won't abort the
+# install. At the end it copies the extension path to the clipboard and opens
+# Finder + Chrome so loading the extension is trivial.
+set -uo pipefail   # deliberately NOT -e: optional steps must not abort the run
 
 GH_OWNER="1elevarts"; GH_REPO="lupa"; GH_BRANCH="main"
 RAW="https://raw.githubusercontent.com/$GH_OWNER/$GH_REPO/$GH_BRANCH"
 TARBALL="https://codeload.github.com/$GH_OWNER/$GH_REPO/tar.gz/refs/heads/$GH_BRANCH"
 PROJ="$HOME/PROJECTS/study-lens"
+EXT="$PROJ/extension"
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 say()  { printf "\n\033[1m%s\033[0m\n" "$*"; }
@@ -16,47 +19,61 @@ warn() { printf "  \033[33m⚠\033[0m %s\n" "$*"; }
 
 say "👓 Lupa — instalare"
 
-# ── 1) Python ────────────────────────────────────────────────
+# ── 1) Python (necesar) ──────────────────────────────────────
 if ! command -v python3 >/dev/null 2>&1; then
-  if command -v brew >/dev/null 2>&1; then say "Instalez Python…"; brew install python
-  else warn "Python3 lipsește. Ia-l de pe https://www.python.org/downloads/ și reia."; exit 1; fi
+  if command -v brew >/dev/null 2>&1; then say "Instalez Python…"; brew install python || true; fi
+fi
+if ! command -v python3 >/dev/null 2>&1; then
+  warn "Python3 lipsește. Instalează-l de pe https://www.python.org/downloads/ și reia."; exit 1
 fi
 ok "Python $(python3 --version 2>&1 | awk '{print $2}')"
 
-# ── 2) Claude CLI + login (CONTUL TĂU, gratuit cu abonament) ──
+# ── 2) Descarc Lupa PRIMUL (garantează folderul extensiei) ───
+say "Descarc Lupa…"
+mkdir -p "$HOME/PROJECTS" "$PROJ"
+TMP="$(mktemp -d)"
+if curl -fsSL --max-time 120 "$TARBALL" -o "$TMP/src.tgz"; then
+  tar -xzf "$TMP/src.tgz" -C "$TMP"
+  SRC="$(find "$TMP" -maxdepth 1 -type d -name "$GH_REPO-*" | head -1)"
+  if [ -d "$SRC/extension" ]; then
+    rsync -a "$SRC/" "$PROJ/"
+    VER="$(curl -fsS "$RAW/manifest.json" | python3 -c 'import sys,json;print(json.load(sys.stdin)["version"])' 2>/dev/null || echo init)"
+    echo "$VER" > "$PROJ/.lupa-version"
+    chmod +x "$PROJ/update-lupa.sh" 2>/dev/null || true
+    ok "Lupa $VER instalată în $PROJ"
+  else
+    warn "Arhiva descărcată pare incompletă."
+  fi
+else
+  warn "Nu am putut descărca de pe GitHub (verifică internetul)."
+fi
+rm -rf "$TMP"
+
+if [ ! -f "$EXT/manifest.json" ]; then
+  warn "Folderul extensiei NU s-a creat ($EXT). Verifică internetul și reia installerul."
+  exit 1
+fi
+
+# ── 3) Backend local (ne-fatal) ──────────────────────────────
+say "Configurez backendul local…"
+bash "$PROJ/backend/install.sh" || warn "Backendul a dat erori la instalare — vezi http://127.0.0.1:8077/health mai târziu."
+
+# ── 4) Claude CLI + login — CONTUL TĂU (ne-fatal) ────────────
 if ! command -v claude >/dev/null 2>&1; then
   say "Instalez Claude CLI…"
-  curl -fsSL https://claude.ai/install.sh | bash || {
-    warn "Instalare automată eșuată. Ia Claude Code de pe https://claude.com/download și reia."; exit 1; }
+  curl -fsSL https://claude.ai/install.sh | bash || warn "Nu am putut instala Claude CLI automat."
   export PATH="$HOME/.local/bin:$PATH"
 fi
 say "Verific contul tău Claude…"
-if claude -p "spune doar: ok" >/dev/null 2>&1; then
+if command -v claude >/dev/null 2>&1 && claude -p "spune doar: ok" >/dev/null 2>&1; then
   ok "Ești logat în Claude."
 else
-  warn "Se deschide browserul ca să te loghezi în contul TĂU Claude…"
-  claude login || { warn "Login eșuat. Rulează 'claude login' în Terminal și reia."; exit 1; }
-  ok "Logat."
+  warn "Mai trebuie să te loghezi (o singură dată). După instalare, rulează în Terminal:"
+  printf "      \033[1mclaude login\033[0m\n"
+  warn "Până te loghezi, Lupa pornește dar explicațiile nu vor merge."
 fi
 
-# ── 3) Download Lupa from GitHub ─────────────────────────────
-say "Descarc Lupa…"
-mkdir -p "$HOME/PROJECTS" "$PROJ"
-TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
-curl -fsSL --max-time 120 "$TARBALL" -o "$TMP/src.tgz" || { warn "Nu am putut descărca de pe GitHub."; exit 1; }
-tar -xzf "$TMP/src.tgz" -C "$TMP"
-SRC="$(find "$TMP" -maxdepth 1 -type d -name "$GH_REPO-*" | head -1)"
-rsync -a "$SRC/" "$PROJ/"
-VER="$(curl -fsS "$RAW/manifest.json" | python3 -c 'import sys,json;print(json.load(sys.stdin)["version"])' 2>/dev/null || echo init)"
-echo "$VER" > "$PROJ/.lupa-version"
-chmod +x "$PROJ/update-lupa.sh" 2>/dev/null || true
-ok "Lupa $VER instalată în $PROJ"
-
-# ── 4) Backend service (venv + deps + launchd) ───────────────
-say "Configurez backendul local…"
-bash "$PROJ/backend/install.sh"
-
-# ── 5) Auto-update agent (every 30 min + at login) ───────────
+# ── 5) Auto-update (la 30 min + la pornire) ──────────────────
 say "Activez actualizările automate…"
 UPLABEL="com.elevarts.lupa-update"
 UPLIST="$HOME/Library/LaunchAgents/$UPLABEL.plist"
@@ -78,26 +95,28 @@ cat > "$UPLIST" <<PL
 </dict></plist>
 PL
 launchctl unload "$UPLIST" 2>/dev/null || true
-launchctl load "$UPLIST"
-ok "Update automat activ (la 30 min + la pornire)."
+launchctl load "$UPLIST" 2>/dev/null && ok "Update automat activ." || warn "Update agent nu s-a încărcat (nefatal)."
 
-# ── done: open the folder + Chrome so the last step is trivial ──
-open "$PROJ/extension" 2>/dev/null || true
+# ── 6) Ultimul pas: clipboard + deschide Finder & Chrome ─────
+printf '%s' "$EXT" | pbcopy 2>/dev/null && CLIP=1 || CLIP=0
+open "$EXT" 2>/dev/null || true
 open -a "Google Chrome" "chrome://extensions" 2>/dev/null || true
 
-say "✅ Gata! Ți-am deschis Finder-ul pe folderul extensiei + pagina Chrome."
+say "✅ Aproape gata! Mai e UN pas, în Chrome:"
 cat <<DONE
-  Mai e UN pas, în Chrome (nu-l pot face eu):
-  1. În pagina deschisă (chrome://extensions) activează „Developer mode" (sus-dreapta)
+  Ți-am deschis Finder-ul pe folderul corect + pagina Chrome.
+  $( [ "$CLIP" = 1 ] && echo "Calea e DEJA copiată în clipboard:" || echo "Calea folderului:" )
+     $EXT
+
+  1. În pagina chrome://extensions → activează „Developer mode" (dreapta-sus)
   2. Apasă „Load unpacked"
-  3. Selectează folderul „extension" pe care ți l-am deschis în Finder
-     (calea lui: $PROJ/extension)
+  3. În fereastra care se deschide apasă  ⌘ + Shift + G ,
+     lipește calea ( ⌘ + V ), Enter → apoi „Open/Deschide"
+     (SAU navighează manual la folderul „extension" deschis în Finder)
   4. Pin-uiește iconița 🔍
 
-  Folosire:
-   • lupa din colțul dreapta-jos: click = explică (sau ⌥+L / Alt+L)
-   • selectează text → explicație; la grile, bifează un răspuns → feedback
-   • on/off: ⌥+Shift+L  sau  iconița extensiei → „Activă"
+  ❗️ NU alege folderul în care ai dezarhivat zip-ul (ăla n-are extensia) —
+     folosește exact calea de mai sus: $EXT
 
-  Backend: http://127.0.0.1:8077/health   ·   Log update: $PROJ/update.log
+  Verifică backendul:  http://127.0.0.1:8077/health  → trebuie {"ok":true,...}
 DONE

@@ -22,13 +22,16 @@ funcții noi.
   (Nu trebuie să muți niciun fișier manual — el le pune în `~/PROJECTS/study-lens`.)
 
 ### Pasul 2 — Încarcă extensia în Chrome
-La final, installerul **îți deschide singur** folderul extensiei în Finder **și**
-pagina `chrome://extensions`. Acolo:
+La final, installerul **îți copiază calea în clipboard** și îți deschide singur
+folderul extensiei în Finder **și** pagina `chrome://extensions`. Acolo:
 1. Activează **Developer mode** (colț dreapta-sus).
 2. Apasă **Load unpacked**.
-3. Selectează folderul **`extension`** pe care ți l-a deschis în Finder.
-   *(calea lui: `~/PROJECTS/study-lens/extension`)*
+3. În fereastra care se deschide apasă **⌘ + Shift + G**, lipește calea
+   (**⌘ + V**), Enter → apoi „Open". *(calea e `~/PROJECTS/study-lens/extension`)*
 4. Pin-uiește iconița 🔍 (puzzle → ac de prindere).
+
+> ❗️ **NU** alege folderul în care ai dezarhivat zip-ul — acela are doar installerul
+> și acest README, **nu** extensia. Folosește exact calea de mai sus.
 
 ### Pasul 3 — Gata
 Backendul pornește singur la fiecare boot, iar **update-urile vin automat** (la 30 min).
