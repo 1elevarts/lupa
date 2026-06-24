@@ -82,7 +82,7 @@
       .dimbar { position: fixed; width: 1px; border-radius: 2px; pointer-events: none;
         z-index: 1; transition: opacity .2s; }
       .dimbar.red   { background: rgba(214,69,69,.75); }
-      .dimbar.green { background: rgba(46,158,99,.85); }
+      .dimbar.green { width: 2px; background: rgba(74,190,124,.6); }
       .dimbar.grey  { background: rgba(150,150,165,.75); }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
@@ -466,23 +466,37 @@
   // search the question first, then the whole page as a fallback
   function findOption(optText, used) {
     const target = normTxt(optText);
-    if (target.length < 3) return null;
+    if (target.length < 4) return null;
     const scopes = [];
     if (S.hlSrc && S.hlSrc.querySelectorAll) scopes.push(S.hlSrc);
     scopes.push(document.body);
     const SEL = "label, li, [role=radio], [role=option], [role=button], button, a, p, td, div, span";
+    const words = target.split(" ").filter((w) => w.length >= 4);
+    const visible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
     for (const scope of scopes) {
+      // pass 1: smallest element that FULLY contains the option text (exact-ish)
       let best = null, bestLen = Infinity;
       for (const el of scope.querySelectorAll(SEL)) {
-        if (used && used.has(el)) continue;        // don't mark the same node twice
+        if (used && used.has(el)) continue;
         const t = normTxt(el.innerText || el.textContent);
-        if (!t || t.length > target.length + 50) continue;
-        if (t.includes(target) || target.includes(t)) {
-          const r = el.getBoundingClientRect();
-          if (r.width > 0 && r.height > 0 && t.length < bestLen) { best = el; bestLen = t.length; }
-        }
+        if (!t || !t.includes(target)) continue;     // must contain the whole option
+        if (t.length < bestLen && visible(el)) { best = el; bestLen = t.length; }
       }
       if (best) return best;
+      // pass 2: token-overlap fallback (handles light paraphrase by the model)
+      if (words.length) {
+        let bo = null, boScore = 0.6, boLen = Infinity;
+        for (const el of scope.querySelectorAll(SEL)) {
+          if (used && used.has(el)) continue;
+          const t = normTxt(el.innerText || el.textContent);
+          if (!t || t.length > target.length * 2.2) continue;
+          const hit = words.filter((w) => t.includes(w)).length / words.length;
+          if (hit >= boScore && visible(el) && (hit > boScore || t.length < boLen)) {
+            bo = el; boScore = hit; boLen = t.length;
+          }
+        }
+        if (bo) return bo;
+      }
     }
     return null;
   }

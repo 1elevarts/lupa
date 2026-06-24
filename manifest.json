@@ -1,1 +1,1 @@
-{"version":"2026-06-24-2328","notes":"bare optiuni 1px: rosu=excluse, verde=favorit, gri=celalalt (toate 4 marcate la single-answer)"}
+{"version":"2026-06-24-2337","notes":"fix mapare culori pe casute (match pe text complet, nu pe litera badge) + fallback pe cuvinte; verde 2px mai deschis/transparent"}
