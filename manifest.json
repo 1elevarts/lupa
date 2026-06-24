@@ -1,1 +1,1 @@
-{"version":"2026-06-24-2200","notes":"lupa opacity 0.3 (idle) + detectare grile cu raspuns multiplu (badge + camp multi din text/checkbox)"}
+{"version":"2026-06-24-2210","notes":"bar: fara chips termeni/referinta, exclude=outline rosu (X nu e:), hint doar outline+bec; lupa opacity .15 pe jumatate ascunsa (iese la hover); explicatii mai scurte/directive; slider .1-.8"}

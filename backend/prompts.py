@@ -18,7 +18,8 @@ becul.
 
 REGULI DE STIL:
 - Română corectă, cu diacritice. Ton cald, direct, fără balast academic.
-- FOARTE scurt: 2–4 propoziții pentru explicația principală. Lupa e mică.
+- FOARTE scurt și DIRECT: 1–2 propoziții la obiect. Pune punctul pe i, fără introduceri \
+sau text de umplutură („În esență", „Trebuie să știi că" etc.). Mergi direct la miez.
 - Dacă există un material de curs relevant în <context_curs>, ancorează explicația în \
 terminologia ȘI exemplele de acolo (e materia LUI, nu generalități).
 - Leagă conceptul de ceva concret/intuitiv (o analogie, un „de ce contează").

@@ -41,17 +41,19 @@
       * { box-sizing: border-box; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; }
       .orb {
         position: fixed; width: 34px; height: 34px;
-        border-radius: 50%; pointer-events: auto; cursor: pointer; right: 18px; bottom: 18px;
+        border-radius: 50%; pointer-events: auto; cursor: pointer; right: -17px; bottom: 18px;
         background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.6), rgba(255,255,255,.1) 60%);
         backdrop-filter: blur(6px) saturate(1.4); -webkit-backdrop-filter: blur(6px) saturate(1.4);
         border: 1.5px solid var(--accent, #7c5cff);
         box-shadow: 0 6px 22px rgba(40,20,90,.32), inset 0 0 12px rgba(255,255,255,.28);
-        opacity: .3; transition: opacity .25s, transform .18s, border-color .3s, box-shadow .3s;
+        opacity: .15; transition: opacity .25s, right .2s ease, transform .18s, border-color .3s, box-shadow .3s;
         display: grid; place-items: center;
       }
-      .orb:hover { opacity: 1; transform: scale(1.08); }
+      .orb:hover { opacity: 1; right: 12px; transform: scale(1.06); }
       .orb:active { transform: scale(.94); }
       .orb svg { width: 16px; height: 16px; stroke: var(--accent,#7c5cff); opacity:.95; }
+      /* when working/ready, slide fully out so the state is visible */
+      .orb.armed, .orb.thinking, .orb.ready, .orb.error { right: 12px; }
       .orb.armed   { opacity: 1; transform: scale(1.06); }
       .orb.thinking{ opacity: 1; border-color:#f5a623; box-shadow:0 6px 22px rgba(245,166,35,.4), inset 0 0 14px rgba(255,255,255,.3); }
       .orb.thinking::after{
@@ -109,12 +111,13 @@
       .p-key { font-size:11px; background:rgba(124,92,255,.12); color:#5a4db0; padding:3px 9px;
                border-radius:20px; border:1px solid rgba(124,92,255,.22); }
       .p-elims { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-      .p-elim { font-size:11px; color:#9a3412; background:rgba(239,68,68,.1);
-                border:1px solid rgba(239,68,68,.25); padding:3px 9px; border-radius:20px;
-                text-decoration:line-through; cursor:help; }
+      .p-elim { font-size:12px; color:#3a3640; background:transparent;
+                border:1px solid rgba(214,69,69,.55); padding:3px 11px; border-radius:18px;
+                cursor:help; }
+      .p-elim b { color:#c0392b; font-weight:700; }
       .p-hint { display:flex; gap:7px; align-items:flex-start;
-                font-size:12.5px; color:#7a5210; background:rgba(245,166,35,.12);
-                border:1px solid rgba(245,166,35,.25); border-radius:10px; padding:8px 10px; }
+                font-size:12.5px; color:#3a3640; background:transparent;
+                border:1px solid rgba(245,166,35,.5); border-radius:10px; padding:8px 10px; }
       .p-hint svg { flex:0 0 auto; margin-top:1px; }
       .p-foot { margin-top:9px; display:flex; align-items:center; gap:8px;
                 font-size:11px; color:#736e92; }
@@ -166,7 +169,7 @@
   });
   function applyAccent(c) { orb.style.setProperty("--accent", c); panel.style.setProperty("--accent", c); }
   function setBarOpacity(v) {
-    const n = Math.min(0.6, Math.max(0.3, Number(v) || 0.4));
+    const n = Math.min(0.8, Math.max(0.1, Number(v) || 0.4));
     host.style.setProperty("--bar-op", String(n));
   }
 
@@ -418,9 +421,11 @@
         const t = norm(lb.innerText);
         if (t && (t.includes(target) || target.includes(t))) {
           S.dimmed.push({ el: lb, prev: lb.style.cssText });
-          lb.style.opacity = "0.4";
-          lb.style.textDecoration = "line-through";
-          lb.style.transition = "opacity .2s";
+          lb.style.outline = "1px solid rgba(214,69,69,.6)";
+          lb.style.outlineOffset = "1px";
+          lb.style.borderRadius = "10px";
+          lb.style.opacity = "0.85";
+          lb.style.transition = "opacity .2s, outline .2s";
           break;
         }
       }
@@ -512,11 +517,7 @@
     S.panelOpen = true;
     const modeLabel = d.mode === "quiz" ? "ghid" : d.mode === "write" ? "schelă"
       : d.mode === "check" ? "verificare" : "explică";
-    const keys = (d.keys || []).slice(0, 4).map(k => `<span class="p-key">${esc(k)}</span>`).join("");
-    const src = (d.sources || [])[0];
-    const srcLink = src
-      ? `<a class="p-src" href="https://invatacu.ai-ai.ro/neuro" target="_blank">${esc(src.chapter)} · ${esc(src.title)}</a>`
-      : "";
+    const elimItems = (d.eliminate || []).slice(0, 2);
     const verdict = d.verdict === "wrong"
       ? `<div class="p-verdict wrong">🤔 Mai gândește-te</div>`
       : d.verdict === "correct"
@@ -528,8 +529,8 @@
     const hint = d.hint ? `<div class="p-hint">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c97f17" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1h6c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>
         <span>${esc(d.hint)}</span></div>` : "";
-    const elim = (d.eliminate || []).slice(0, 2)
-      .map(e => `<span class="p-elim" title="${esc(e.why || "")}">✕ ${esc(e.opt)}</span>`).join("");
+    const elim = elimItems
+      .map(e => `<span class="p-elim" title="${esc(e.why || "")}"><b>✕ nu e:</b> ${esc(e.opt)}</span>`).join("");
     const elims = elim ? `<div class="p-elims">${elim}</div>` : "";
     panel.innerHTML = `
       <div class="p-main">
@@ -541,12 +542,10 @@
         ${multi}
         ${verdict}
         <div class="p-body">${esc(d.explain || "")}</div>
-        ${keys ? `<div class="p-keys">${keys}</div>` : ""}
       </div>
       <div class="p-side">
         ${elims}
         ${hint}
-        ${srcLink ? `<div class="p-foot">${srcLink}</div>` : ""}
       </div>
       <span class="p-x" id="elupa-x">✕</span>`;
     root.getElementById("elupa-x").addEventListener("click", closePanel);
