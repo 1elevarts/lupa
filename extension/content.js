@@ -99,7 +99,7 @@
       .p-side { flex: 1 1 30%; min-width: 200px; }
       /* auto-hide layout: peek (balance/title) always visible, full body toggled by H */
       .p-peek { display:flex; align-items:center; justify-content:center; gap:10px; position:relative; min-height:22px; padding-right:26px; }
-      .p-peek .p-balance { margin-top:0; padding-top:0; border-top:none; }
+      .p-peek .p-fader, .p-peek .p-faders { width:100%; }
       .p-peektitle { display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; color:#171527; }
       .p-toggle { position:absolute; right:0; top:50%; transform:translateY(-50%);
                   font-size:10px; font-weight:700; color:#9b99ab; border:1px solid rgba(20,16,40,.16);
@@ -124,13 +124,29 @@
                  border-radius:20px; margin-bottom:7px; color:#1e40af;
                  background:rgba(59,130,246,.14); border:1px solid rgba(59,130,246,.32); }
       .p-body { color:#2a2740; }
-      .p-balance { margin-top:12px; padding-top:9px; border-top:1px solid rgba(20,16,40,.06); }
-      .b-row { display:flex; align-items:center; gap:6px; }
-      .b-opt { flex:1 1 0; min-width:0; font-size:11px; color:#7a7790; text-align:center;
+      /* DJ crossfader (single-answer) */
+      .p-fader { width:100%; }
+      .f-row { display:flex; align-items:center; gap:10px; }
+      .f-deck { flex:1 1 0; min-width:0; font-size:11px; color:#7a7790; text-align:center;
+                overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .f-deck.fav { color:#5a4db0; font-weight:700; }
+      .f-track { flex:0 0 140px; height:6px; border-radius:6px; position:relative;
+                 background:linear-gradient(90deg, rgba(124,92,255,.2), rgba(124,92,255,.05) 50%, rgba(124,92,255,.2)); }
+      .f-mid { position:absolute; left:50%; top:-3px; width:1px; height:12px; background:rgba(20,16,40,.2); }
+      .f-knob { position:absolute; top:50%; width:12px; height:18px; border-radius:4px;
+                background:var(--accent,#7c5cff); transform:translate(-50%,-50%);
+                box-shadow:0 2px 6px rgba(124,92,255,.5); transition:left .35s cubic-bezier(.2,.9,.3,1); }
+      .b-cap { font-size:10px; color:#9b99ab; text-align:center; margin-top:4px; }
+      /* level faders (multi-answer) — one per option, by chance of being correct */
+      .p-faders { display:flex; flex-direction:column; gap:5px; width:100%; }
+      .m-slider { display:flex; align-items:center; gap:8px; }
+      .m-lbl { flex:0 0 40%; max-width:40%; font-size:11px; color:#4a4763;
                overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-      .b-opt.fav { color:#5a4db0; font-weight:700; }
-      .b-svg { flex:0 0 auto; }
-      .b-cap { font-size:10px; color:#9b99ab; text-align:center; margin-top:2px; }
+      .m-track { flex:1 1 0; height:7px; border-radius:7px; background:rgba(20,16,40,.08); overflow:hidden; }
+      .m-fill { height:100%; border-radius:7px; background:var(--accent,#7c5cff); transition:width .35s ease; }
+      .m-fill.hot  { background:#34b37a; }
+      .m-fill.cold { background:#cfccdd; }
+      .m-pct { flex:0 0 auto; font-size:10.5px; color:#7a7790; min-width:30px; text-align:right; }
       .p-keys { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
       .p-key { font-size:11px; background:rgba(124,92,255,.12); color:#5a4db0; padding:3px 9px;
                border-radius:20px; border:1px solid rgba(124,92,255,.22); }
@@ -554,9 +570,22 @@
     panel.classList.toggle("expanded", S.barExpanded);
   }
   function esc(s){ return (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-  // a subtle balance beam that tilts toward the more likely of the 2 finalists
-  function balanceHTML(d, isMulti) {
-    if (isMulti) return "";
+  // DJ crossfader (single-answer) or per-option level faders (multi-answer)
+  function faderHTML(d, isMulti) {
+    if (isMulti) {
+      const picks = (d.picks || []).filter((p) => p && p.opt);
+      if (!picks.length) return "";
+      const rows = picks.map((p) => {
+        const pct = Math.round(Math.max(0, Math.min(1, Number(p.score) || 0)) * 100);
+        const cls = pct >= 60 ? " hot" : pct <= 30 ? " cold" : "";
+        return `<div class="m-slider">
+          <span class="m-lbl" title="${esc(p.opt)}">${esc(p.opt)}</span>
+          <div class="m-track"><div class="m-fill${cls}" style="width:${pct}%"></div></div>
+          <span class="m-pct">${pct}%</span>
+        </div>`;
+      }).join("");
+      return `<div class="p-faders">${rows}</div>`;
+    }
     const f = d.finalists || [];
     const lean = d.lean;
     if (f.length !== 2 || !lean || !lean.toward) return "";
@@ -564,28 +593,16 @@
     const t = norm(lean.toward);
     const favRight = norm(f[1]).includes(t) || t.includes(norm(f[1]));
     const s = Math.max(0.5, Math.min(0.9, Number(lean.strength) || 0.5));
-    const ang = ((s - 0.5) / 0.4) * 13;          // 0..13°
-    const deg = (favRight ? 1 : -1) * ang;        // favored side dips down
+    const pos = Math.round((favRight ? s : 1 - s) * 100); // knob: 0=stânga(A), 100=dreapta(B)
     const pct = Math.round(s * 100);
-    const ac = "var(--accent,#7c5cff)";
-    const lFill = favRight ? "#c9c5da" : ac;
-    const rFill = favRight ? ac : "#c9c5da";
     return `
-      <div class="p-balance">
-        <div class="b-row">
-          <span class="b-opt ${favRight ? "" : "fav"}" title="${esc(f[0])}">${esc(f[0])}</span>
-          <svg class="b-svg" width="118" height="40" viewBox="0 0 118 40" aria-hidden="true">
-            <g transform="rotate(${deg.toFixed(1)} 59 15)">
-              <line x1="16" y1="15" x2="102" y2="15" stroke="${ac}" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="16" cy="15" r="4.5" fill="${lFill}"/>
-              <circle cx="102" cy="15" r="4.5" fill="${rFill}"/>
-            </g>
-            <line x1="59" y1="15" x2="59" y2="33" stroke="#b9b6cc" stroke-width="2"/>
-            <path d="M51 35 L67 35 L59 24 Z" fill="#b9b6cc"/>
-          </svg>
-          <span class="b-opt ${favRight ? "fav" : ""}" title="${esc(f[1])}">${esc(f[1])}</span>
+      <div class="p-fader">
+        <div class="f-row">
+          <span class="f-deck ${favRight ? "" : "fav"}" title="${esc(f[0])}">${esc(f[0])}</span>
+          <div class="f-track"><div class="f-mid"></div><div class="f-knob" style="left:${pos}%"></div></div>
+          <span class="f-deck ${favRight ? "fav" : ""}" title="${esc(f[1])}">${esc(f[1])}</span>
         </div>
-        <div class="b-cap">înclină ~${pct}% spre „${esc(lean.toward)}"</div>
+        <div class="b-cap">${pct}% spre „${esc(lean.toward)}"</div>
       </div>`;
   }
   function renderPanel(d) {
@@ -607,7 +624,7 @@
     const elim = elimItems
       .map(e => `<span class="p-elim" title="${esc(e.why || "")}"><b>✕ nu e:</b> ${esc(e.opt)}</span>`).join("");
     const elims = elim ? `<div class="p-elims">${elim}</div>` : "";
-    const bal = balanceHTML(d, isMulti);
+    const bal = faderHTML(d, isMulti);
     const peek = bal
       ? bal
       : `<div class="p-peektitle"><span class="p-dot"></span>${esc(d.concept || "Concept")}</div>`;

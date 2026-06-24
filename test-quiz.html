@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>Lupa — pagină de test grile</title>
+<style>
+  body { font-family:-apple-system,"Segoe UI",Roboto,sans-serif; max-width:760px;
+         margin:40px auto; padding:0 20px; color:#222; background:#faf9f6; line-height:1.5; }
+  h1 { font-size:20px; } h2 { font-size:15px; margin-top:34px; }
+  .q { background:#fff; border:1px solid #e7e5ee; border-radius:12px; padding:18px 20px; margin:14px 0;
+       box-shadow:0 2px 10px rgba(20,10,50,.05); }
+  .q p { font-weight:650; margin:0 0 12px; }
+  label { display:block; padding:9px 12px; border:1px solid #eee; border-radius:9px; margin:7px 0;
+          cursor:pointer; }
+  label:hover { background:#f6f5fb; }
+  .note { font-size:12.5px; color:#888; }
+  code { background:#eee; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+  <h1>🔍 Lupa — pagină de test grile</h1>
+  <p class="note">Pune <b>Mod = Auto</b> (sau „Ghid grilă") în iconița extensiei. Selectează textul
+  întrebării sau click pe lupă. Apasă <code>H</code> ca să vezi explicația sub fader.</p>
+
+  <h2>1) Întrebare cu UN singur răspuns (radio) → crossfader</h2>
+  <div class="q">
+    <p>Care metodă poate modula DIRECT nuclei subcorticali profunzi (STN/GPi)?</p>
+    <label><input type="radio" name="q1"> A) TMS</label>
+    <label><input type="radio" name="q1"> B) tES</label>
+    <label><input type="radio" name="q1"> C) DBS</label>
+    <label><input type="radio" name="q1"> D) EEG</label>
+  </div>
+
+  <h2>2) Întrebare cu RĂSPUNSURI MULTIPLE (checkbox) → mai multe faders</h2>
+  <div class="q">
+    <p>Selectați TOATE metodele neinvazive de neuroimagistică/stimulare (mai multe corecte):</p>
+    <label><input type="checkbox" name="q2"> A) EEG</label>
+    <label><input type="checkbox" name="q2"> B) DBS (deep brain stimulation)</label>
+    <label><input type="checkbox" name="q2"> C) fMRI</label>
+    <label><input type="checkbox" name="q2"> D) TMS</label>
+    <label><input type="checkbox" name="q2"> E) Implant de electrozi profunzi</label>
+  </div>
+
+  <h2>3) Întrebare negativă (care e GREȘIT) → crossfader + excluderi</h2>
+  <div class="q">
+    <p>În tractografia deterministă, care criteriu de oprire este INCORECT?</p>
+    <label><input type="radio" name="q3"> A) Curbura depășind un unghi maxim</label>
+    <label><input type="radio" name="q3"> B) FA sub un prag (FA &lt; 0,15)</label>
+    <label><input type="radio" name="q3"> C) Semnalul T2* scăzând sub media creierului</label>
+    <label><input type="radio" name="q3"> D) Atingerea regiunii de interes țintă</label>
+  </div>
+</body>
+</html>

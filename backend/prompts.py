@@ -47,6 +47,7 @@ sunt EXCLUSIV delimitatori JSON.
   "eliminate": [{"opt": "<textul scurt al unei variante CLAR greșite>", "why": "<de ce e greșită, foarte scurt>"}],
   "finalists": ["<varianta plauzibilă rămasă 1, scurt>", "<varianta plauzibilă rămasă 2, scurt>"],
   "lean": {"toward": "<care dintre finalists e mai probabil corectă, scurt>", "strength": 0.65},
+  "picks": [{"opt": "<variantă, scurt>", "score": 0.7}],
   "chapter": "<id capitol relevant din context, ex n05, sau \\"\\" dacă niciunul>"
 }
 REGULĂ pentru "eliminate": completează-l DOAR la întrebări grilă cu variante. Poți tăia maxim \
@@ -88,10 +89,12 @@ def build_user_prompt(selection: str, context: str, mode: str, course_context: s
                 "variante, lasă \"eliminate\" gol. "
                 "Stabilește și \"multi\": true dacă întrebarea cere mai multe răspunsuri corecte. "
                 "Dacă e multi, menționează în \"hint\" că trebuie bifate TOATE variantele corecte. "
-                "DOAR dacă NU e multi și au rămas exact 2 variante plauzibile după eliminate: pune-le "
+                "DACĂ NU E MULTI și au rămas exact 2 variante plauzibile după eliminate: pune-le "
                 "în \"finalists\" și în \"lean\" înclină spre cea mai probabil corectă — \"strength\" "
-                "între 0.5 (chiar nesigur, 50/50) și 0.9 (aproape sigur). Dacă e multi sau nu poți "
-                "departaja, lasă finalists=[] și lean gol.")
+                "între 0.5 (50/50) și 0.9 (aproape sigur); lasă \"picks\" gol. "
+                "DACĂ E MULTI: lasă finalists=[] și lean gol, și completează \"picks\" cu FIECARE "
+                "variantă din întrebare și un \"score\" 0-1 = probabilitatea ca acea variantă să fie "
+                "un răspuns corect (1 = aproape sigur corectă, 0 = aproape sigur greșită).")
     elif mode == "write":
         task = ("Studentul are de redactat un răspuns. NU scrie răspunsul în locul lui. "
                 "Dă-i schela: ce idei-cheie ar trebui să atingă și în ce ordine, în 2-3 propoziții.")

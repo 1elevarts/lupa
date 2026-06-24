@@ -64,6 +64,26 @@ def _norm_finalists(raw) -> list:
     return [str(x).strip()[:120] for x in raw if str(x).strip()][:2]
 
 
+def _norm_picks(raw) -> list:
+    """[{opt, score 0..1}] for multi-answer questions, sorted high->low."""
+    if not isinstance(raw, list):
+        return []
+    out = []
+    for it in raw:
+        if not isinstance(it, dict):
+            continue
+        opt = str(it.get("opt", "")).strip()[:120]
+        if not opt:
+            continue
+        try:
+            score = float(it.get("score", 0.5))
+        except (TypeError, ValueError):
+            score = 0.5
+        out.append({"opt": opt, "score": round(max(0.0, min(1.0, score)), 2)})
+    out.sort(key=lambda x: x["score"], reverse=True)
+    return out[:6]
+
+
 def _norm_eliminate(raw) -> list:
     """Keep at most 2 well-formed {opt, why} entries; tolerate strings too."""
     out = []
@@ -150,6 +170,7 @@ def explain(req: ExplainReq):
         "eliminate": _norm_eliminate(data.get("eliminate")),
         "finalists": _norm_finalists(data.get("finalists")),
         "lean": _norm_lean(data.get("lean")),
+        "picks": _norm_picks(data.get("picks")),
         "chapter": data.get("chapter", "") or (hits[0]["chapter"] if hits else ""),
         "sources": [{"chapter": h["chapter"], "title": h["chapter_title"],
                      "heading": h["heading"], "score": h.get("score")} for h in hits],
@@ -158,10 +179,15 @@ def explain(req: ExplainReq):
         "mode": req.mode,
         "ts": int(time.time()),
     }
-    # the balance lean is only meaningful for single-answer questions with 2 finalists
-    if out["multi"] or not out["lean"] or len(out["finalists"]) != 2:
+    # single-answer -> crossfader (finalists + lean); multi-answer -> per-option picks
+    if out["multi"]:
         out["finalists"] = []
         out["lean"] = None
+    else:
+        out["picks"] = []
+        if not out["lean"] or len(out["finalists"]) != 2:
+            out["finalists"] = []
+            out["lean"] = None
     if use_cache:
         try:
             json.dump(out, open(cache_path, "w", encoding="utf-8"), ensure_ascii=False)

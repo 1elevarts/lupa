@@ -135,12 +135,21 @@ def _loose_fields(text: str) -> dict | None:
         if mt and mt.group(1).strip():
             lean = {"toward": mt.group(1).strip(),
                     "strength": float(ms.group(1)) if ms else 0.5}
+    picks = []
+    mp = re.search(r'"picks"\s*:\s*\[(.*?)\]', text, re.DOTALL)
+    if mp:
+        for obj in re.findall(r'\{(.*?)\}', mp.group(1), re.DOTALL):
+            mo = re.search(r'"opt"\s*:\s*"([^"]*)"', obj)
+            msc = re.search(r'"score"\s*:\s*([0-9.]+)', obj)
+            if mo and mo.group(1).strip():
+                picks.append({"opt": mo.group(1).strip(),
+                              "score": float(msc.group(1)) if msc else 0.5})
     if not (concept or explain):
         return None
     return {"concept": concept, "explain": explain, "keys": keys,
             "hint": hint, "verdict": verdict, "multi": multi,
             "eliminate": eliminate, "finalists": finalists, "lean": lean,
-            "chapter": chapter}
+            "picks": picks, "chapter": chapter}
 
 
 def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:
