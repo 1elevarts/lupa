@@ -78,13 +78,10 @@
         box-shadow: 0 0 0 2px rgba(120,122,140,.07);
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
-      /* red bar overlaid on the left edge of an excluded option (no page edits) */
-      /* thin colour bar overlaid on the left edge of an option (no page edits) */
-      .dimbar { position: fixed; width: 1px; border-radius: 2px; pointer-events: none;
-        z-index: 1; transition: opacity .2s; }
-      .dimbar.red   { background: rgba(214,69,69,.75); }
-      .dimbar.green { width: 2px; background: rgba(74,190,124,.6); }
-      .dimbar.grey  { background: rgba(150,150,165,.75); }
+      /* small green dot before the leaned-to option's first letter (no page edits) */
+      .dimdot { position: fixed; width: 8px; height: 8px; border-radius: 50%;
+        background: #34b37a; box-shadow: 0 0 6px rgba(52,179,122,.55);
+        pointer-events: none; z-index: 1; transition: opacity .2s; }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
@@ -506,27 +503,22 @@
     }
     return null;
   }
-  // draw left-edge bars on the options: red = excluded, green = leaned-to, grey = other
+  // On the page we mark ONLY the leaned-to answer, with a small green dot just
+  // before its first letter. Red (excluded) + grey (other finalist) live only in
+  // the H-expandable panel (the "✕ nu e" chips + the crossfader).
   function applyOptionBars(d, isMulti) {
     clearDim();
-    const used = new Set();
-    const draw = (optText, cls) => {
-      const target = findOption(optText, used);
-      if (!target) return;
-      used.add(target);
-      const ov = document.createElement("div");
-      ov.className = "dimbar " + cls;
-      root.appendChild(ov);
-      S.dimEls.push({ ov, target });
-    };
-    for (const e of (d.eliminate || [])) draw(e.opt, "red");
+    if (isMulti) return;
     const f = d.finalists || [];
-    if (!isMulti && d.lean && d.lean.toward && f.length === 2) {
-      const t = normTxt(d.lean.toward);
-      const favIdx = (normTxt(f[1]).includes(t) || t.includes(normTxt(f[1]))) ? 1 : 0;
-      draw(f[favIdx], "green");
-      draw(f[1 - favIdx], "grey");
-    }
+    if (!d.lean || !d.lean.toward || f.length !== 2) return;
+    const t = normTxt(d.lean.toward);
+    const favIdx = (normTxt(f[1]).includes(t) || t.includes(normTxt(f[1]))) ? 1 : 0;
+    const target = findOption(f[favIdx], new Set());
+    if (!target) return;
+    const ov = document.createElement("div");
+    ov.className = "dimdot";
+    root.appendChild(ov);
+    S.dimEls.push({ ov, target });
     positionDims();
   }
   function positionDims() {
@@ -535,10 +527,10 @@
       const cs = getComputedStyle(d.target);
       let lh = parseFloat(cs.lineHeight);
       if (!lh || isNaN(lh)) lh = (parseFloat(cs.fontSize) || 15) * 1.4;
-      const h = Math.max(12, Math.min(lh, r.height) - 2); // only the FIRST line, next to the letter
-      d.ov.style.left = (r.left - 2) + "px";
-      d.ov.style.top = (r.top + 2) + "px";
-      d.ov.style.height = h + "px";
+      lh = Math.min(lh, r.height);
+      // green dot, vertically centered on the first line, just left of the text
+      d.ov.style.left = (r.left - 13) + "px";
+      d.ov.style.top = (r.top + lh / 2 - 4) + "px";
     }
   }
   function clearDim() {
