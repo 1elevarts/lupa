@@ -152,6 +152,10 @@ def explain(req: ExplainReq):
         res = llm.ask_web(TUTOR_SYSTEM, user_prompt, model=model_for_call)
     else:
         res = llm.ask(TUTOR_SYSTEM, user_prompt, model=model_for_call)
+        # safety net: if Sonnet isn't reachable (e.g. OAuth account without it),
+        # don't fail the quiz — retry on Haiku so the student still gets help
+        if res.get("error") and "sonnet" in (model_for_call or ""):
+            res = llm.ask(TUTOR_SYSTEM, user_prompt, model="claude-haiku-4-5")
 
     data = res.get("data")
     if not data:

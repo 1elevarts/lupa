@@ -1,1 +1,1 @@
-{"version":"2026-06-25-1200","notes":"punct verde 3px la baza literei (ca un punct .Aplicarea)"}
+{"version":"2026-06-25-1207","notes":"fallback grile: daca Sonnet nu e accesibil (ex. OAuth fara abonament) -> revine automat la Haiku, nu mai da eroare"}
