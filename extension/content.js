@@ -277,9 +277,17 @@
     if (S.panelOpen) return;
     const el = e.target;
     S.hoverTimer = setTimeout(() => {
-      const txt = blockText(el);
+      // hovering anywhere in a quiz (question OR any option) -> analyze the WHOLE
+      // question + all its options as one block, not just the bit under the cursor
+      const scope = questionScope(el);
+      const isQuizBlock = scope && scope.querySelectorAll &&
+        (scope.querySelectorAll('input[type=radio], input[type=checkbox]').length >= 2 ||
+         (scope.matches && scope.matches(".que, .formulation, .question, .quiz, fieldset")));
+      const txt = isQuizBlock
+        ? (scope.innerText || "").trim().replace(/\s+/g, " ")
+        : blockText(el);
       if (txt && txt.length > 24 && txt !== S.lastSel) {
-        explain(txt.slice(0, 600), contextAround(el), detectMode(txt, el), questionScope(el));
+        explain(txt.slice(0, 800), contextAround(el), detectMode(txt, el), scope || el);
       }
     }, 850);
   }

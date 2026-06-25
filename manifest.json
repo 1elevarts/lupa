@@ -1,1 +1,1 @@
-{"version":"2026-06-25-1207","notes":"fallback grile: daca Sonnet nu e accesibil (ex. OAuth fara abonament) -> revine automat la Haiku, nu mai da eroare"}
+{"version":"2026-06-25-1212","notes":"scan la hover: prinde toata intrebarea + toate variantele (oriunde tii mousul in grila), nu doar blocul de sub cursor"}
