@@ -78,10 +78,9 @@
         box-shadow: 0 0 0 2px rgba(120,122,140,.07);
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
-      /* small green dot before the leaned-to option's first letter (no page edits) */
-      .dimdot { position: fixed; width: 8px; height: 8px; border-radius: 50%;
-        background: #34b37a; box-shadow: 0 0 6px rgba(52,179,122,.55);
-        pointer-events: none; z-index: 1; transition: opacity .2s; }
+      /* tiny green dot right before the leaned-to option's first letter */
+      .dimdot { position: fixed; width: 4px; height: 4px; border-radius: 50%;
+        background: #34b37a; pointer-events: none; z-index: 1; transition: opacity .2s; }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
       .panel {
@@ -528,9 +527,9 @@
       let lh = parseFloat(cs.lineHeight);
       if (!lh || isNaN(lh)) lh = (parseFloat(cs.fontSize) || 15) * 1.4;
       lh = Math.min(lh, r.height);
-      // green dot, vertically centered on the first line, just left of the text
-      d.ov.style.left = (r.left - 13) + "px";
-      d.ov.style.top = (r.top + lh / 2 - 4) + "px";
+      // tiny dot right before the first letter, centered on the first line
+      d.ov.style.left = (r.left - 8) + "px";
+      d.ov.style.top = (r.top + lh / 2 - 2) + "px";
     }
   }
   function clearDim() {
