@@ -180,13 +180,15 @@
       .shimmer { width:14px;height:14px;border-radius:50%;border:2px solid rgba(124,92,255,.3);
                  border-top-color:#7c5cff; animation:spin .8s linear infinite; }
 
-      .toast { position:fixed; bottom:64px; left:50%; transform:translateX(-50%);
-               background:rgba(20,18,32,.95); color:#fff; padding:10px 15px; border-radius:12px;
-               font-size:12.5px; pointer-events:auto; border:1px solid rgba(255,255,255,.12);
-               box-shadow:0 12px 36px rgba(0,0,0,.4); max-width:420px; opacity:0; transition:opacity .2s; }
-      .toast.show { opacity:1; }
-      .toast b { color:#ffd9a8; }
-      kbd { background:rgba(255,255,255,.14); border-radius:5px; padding:1px 5px; font-size:11px; }
+      .toast { position:fixed; bottom:60px; right:16px; max-width:360px;
+               background:rgba(250,250,252,.9); color:#3a3850; padding:9px 13px; border-radius:12px;
+               font-size:12.5px; pointer-events:auto; border:1px solid rgba(20,16,40,.08);
+               backdrop-filter:blur(10px) saturate(1.1); -webkit-backdrop-filter:blur(10px) saturate(1.1);
+               box-shadow:0 6px 20px rgba(20,10,50,.1); opacity:0; transition:opacity .2s; }
+      .toast.show { opacity:.5; }
+      .toast.show:hover { opacity:1; }
+      .toast b { color:#b9791a; }
+      kbd { background:rgba(20,16,40,.07); color:#5a5870; border-radius:5px; padding:1px 5px; font-size:11px; }
     </style>
     <div class="orbzone" id="orbzone">
       <div class="orb" id="orb" title="Lupa — click ca să-ți explic selecția / paragraful">
