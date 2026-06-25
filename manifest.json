@@ -1,1 +1,1 @@
-{"version":"2026-06-25-1212","notes":"scan la hover: prinde toata intrebarea + toate variantele (oriunde tii mousul in grila), nu doar blocul de sub cursor"}
+{"version":"2026-06-25-1214","notes":"cache local rezultate: re-hover pe aceeasi intrebare = instant, fara re-cautare (chiar dupa click/inchidere)"}

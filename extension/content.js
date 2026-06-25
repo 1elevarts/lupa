@@ -20,6 +20,7 @@
     state: "idle",    // idle | armed | thinking | ready | error
     lastSel: "",
     last: null,       // last explain params, for the "caută online" escalation
+    rcache: new Map(),// frontend result cache: key=mode|selection -> data (instant re-show)
     lastAutoQ: "",    // text of the last auto-explained question (dedupe)
     hlEl: null,       // element currently framed by the highlight
     hlSrc: null,      // source element of the current explanation (for dim scoping)
@@ -286,7 +287,8 @@
       const txt = isQuizBlock
         ? (scope.innerText || "").trim().replace(/\s+/g, " ")
         : blockText(el);
-      if (txt && txt.length > 24 && txt !== S.lastSel) {
+      // re-hover the same question re-shows it (instant from cache via explain)
+      if (txt && txt.length > 24) {
         explain(txt.slice(0, 800), contextAround(el), detectMode(txt, el), scope || el);
       }
     }, 850);
@@ -595,6 +597,16 @@
     S.lastSel = selection;
     S.hlSrc = srcEl || null;
     S.last = { selection, context, mode, srcEl };  // remember for "caută online"
+    // instant re-show from local cache — re-hovering the same question never re-searches
+    const key = mode + "|" + selection;
+    if (!web && mode !== "check" && S.rcache.has(key)) {
+      const d = S.rcache.get(key);
+      setState("ready");
+      renderPanel(d);
+      showHighlight(srcEl);
+      setTimeout(() => { if (S.state === "ready") setState("idle"); }, 2500);
+      return;
+    }
     setState("thinking");
     openLoading(web ? "web" : mode);
     showHighlight(srcEl);
@@ -616,6 +628,7 @@
     }
     const d = resp.data || {};
     if (!d.ok) { setState("error"); closePanel(); showToast(d.error || "Eroare."); setTimeout(()=>setState("idle"),1200); return; }
+    if (!web && mode !== "check") S.rcache.set(key, d);   // remember for instant re-show
     setState("ready");
     renderPanel(d);
     setTimeout(() => { if (S.state === "ready") setState("idle"); }, 2500);
