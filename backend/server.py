@@ -146,10 +146,12 @@ def explain(req: ExplainReq):
 
     user_prompt = build_user_prompt(sel, req.context, req.mode, course_ctx,
                                     req.choice, grounded=grounded)
+    # quiz reasoning needs accuracy -> use the stronger model for quiz/check
+    model_for_call = req.model or ("claude-sonnet-4-6" if req.mode in ("quiz", "check") else None)
     if req.web:
-        res = llm.ask_web(TUTOR_SYSTEM, user_prompt, model=req.model)
+        res = llm.ask_web(TUTOR_SYSTEM, user_prompt, model=model_for_call)
     else:
-        res = llm.ask(TUTOR_SYSTEM, user_prompt, model=req.model)
+        res = llm.ask(TUTOR_SYSTEM, user_prompt, model=model_for_call)
 
     data = res.get("data")
     if not data:

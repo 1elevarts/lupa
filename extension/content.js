@@ -175,7 +175,7 @@
       .p-x { position:absolute; top:8px; right:12px; cursor:pointer; color:#9a93b8;
              font-size:16px; line-height:1; }
       .p-x:hover { color:#211e33; }
-      .p-loading { display:flex; gap:9px; align-items:center; color:#4a4663; font-size:13px; }
+      .p-loading { display:flex; justify-content:center; align-items:center; min-height:18px; }
       .shimmer { width:14px;height:14px;border-radius:50%;border:2px solid rgba(124,92,255,.3);
                  border-top-color:#7c5cff; animation:spin .8s linear infinite; }
 
@@ -510,6 +510,7 @@
     if (isMulti) return;
     const f = d.finalists || [];
     if (!d.lean || !d.lean.toward || f.length !== 2) return;
+    if ((Number(d.lean.strength) || 0) < 0.7) return;  // only point when fairly sure
     const t = normTxt(d.lean.toward);
     const favIdx = (normTxt(f[1]).includes(t) || t.includes(normTxt(f[1]))) ? 1 : 0;
     const target = findOption(f[favIdx], new Set());
@@ -619,9 +620,7 @@
     S.panelOpen = true;
     S.barExpanded = false;             // every new question starts collapsed (peek only)
     panel.classList.remove("expanded");
-    const loadMsg = mode === "web" ? "Lupa caută online…"
-      : mode === "check" ? "Lupa verifică alegerea ta…" : "Lupa se uită în materie…";
-    panel.innerHTML = `<div class="p-loading"><div class="shimmer"></div>${loadMsg}</div>`;
+    panel.innerHTML = `<div class="p-loading"><div class="shimmer"></div></div>`;
     requestAnimationFrame(() => panel.classList.add("show"));
   }
   function toggleBar() {
