@@ -79,7 +79,7 @@
         transition: opacity .2s, top .12s, left .12s, width .12s, height .12s; }
       .hl.show { opacity: .85; }
       /* tiny green dot right before the leaned-to option's first letter */
-      .dimdot { position: fixed; width: 4px; height: 4px; border-radius: 50%;
+      .dimdot { position: fixed; width: 3px; height: 3px; border-radius: 50%;
         background: #34b37a; pointer-events: none; z-index: 1; transition: opacity .2s; }
 
       /* ---- info bar at the bottom: light, translucent, clears on hover ---- */
@@ -525,12 +525,10 @@
     for (const d of S.dimEls) {
       const r = d.target.getBoundingClientRect();
       const cs = getComputedStyle(d.target);
-      let lh = parseFloat(cs.lineHeight);
-      if (!lh || isNaN(lh)) lh = (parseFloat(cs.fontSize) || 15) * 1.4;
-      lh = Math.min(lh, r.height);
-      // tiny dot right before the first letter, centered on the first line
-      d.ov.style.left = (r.left - 8) + "px";
-      d.ov.style.top = (r.top + lh / 2 - 2) + "px";
+      const fs = parseFloat(cs.fontSize) || 15;
+      // tiny dot at the BASELINE of the first letter, like a period before it
+      d.ov.style.left = (r.left - 7) + "px";
+      d.ov.style.top = (r.top + fs * 0.92 - 3) + "px";
     }
   }
   function clearDim() {
