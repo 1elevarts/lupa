@@ -687,6 +687,15 @@
     explain(S.last.selection, S.last.context, S.last.mode, S.last.srcEl, true);
   }
   function esc(s){ return (s||"").replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  // Resolve a model-paraphrased option to the EXACT text shown on the page, so the
+  // fader labels read identically to the question (paraphrases are confusing).
+  function optionText(modelText) {
+    const el = findOption(modelText, new Set());
+    if (!el) return modelText || "";
+    let t = (el.innerText || el.textContent || "").trim().replace(/\s+/g, " ");
+    t = t.replace(/^[A-Za-z]\s*[\).·:\-–—]?\s+/, "");   // strip leading "A " / "B)" / "C." marker
+    return t || modelText || "";
+  }
   // DJ crossfader (single-answer) or per-option level faders (multi-answer)
   function faderHTML(d, isMulti) {
     if (isMulti) {
@@ -695,10 +704,11 @@
       const rows = picks.map((p) => {
         const pct = Math.round(Math.max(0, Math.min(1, Number(p.score) || 0)) * 100);
         const cls = pct >= 60 ? " hot" : pct <= 30 ? " cold" : "";
+        const lbl = optionText(p.opt);
         return `<div class="m-slider">
           <div class="m-track"><div class="m-fill${cls}" style="width:${pct}%"></div></div>
           <span class="m-pct">${pct}%</span>
-          <span class="m-lbl" title="${esc(p.opt)}">${esc(p.opt)}</span>
+          <span class="m-lbl" title="${esc(lbl)}">${esc(lbl)}</span>
         </div>`;
       }).join("");
       return `<div class="p-faders">${rows}</div>`;
@@ -710,14 +720,16 @@
     const s = Math.max(0.5, Math.min(0.9, Number(lean.strength) || 0.5));
     const pos = Math.round((favRight ? s : 1 - s) * 100); // knob: 0=stânga(A), 100=dreapta(B)
     const pct = Math.round(s * 100);
+    const l0 = optionText(f[0]), l1 = optionText(f[1]);   // exact on-page wording
+    const favText = favRight ? l1 : l0;
     return `
       <div class="p-fader">
         <div class="f-row">
-          <span class="f-deck ${favRight ? "" : "fav"}" title="${esc(f[0])}">${esc(f[0])}</span>
+          <span class="f-deck ${favRight ? "" : "fav"}" title="${esc(l0)}">${esc(l0)}</span>
           <div class="f-track"><div class="f-mid"></div><div class="f-knob" style="left:${pos}%"></div></div>
-          <span class="f-deck ${favRight ? "fav" : ""}" title="${esc(f[1])}">${esc(f[1])}</span>
+          <span class="f-deck ${favRight ? "fav" : ""}" title="${esc(l1)}">${esc(l1)}</span>
         </div>
-        <div class="b-cap">${pct}% spre „${esc(lean.toward)}"</div>
+        <div class="b-cap">${pct}% spre „${esc(favText)}"</div>
       </div>`;
   }
   function renderPanel(d) {

@@ -1,1 +1,1 @@
-{"version":"2026-06-26-1023","notes":"fix: nu mai arata raspunsul intrebarii precedente (guard stale prin reqSeq + verificare ca intrebarea e inca pe ecran); fix fader/punct verde care indica finalista gresita cand lean.toward e parafrazat (potrivire prin overlap de cuvinte)"}
+{"version":"2026-06-26-1027","notes":"fader: afiseaza textul EXACT al optiunii de pe pagina (rezolvat din DOM), nu parafraza modelului — etichete identice cu intrebarea"}
