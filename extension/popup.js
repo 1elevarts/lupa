@@ -27,7 +27,11 @@ chrome.runtime.sendMessage({ type: "health" }, (resp) => {
   const el = $("status");
   if (resp && resp.ok && resp.data && resp.data.ok) {
     el.className = "status ok";
-    el.innerHTML = `✓ Backend pornit · ${resp.data.chunks} fragmente neuro · ${resp.data.model}`;
+    const short = (m) => (m || "").replace("claude-", "").replace(/-\d+$/, "");
+    const ex = short(resp.data.model);
+    const qz = short(resp.data.quiz_model || resp.data.model);
+    const models = ex === qz ? ex : `explică ${ex} · grile ${qz}`;
+    el.innerHTML = `✓ Backend pornit · ${resp.data.chunks} fragmente neuro · ${models}`;
   } else {
     el.className = "status bad";
     el.innerHTML = `✕ Backend oprit. Rulează în terminal:<br><code>~/PROJECTS/study-lens/backend/run.sh</code>`;

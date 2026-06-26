@@ -112,7 +112,9 @@ def _cache_key(req: ExplainReq) -> str:
 @app.get("/health")
 def health():
     idx = retrieval.get_index()
-    return {"ok": True, "chunks": len(idx.chunks), "model": llm.MODEL}
+    # explain uses LENS_MODEL; quiz/check are forced to Sonnet for accuracy
+    return {"ok": True, "chunks": len(idx.chunks),
+            "model": llm.MODEL, "quiz_model": "claude-sonnet-4-6"}
 
 
 @app.post("/explain")
