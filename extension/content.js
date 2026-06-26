@@ -285,8 +285,8 @@
       // question + all its options as one block, not just the bit under the cursor
       const scope = questionScope(el);
       const isQuizBlock = scope && scope.querySelectorAll &&
-        (scope.querySelectorAll('input[type=radio], input[type=checkbox]').length >= 2 ||
-         (scope.matches && scope.matches(".que, .formulation, .question, .quiz, fieldset")));
+        (countOptions(scope) >= 2 ||
+         (scope.matches && scope.matches(".que, .formulation, .question, .quiz, fieldset, [role=listitem], [role=radiogroup]")));
       const txt = isQuizBlock
         ? (scope.innerText || "").trim().replace(/\s+/g, " ")
         : blockText(el);
@@ -305,6 +305,14 @@
     if (!inp.checked) return;
     maybeCheckAnswer(inp);
   }, true);
+  // Google Forms options are ARIA divs (no change event). Listen for clicks and
+  // read aria-checked once it settles (it flips after the page's own handler).
+  document.addEventListener("click", (e) => {
+    if (!S.enabled) return;
+    const opt = e.target.closest?.("[role=radio], [role=checkbox]");
+    if (!opt) return;
+    setTimeout(() => { if (optChecked(opt)) maybeCheckAnswer(opt); }, 80);
+  }, true);
 
   function maybeCheckAnswer(inp) {
     // a real quiz group has >=2 options. Moodle multi-answer checkboxes each have a
@@ -312,10 +320,10 @@
     const scope = inp.closest(Q_SEL) || inp.parentElement;
     const byName = inp.name
       ? document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`).length : 0;
-    const byCont = scope ? scope.querySelectorAll('input[type=radio], input[type=checkbox]').length : 0;
+    const byCont = countOptions(scope);
     if (Math.max(byName, byCont) < 2) return;
     const question = questionBlock(inp);
-    const choice = labelText(inp);
+    const choice = optLabel(inp);
     if (question.length < 12 || choice.length < 1) return;
     checkAnswer(question, choice, contextAround(inp), scope);
   }
@@ -380,7 +388,7 @@
     // First quiz question from the top of the viewport DOWN. A question that has
     // mostly scrolled ABOVE the top is skipped, so when you scroll the next one to
     // the top it becomes the active one. Picks the topmost still-anchored block.
-    const inputs = document.querySelectorAll('input[type=radio], input[type=checkbox]');
+    const inputs = document.querySelectorAll(OPT_SEL);
     const seen = new Set();
     let best = null, bestTop = Infinity;
     for (const inp of inputs) {
@@ -389,7 +397,7 @@
       seen.add(c);
       const byName = inp.name
         ? document.querySelectorAll(`input[name="${CSS.escape(inp.name)}"]`).length : 0;
-      const byCont = c.querySelectorAll('input[type=radio], input[type=checkbox]').length;
+      const byCont = countOptions(c);
       if (Math.max(byName, byCont) < 2) continue;
       const r = c.getBoundingClientRect();
       const aboveLimit = -Math.min(120, r.height * 0.5); // tolerate a small top crop
@@ -442,10 +450,28 @@
   /* ---------- helpers ---------- */
   function answerControl(el) {
     if (!el || !el.closest) return false;
-    return !!el.closest('input[type=radio], input[type=checkbox], label, .answer, [role=radio], [role=option]');
+    return !!el.closest('input[type=radio], input[type=checkbox], label, .answer, [role=radio], [role=checkbox], [role=option]');
   }
-  // closest question container — Moodle uses .que / .formulation
-  const Q_SEL = "fieldset, .que, .formulation, .question, .quiz, .q, li, form, section, article";
+  // closest question container — Moodle uses .que / .formulation; Google Forms uses [role=listitem]
+  const Q_SEL = "fieldset, .que, .formulation, .question, .quiz, .q, [role=listitem], li, form, section, article";
+  // a quiz option = a real radio/checkbox input OR a Google-Forms ARIA control
+  const OPT_SEL = "input[type=radio], input[type=checkbox], [role=radio], [role=checkbox]";
+  const CHK_SEL = "input[type=checkbox], [role=checkbox]";
+  function countOptions(scope) { return scope ? scope.querySelectorAll(OPT_SEL).length : 0; }
+  function optChecked(el) {
+    if (!el) return false;
+    if (el.matches && el.matches("input")) return !!el.checked;
+    return el.getAttribute && el.getAttribute("aria-checked") === "true";
+  }
+  function optLabel(el) {
+    // Google Forms: text lives in aria-label / data-value, not a <label for=>
+    if (el && el.matches && el.matches("[role=radio], [role=checkbox]")) {
+      const t = el.getAttribute("aria-label") || el.getAttribute("data-value")
+        || el.innerText || el.textContent || "";
+      return t.trim().replace(/\s+/g, " ").slice(0, 200);
+    }
+    return labelText(el);
+  }
   function elementUnderCursor() {
     return document.elementFromPoint(S.cursor.x, S.cursor.y) || document.body;
   }
@@ -516,7 +542,7 @@
     const scopes = [];
     if (S.hlSrc && S.hlSrc.querySelectorAll) scopes.push(S.hlSrc);
     scopes.push(document.body);
-    const SEL = "label, li, [role=radio], [role=option], [role=button], button, a, p, td, div, span";
+    const SEL = "label, li, [role=radio], [role=checkbox], [role=option], [role=button], button, a, p, td, div, span";
     const words = target.split(" ").filter((w) => w.length >= 4);
     const visible = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
     for (const scope of scopes) {
@@ -613,7 +639,7 @@
     const t = (text || "").toLowerCase();
     const looksQuiz = /\?/.test(t) &&
       (/\b[a-d]\)|\bvarianta|care (este|dintre)|corect|adevărat|fals\b/.test(t) ||
-        (el && el.closest && el.closest("label, .question, .quiz, fieldset")) ||
+        (el && el.closest && el.closest("label, .question, .quiz, fieldset, [role=radio], [role=checkbox], [role=listitem]")) ||
         (el && nearbyInputs(el)));
     if (looksQuiz) return "quiz";
     const onField = el && el.closest && el.closest("textarea, input[type=text], [contenteditable=true]");
@@ -621,8 +647,8 @@
     return "explain";
   }
   function nearbyInputs(el) {
-    const scope = el.closest?.("form, fieldset, .question, .quiz, li, div") || document;
-    return scope.querySelector?.('input[type=radio], input[type=checkbox]');
+    const scope = el.closest?.("form, fieldset, .question, .quiz, [role=listitem], li, div") || document;
+    return scope.querySelector?.(OPT_SEL);
   }
 
   /* ---------- the call ---------- */
@@ -742,7 +768,7 @@
       : d.verdict === "correct"
         ? `<div class="p-verdict ok">✅ Corect!</div>` : "";
     const isMulti = d.multi || (S.hlSrc && S.hlSrc.querySelector &&
-      !!S.hlSrc.querySelector('input[type=checkbox]'));
+      !!S.hlSrc.querySelector(CHK_SEL));
     const multi = isMulti
       ? `<div class="p-multi">◳ Răspuns multiplu — bifează TOATE corecte</div>` : "";
     const hint = d.hint ? `<div class="p-hint">
