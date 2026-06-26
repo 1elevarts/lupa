@@ -97,6 +97,8 @@ def build_user_prompt(selection: str, context: str, mode: str, course_context: s
                 "DACĂ NU E MULTI și au rămas exact 2 variante plauzibile după eliminate: pune-le "
                 "în \"finalists\" și în \"lean\" înclină spre cea mai probabil corectă — \"strength\" "
                 "între 0.5 (50/50) și 0.9 (aproape sigur); lasă \"picks\" gol. "
+                "IMPORTANT: \"lean.toward\" trebuie să fie EXACT textul scurt al finalistei favorite "
+                "(una dintre cele 2 din \"finalists\"), copiat identic, FĂRĂ explicații sau comentarii lipite. "
                 "FII ONEST cu strength: gândește atent care e răspunsul corect (verifică fiecare "
                 "detaliu/cifră din variante), iar dacă cele 2 finaliste sunt greu de departajat sau "
                 "ai vreo îndoială, pune strength aproape de 0.5. Nu fi exagerat de încrezător. "

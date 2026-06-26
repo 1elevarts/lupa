@@ -29,6 +29,7 @@
     panelOpen: false,
     hoverTimer: null,
     autoTimer: null,
+    reqSeq: 0,        // bumps on every network call -> stale responses are dropped
   };
 
   /* ---------- shadow UI ---------- */
@@ -322,6 +323,7 @@
   async function checkAnswer(question, choice, context, srcEl) {
     S.lastSel = question;
     S.hlSrc = srcEl || null;
+    const myReq = ++S.reqSeq;
     setState("thinking");
     openLoading("check");
     showHighlight(srcEl);
@@ -332,6 +334,8 @@
         payload: { selection: question, choice, context, mode: "check", url: location.href },
       });
     } catch (e) { resp = { ok: false, error: String(e) }; }
+    if (myReq !== S.reqSeq) return;                          // a newer request took over
+    if (!questionStillThere(srcEl, question)) { closePanel(); return; } // moved on
     if (!resp || !resp.ok || !resp.data || !resp.data.ok) {
       setState("error"); closePanel();
       showToast("Backend-ul nu răspunde — verifică serviciul Lupa.");
@@ -462,6 +466,34 @@
   // our own fixed overlays positioned over the matched option boxes in the viewport.
   function normTxt(s) { return (s || "").toLowerCase().replace(/\s+/g, " ").trim(); }
 
+  // Which finalist does lean.toward point to? The model often paraphrases toward
+  // (extra commentary, slight rewording) so substring matching is unreliable —
+  // pick the finalist with the strongest text overlap instead.
+  function favoredIndex(towardRaw, finalists) {
+    const t = normTxt(towardRaw);
+    if (!t || !finalists || finalists.length !== 2) return 0;
+    const score = (cand) => {
+      const c = normTxt(cand);
+      if (!c) return -1;
+      if (t.includes(c) || c.includes(t)) return 999;          // strong: one contains the other
+      const cw = c.split(" ").filter((w) => w.length >= 4);
+      if (!cw.length) return 0;
+      const tw = new Set(t.split(" ").filter((w) => w.length >= 4));
+      return cw.filter((w) => tw.has(w)).length / cw.length;     // token overlap 0..1
+    };
+    return score(finalists[1]) > score(finalists[0]) ? 1 : 0;
+  }
+
+  // Drop a response if the user moved on: a newer request superseded this one, or
+  // the question the request was about is no longer on screen (SPA swapped it).
+  function questionStillThere(srcEl, selection) {
+    if (!srcEl) return true;                    // can't verify (e.g. free text select)
+    if (!srcEl.isConnected) return false;       // element detached -> navigated away
+    const now = normTxt(srcEl.innerText || srcEl.textContent || "");
+    const want = normTxt(selection).slice(0, 60);
+    return !want || !now || now.includes(want);
+  }
+
   function showHighlight(el) {
     if (!el || !el.getBoundingClientRect) { hideHighlight(); return; }
     S.hlEl = el;
@@ -523,8 +555,7 @@
     const f = d.finalists || [];
     if (!d.lean || !d.lean.toward || f.length !== 2) return;
     if ((Number(d.lean.strength) || 0) < 0.7) return;  // only point when fairly sure
-    const t = normTxt(d.lean.toward);
-    const favIdx = (normTxt(f[1]).includes(t) || t.includes(normTxt(f[1]))) ? 1 : 0;
+    const favIdx = favoredIndex(d.lean.toward, f);
     const target = findOption(f[favIdx], new Set());
     if (!target) return;
     const ov = document.createElement("div");
@@ -609,6 +640,7 @@
       setTimeout(() => { if (S.state === "ready") setState("idle"); }, 2500);
       return;
     }
+    const myReq = ++S.reqSeq;
     setState("thinking");
     openLoading(web ? "web" : mode);
     showHighlight(srcEl);
@@ -621,6 +653,8 @@
     } catch (e) {
       resp = { ok: false, error: String(e) };
     }
+    if (myReq !== S.reqSeq) return;                       // a newer request took over
+    if (!questionStillThere(srcEl, selection)) { closePanel(); return; } // moved on
     if (!resp || !resp.ok) {
       setState("error");
       closePanel();
@@ -672,9 +706,7 @@
     const f = d.finalists || [];
     const lean = d.lean;
     if (f.length !== 2 || !lean || !lean.toward) return "";
-    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, " ").trim();
-    const t = norm(lean.toward);
-    const favRight = norm(f[1]).includes(t) || t.includes(norm(f[1]));
+    const favRight = favoredIndex(lean.toward, f) === 1;
     const s = Math.max(0.5, Math.min(0.9, Number(lean.strength) || 0.5));
     const pos = Math.round((favRight ? s : 1 - s) * 100); // knob: 0=stânga(A), 100=dreapta(B)
     const pct = Math.round(s * 100);

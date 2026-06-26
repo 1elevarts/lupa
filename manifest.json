@@ -1,1 +1,1 @@
-{"version":"2026-06-25-1429","notes":"toast discret: fundal alb, opacity .5 (full la hover), in coltul dreapta-jos langa lupa"}
+{"version":"2026-06-26-1023","notes":"fix: nu mai arata raspunsul intrebarii precedente (guard stale prin reqSeq + verificare ca intrebarea e inca pe ecran); fix fader/punct verde care indica finalista gresita cand lean.toward e parafrazat (potrivire prin overlap de cuvinte)"}
