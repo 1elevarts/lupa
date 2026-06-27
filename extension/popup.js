@@ -39,13 +39,29 @@ $("barOpacity").addEventListener("input", (e) => {
 // ── AI source: maxOAuth ↔ API (backend-side, lives in ~/.lupa/config.json) ───
 const toggleApiBox = () => { $("apiBox").style.display = $("authMode").value === "api" ? "block" : "none"; };
 
+function renderKeyState(c, forceEdit) {
+  const has = !!(c && c.has_key);
+  const st = $("keyStatus");
+  if (has) {
+    st.innerHTML = `<span class="ok">✓ Cheie salvată: ${c.key_masked} · all set</span>`
+                 + `<a id="changeKey">adaugă altă cheie</a>`;
+    $("keyEditor").style.display = forceEdit ? "block" : "none";
+    const ch = $("changeKey");
+    if (ch) ch.addEventListener("click", () => {
+      $("keyEditor").style.display = "block";
+      $("apiKey").focus();
+    });
+  } else {
+    st.innerHTML = `<span class="bad">✕ Nicio cheie salvată</span>`;
+    $("keyEditor").style.display = "block";
+  }
+}
+
 function applyConfig(c) {
   if (!c || c.ok === false) return;
   $("authMode").value = c.auth_mode === "api" ? "api" : "oauth";
   toggleApiBox();
-  $("keyHint").textContent = c.has_key
-    ? `Cheie salvată: ${c.key_masked} · rămâne doar pe calculatorul tău.`
-    : "Cheia rămâne doar pe calculatorul tău.";
+  renderKeyState(c, false);
 }
 
 $("authMode").addEventListener("change", async (e) => {
@@ -57,11 +73,13 @@ $("authMode").addEventListener("change", async (e) => {
 $("saveKey").addEventListener("click", async () => {
   const k = $("apiKey").value.trim();
   if (!k) { $("keyHint").textContent = "Lipsește cheia."; return; }
+  $("saveKey").disabled = true;
   $("keyHint").textContent = "Salvez…";
   const c = await postConfig({ api_key: k, auth_mode: "api" });
   $("apiKey").value = "";
-  applyConfig(c);
-  if (c && c.has_key) $("keyHint").textContent = `✓ Salvată: ${c.key_masked} · folosesc API-ul tău.`;
+  $("saveKey").disabled = false;
+  $("keyHint").textContent = "Cheia rămâne doar pe calculatorul tău.";
+  applyConfig(c);   // key present -> editor collapses, green ✓ shows
   refreshHealth();
 });
 

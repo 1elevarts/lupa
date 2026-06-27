@@ -1,1 +1,1 @@
-{"version":"2026-06-27-1738","notes":"popup: link-uri click → API keys + Billing (Cipri ajunge ușor să-și ia cheia / vadă credite)"}
+{"version":"2026-06-27-1745","notes":"popup API key: bifă verde + colaps când există cheie, X gri + field deschis când nu (UX clar)"}

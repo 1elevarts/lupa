@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Lupa — tutore AR de studiu",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "O lupă AR care vine cu cursorul pe orice pagină și îți explică subtil conceptele din materie (neuroștiințe). Te învață, nu îți dă răspunsul.",
   "icons": {
     "16": "icons/icon-16.png",
