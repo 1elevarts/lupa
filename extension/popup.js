@@ -45,7 +45,7 @@ function applyConfig(c) {
   toggleApiBox();
   $("keyHint").textContent = c.has_key
     ? `Cheie salvată: ${c.key_masked} · rămâne doar pe calculatorul tău.`
-    : "Cheia rămâne doar pe calculatorul tău. Ia una de la console.anthropic.com.";
+    : "Cheia rămâne doar pe calculatorul tău.";
 }
 
 $("authMode").addEventListener("change", async (e) => {
