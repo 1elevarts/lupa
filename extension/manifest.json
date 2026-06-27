@@ -1,12 +1,27 @@
 {
   "manifest_version": 3,
   "name": "Lupa — tutore AR de studiu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "O lupă AR care vine cu cursorul pe orice pagină și îți explică subtil conceptele din materie (neuroștiințe). Te învață, nu îți dă răspunsul.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
   "permissions": ["storage", "activeTab", "scripting", "alarms", "tabs"],
   "host_permissions": ["http://127.0.0.1:8077/*", "http://localhost:8077/*"],
   "background": { "service_worker": "background.js" },
-  "action": { "default_popup": "popup.html", "default_title": "Lupa — tutore AR" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Lupa — tutore AR",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

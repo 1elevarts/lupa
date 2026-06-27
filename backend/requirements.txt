@@ -1,4 +1,4 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
-# anthropic only needed if you set ANTHROPIC_API_KEY (otherwise OAuth `claude -p` is used)
-# anthropic>=0.40
+# anthropic powers the "API key" auth mode (popup toggle); harmless on OAuth-only setups
+anthropic>=0.40

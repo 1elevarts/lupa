@@ -37,8 +37,8 @@ rsync -a --delete "$SRC/extension/" "$PROJ/extension/"
 
 # content changed -> drop stale answer cache
 rm -f "$PROJ/backend/cache/"*.json 2>/dev/null || true
-# refresh deps in case requirements changed
-"$PROJ/backend/.venv/bin/pip" install --quiet "fastapi>=0.110" "uvicorn[standard]>=0.29" >/dev/null 2>&1 || true
+# refresh deps in case requirements changed (incl. anthropic for the API auth mode)
+"$PROJ/backend/.venv/bin/pip" install --quiet -r "$PROJ/backend/requirements.txt" >/dev/null 2>&1 || true
 
 echo "$REMOTE_V" > "$VFILE"
 # restart backend -> rebuilds the index (picks up new n*.json subjects)

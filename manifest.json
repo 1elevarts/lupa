@@ -1,1 +1,1 @@
-{"version":"2026-06-26-1750","notes":"Google Forms support: detecteaza grile cu controale ARIA (role=radio/checkbox in role=listitem), verifica raspunsul ales la click (nu doar input change), auto-question + multi + fader merg si pe Forms"}
+{"version":"2026-06-27-1533","notes":"icon nou Lupa + toggle Sursă AI (maxOAuth/API + cheie proprie) în popup"}

@@ -109,12 +109,45 @@ def _cache_key(req: ExplainReq) -> str:
     return os.path.join(CACHE_DIR, f"{h}.json")
 
 
+class ConfigReq(BaseModel):
+    auth_mode: str | None = None   # "oauth" | "api"
+    api_key: str | None = None
+
+
+def _config_view() -> dict:
+    cfg = llm.runtime_config()
+    return {"ok": True, "auth_mode": cfg["auth_mode"],
+            "has_key": bool(cfg["api_key"]),
+            "key_masked": llm.mask_key(cfg["api_key"])}
+
+
 @app.get("/health")
 def health():
     idx = retrieval.get_index()
+    cfg = llm.runtime_config()
+    use_api, _, auth = llm.resolve_auth()
     # explain uses LENS_MODEL; quiz/check are forced to Sonnet for accuracy
     return {"ok": True, "chunks": len(idx.chunks),
-            "model": llm.MODEL, "quiz_model": "claude-sonnet-4-6"}
+            "model": llm.MODEL, "quiz_model": "claude-sonnet-4-6",
+            "auth_mode": cfg["auth_mode"], "auth": auth, "has_key": bool(cfg["api_key"])}
+
+
+@app.get("/config")
+def get_config():
+    return _config_view()
+
+
+@app.post("/config")
+def set_config(req: ConfigReq):
+    if req.auth_mode is not None and req.auth_mode not in ("oauth", "api"):
+        return {"ok": False, "error": "auth_mode invalid (oauth|api)"}
+    patch: dict = {}
+    if req.auth_mode is not None:
+        patch["auth_mode"] = req.auth_mode
+    if req.api_key is not None:
+        patch["api_key"] = req.api_key
+    llm.save_runtime_config(patch)
+    return _config_view()
 
 
 @app.post("/explain")

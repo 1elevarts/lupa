@@ -25,6 +25,69 @@ _OAUTH_MODEL = {
     "claude-haiku-4-5": "haiku",
 }
 
+# ── runtime auth config ──────────────────────────────────────────────────────
+# Lives OUTSIDE the project tree so it survives auto-update (update-lupa.sh
+# overwrites backend files) and stays local per machine — Cipri's API key never
+# leaves his computer / never enters the repo. auth_mode: auto | oauth | api.
+CONFIG_DIR = os.path.expanduser("~/.lupa")
+CONFIG_PATH = os.path.join(CONFIG_DIR, "config.json")
+_DEFAULT_CFG = {"auth_mode": "auto", "api_key": ""}
+
+
+def runtime_config() -> dict:
+    cfg = dict(_DEFAULT_CFG)
+    try:
+        with open(CONFIG_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict):
+            for k in cfg:
+                if k in data:
+                    cfg[k] = data[k]
+    except Exception:
+        pass
+    if cfg.get("auth_mode") not in ("auto", "oauth", "api"):
+        cfg["auth_mode"] = "auto"
+    cfg["api_key"] = (cfg.get("api_key") or "").strip()
+    return cfg
+
+
+def save_runtime_config(patch: dict) -> dict:
+    cfg = runtime_config()
+    if patch.get("auth_mode") in ("auto", "oauth", "api"):
+        cfg["auth_mode"] = patch["auth_mode"]
+    if patch.get("api_key") is not None:
+        cfg["api_key"] = str(patch["api_key"]).strip()
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+    with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+        json.dump(cfg, f)
+    try:
+        os.chmod(CONFIG_PATH, 0o600)   # the key is sensitive
+    except Exception:
+        pass
+    return cfg
+
+
+def mask_key(key: str) -> str:
+    key = (key or "").strip()
+    if not key:
+        return ""
+    return ("…" + key[-4:]) if len(key) > 4 else "••••"
+
+
+def resolve_auth() -> tuple[bool, str | None, str]:
+    """(use_api, api_key, auth_label) from runtime config, falling back to env."""
+    cfg = runtime_config()
+    mode = cfg["auth_mode"]
+    cfg_key = cfg["api_key"]
+    env_key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")
+    if mode == "oauth":
+        return False, None, "oauth"
+    if mode == "api":
+        key = cfg_key or env_key
+        return (bool(key), key, "api" if key else "oauth")
+    # auto -> legacy behaviour: API only if an env key is present
+    return (bool(env_key), env_key, "api" if env_key else "oauth")
+
 
 def _balanced_objects(text: str):
     """Yield every top-level {...} substring via brace-depth scanning.
@@ -152,9 +215,10 @@ def _loose_fields(text: str) -> dict | None:
             "picks": picks, "chapter": chapter}
 
 
-def _via_api(system: str, prompt: str, model: str, max_tokens: int) -> str:
+def _via_api(system: str, prompt: str, model: str, max_tokens: int,
+             api_key: str | None = None) -> str:
     import anthropic  # lazy: only when a key is present
-    client = anthropic.Anthropic()
+    client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
     resp = client.messages.create(
         model=model,
         max_tokens=max_tokens,
@@ -210,10 +274,10 @@ def ask(system: str, prompt: str, model: str | None = None, max_tokens: int = 10
     """Return {'data': <parsed json or None>, 'raw': str, 'ms': int, 'auth': str}."""
     model = model or MODEL
     t0 = time.time()
-    use_api = bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
-    auth = "api" if use_api else "oauth"
+    use_api, api_key, auth = resolve_auth()
     try:
-        raw = _via_api(system, prompt, model, max_tokens) if use_api else _via_oauth(system, prompt, model)
+        raw = (_via_api(system, prompt, model, max_tokens, api_key)
+               if use_api else _via_oauth(system, prompt, model))
     except Exception as e:
         return {"data": None, "raw": "", "ms": int((time.time() - t0) * 1000),
                 "auth": auth, "error": str(e)}
