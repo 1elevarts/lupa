@@ -1,1 +1,1 @@
-{"version":"2026-06-27-1533","notes":"icon nou Lupa + toggle Sursă AI (maxOAuth/API + cheie proprie) în popup"}
+{"version":"2026-06-27-1700","notes":"API mode fără dependențe (REST via stdlib urllib + CA fallback) — merge automat la toți, fără instalări"}

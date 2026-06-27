@@ -1,4 +1,3 @@
 fastapi>=0.110
 uvicorn[standard]>=0.29
-# anthropic powers the "API key" auth mode (popup toggle); harmless on OAuth-only setups
-anthropic>=0.40
+# no SDK needed: the "API key" auth mode calls the REST API directly via stdlib urllib

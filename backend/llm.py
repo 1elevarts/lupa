@@ -217,15 +217,47 @@ def _loose_fields(text: str) -> dict | None:
 
 def _via_api(system: str, prompt: str, model: str, max_tokens: int,
              api_key: str | None = None) -> str:
-    import anthropic  # lazy: only when a key is present
-    client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
-    resp = client.messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        system=system,
-        messages=[{"role": "user", "content": prompt}],
+    # Direct REST call via stdlib (urllib) — deliberately NO `anthropic` SDK, so
+    # the API auth mode works on any machine without installing extra deps
+    # (matters for friends pulling auto-updates). x-api-key auth = real API keys.
+    import urllib.request
+    import urllib.error
+    import ssl
+    # python.org framework Python doesn't find a CA bundle by default -> urllib
+    # TLS verify fails. Prefer certifi if present, else the macOS system bundle,
+    # else the library default. Stdlib-only so no extra dep to install anywhere.
+    ctx = None
+    try:
+        import certifi
+        ctx = ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        if os.path.exists("/etc/ssl/cert.pem"):
+            ctx = ssl.create_default_context(cafile="/etc/ssl/cert.pem")
+    key = api_key or os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")
+    body = json.dumps({
+        "model": model,
+        "max_tokens": max_tokens,
+        "system": system,
+        "messages": [{"role": "user", "content": prompt}],
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.anthropic.com/v1/messages",
+        data=body,
+        headers={
+            "content-type": "application/json",
+            "x-api-key": key or "",
+            "anthropic-version": "2023-06-01",
+        },
+        method="POST",
     )
-    return "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+    try:
+        with urllib.request.urlopen(req, timeout=60, context=ctx) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", "ignore")[:200]
+        raise RuntimeError(f"API {e.code}: {detail}")
+    return "".join(b.get("text", "") for b in data.get("content", [])
+                   if b.get("type") == "text")
 
 
 def _via_oauth(system: str, prompt: str, model: str) -> str:
